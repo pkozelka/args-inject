@@ -1,0 +1,9 @@
+
+Snippet test
+
+%{snippet|id=example1|file=test/net/sf/buildbox/args/ArgsParserTest.java}
+
+code snippet
+
+%{code-snippet|id=example1|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}
+
