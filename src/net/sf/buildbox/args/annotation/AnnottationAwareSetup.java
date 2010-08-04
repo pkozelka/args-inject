@@ -8,10 +8,10 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.*;
 import net.sf.buildbox.args.ArgsUtils;
-import net.sf.buildbox.args.DefaultHelpCommand;
 import net.sf.buildbox.args.ParsedOption;
 import net.sf.buildbox.args.api.ArgsSetup;
 import net.sf.buildbox.args.api.ExecutableCommand;
+import net.sf.buildbox.args.api.MetaCommand;
 import net.sf.buildbox.args.model.CliDeclaration;
 import net.sf.buildbox.args.model.CommandDeclaration;
 import net.sf.buildbox.args.model.OptionDeclaration;
@@ -199,8 +199,8 @@ public class AnnottationAwareSetup implements ArgsSetup {
             }
         }
         // special cases - todo: generalize ?
-        if (commandInstance instanceof DefaultHelpCommand) {
-            final DefaultHelpCommand h = (DefaultHelpCommand) commandInstance;
+        if (commandInstance instanceof MetaCommand) {
+            final MetaCommand h = (MetaCommand) commandInstance;
             h.setDeclaration(cliDeclaration);
         }
     }

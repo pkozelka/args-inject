@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import net.sf.buildbox.args.annotation.CliCommand;
-import net.sf.buildbox.args.api.ExecutableCommand;
+import net.sf.buildbox.args.api.MetaCommand;
 import net.sf.buildbox.args.model.CliDeclaration;
 import net.sf.buildbox.args.model.CommandDeclaration;
 import net.sf.buildbox.args.model.ParamDeclaration;
@@ -21,7 +21,7 @@ import net.sf.buildbox.args.model.ParamDeclaration;
  * javaapp SOMECMD --help
  */
 @CliCommand(name = "help", aliases = {"--help", "?", "h"})
-public class DefaultHelpCommand implements ExecutableCommand {
+public class DefaultHelpCommand implements MetaCommand {
     private CliDeclaration declaration = null;
     private final String command;
     private PrintStream out = System.err;
