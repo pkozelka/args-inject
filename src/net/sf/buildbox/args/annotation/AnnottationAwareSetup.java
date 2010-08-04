@@ -137,11 +137,10 @@ public class AnnottationAwareSetup implements ArgsSetup {
         //TODO: use ParamDeclarations
         final String cmdName = cmdParams.removeFirst();
         final Class<? extends ExecutableCommand> cmdClass = cmdDecl.getCommandClass();
-        // find public constructor
-        final Constructor<? extends ExecutableCommand> con = ArgsUtils.findPublicConstructor(cmdClass);
         // parse remaining tokens as the public constructor's params
         final List<Object> cmdParamsUnmarshalled = new ArrayList<Object>();
-        for (Class paramType : con.getParameterTypes()) {
+        for (ParamDeclaration paramDecl : cmdDecl.getParams()) {
+            final Class paramType = paramDecl.getType();
             if (paramType.isArray()) {
                 final List<Object> lastArrayParam = new ArrayList<Object>();
                 while (!cmdParams.isEmpty()) {
@@ -157,7 +156,9 @@ public class AnnottationAwareSetup implements ArgsSetup {
             }
         }
         // instantiate cmdClass
-//        diag("cmd constructor: %s%s", con, cmdParamsUnmarshalled);
+        // find public constructor
+        final Constructor<? extends ExecutableCommand> con = ArgsUtils.findPublicConstructor(cmdClass);
+        ArgsUtils.debug("cmd constructor: %s%s", con, cmdParamsUnmarshalled);
         try {
             return con.newInstance(cmdParamsUnmarshalled.toArray(new Object[cmdParamsUnmarshalled.size()]));
         } catch (InvocationTargetException e) {
@@ -176,7 +177,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
         for (ParsedOption option : parsedOptions) {
             final Object[] values = option.getValues();
             final Method method = option.getOptionDecl().getOptionMethod();
-//            diag("  option method: %s%s", method, values.length == 0 ? "" : Arrays.asList(values));
+            ArgsUtils.debug("  option method: %s%s", method, values.length == 0 ? "" : Arrays.asList(values));
             try {
                 final Class<?> declaringClass = method.getDeclaringClass();
                 if (declaringClass.isAssignableFrom(cmdClass)) {
