@@ -23,20 +23,8 @@ import net.sf.buildbox.args.model.OptionDeclaration;
 public class SingleCommandBuilder {
     private final ArgsSetup declarationSetup;
 
-    private boolean diagnosticMode = Boolean.getBoolean(System.getProperty("args.diag"));
-
     public SingleCommandBuilder(ArgsSetup declarationSetup) {
         this.declarationSetup = declarationSetup;
-    }
-
-    public void setDiagnosticMode(boolean diagnosticMode) {
-        this.diagnosticMode = diagnosticMode;
-    }
-
-    private void diag(String format, Object... objects) {
-        if (diagnosticMode) {
-            System.err.println("DIAGNOSTICS: " + String.format(format, objects));
-        }
     }
 
     /**
@@ -49,7 +37,7 @@ public class SingleCommandBuilder {
     public ExecutableCommand buildCommand(String... args) throws ParseException {
         final CliDeclaration declaration = declarationSetup.getDeclaration();
         final LinkedList<String> argsList = new LinkedList<String>(Arrays.asList(args));
-        diag("Parsing commandline args: %s", argsList);
+        ArgsUtils.debug("Parsing commandline args: %s", argsList);
         final List<ParsedOption> parsedOptions = new ArrayList<ParsedOption>();
         final LinkedList<String> cmdParams = new LinkedList<String>();
         while (!argsList.isEmpty()) {
@@ -94,8 +82,8 @@ public class SingleCommandBuilder {
             option.parse(argsList);
             parsedOptions.add(option);
         }
-        diag("  cmdParams:     %s", cmdParams);
-        diag("  parsedOptions: %s", parsedOptions);
+        ArgsUtils.debug("  cmdParams:     %s", cmdParams);
+        ArgsUtils.debug("  parsedOptions: %s", parsedOptions);
         // parse command
         String cmdName = cmdParams.getFirst();
         CommandDeclaration cmdDecl = declaration.lookupCommand(cmdName, false);
@@ -121,13 +109,39 @@ public class SingleCommandBuilder {
         return new SingleCommandBuilder(declarationSetup).buildCommand(args);
     }
 
+    /**
+     * <p>High-level entry point for commandline processing. Builds command according to setup and args, calls it,
+     * and handles any exceptions in a way expectable from commandline application.</p>
+     * <p>Expected usage:</p>
+     * <pre>
+     * ...
+     * public static void main(String[] args) {
+     *   // ... create your commandline setup here ...
+     *   if (!<b> SingleCommandBuilder.main</b>(setup, args)) {
+     *     {@link System#exit(int) System.exit(1)}; // indicate failure to shell
+     *   }
+     * }
+     * ...
+     * </pre>
+     * <p>Note that this way, the dirty job of calling {@link System#exit(int)} is intentionally left up to the caller.</p>
+     *
+     * @param setup commandline declaration
+     * @param args  actual arguments to be processed
+     * @return true if execution succeeded, false if it failed. It is a good idea to indicate failure to shell by terminating with {@link System#exit(int) System.exit(1)}
+     */
     public static boolean main(ArgsSetup setup, String... args) throws Exception {
-        try {
+        if (ArgsUtils.debugMode) {
             new SingleCommandBuilder(setup).buildCommand(args).call();
+            // in debug mode, we let the exception pass up so that full stacktrace is shown; of course then false is never returned
             return true;
-        } catch (Exception e) {
-            System.err.println("ERROR: " + e.getClass().getSimpleName() + " - " + e.getMessage());
-            return false;
+        } else {
+            try {
+                new SingleCommandBuilder(setup).buildCommand(args).call();
+                return true;
+            } catch (Exception e) {
+                System.err.println("ERROR: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+                return false;
+            }
         }
     }
 }

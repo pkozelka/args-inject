@@ -8,6 +8,18 @@ import java.text.ParseException;
 import net.sf.buildbox.args.api.ExecutableCommand;
 
 public final class ArgsUtils {
+    /**
+     * Enables diagnostic output.
+     * Mostly useful for debugging args-inject itself or the commandline application.
+     */
+    public static boolean debugMode = Boolean.getBoolean(System.getProperty("args.debug"));
+
+    public static void debug(String format, Object... objects) {
+        if (debugMode) {
+            System.err.println("args.debug: " + String.format(format, objects));
+        }
+    }
+
     private ArgsUtils() {
         // not instantiable
     }
