@@ -1,0 +1,78 @@
+---+  Commandline Injection Library
+
+(yet another one, see Comparison with similar libraries)
+
+---++ Commandline parsing challenges
+
+   * (sub)command, with 0-n params
+   * default command
+   * variable number of params
+   * global options
+   * command-specific options
+   * option names - long, short
+   * option name/semantic consistency enforcing
+   * value notations for options
+      * additive flag(s): ==ls -la==
+      * flippable flags: ==samplecmd -x- -g+==
+      * appended value: ==svn up -r1204==
+      * next arg value: ==svn up -r 1204; svn up --revision 1204==
+      * value assignment: ==svn up --revision=1204==
+      * property assignment: ==ant -Dkey=value==
+   * auto-generated synopsis, help etc.
+   * feeding application data objects
+      * type conversions supported
+
+---+++ Error conditions
+declaration (java.lang.IllegalStateException)
+   * unrecognized type to unmarshall
+   * no command declared
+
+parsing (java.text.ParseException)
+   * unknown command: %s
+   * command %s: not enough parameters provided
+   * invalid option: %s
+   * command '%s' does not accept option '%s'
+   * option %s: not enough parameters provided
+   * command %s: syntax error: %s
+   * command %s: unparsed tokens: %s
+
+---++ args-inject approach
+Commandline Injector sees the commandline as a mix of options, its values, and commands with zero or more arguments.
+
+Options can occur anywhere before/after the command and any argument without having functional impact.
+
+Options having values must have these values next to it, in order of their definition.
+
+---+++ Example
+%{snippet|id=example1|file=test/net/sf/buildbox/args/ArgsParserTest.java}
+
+or
+
+%snippet|id=example1|file=test/net/sf/buildbox/args/ArgsParserTest.java%
+
+or
+
+<macro name="snippet"> <!-- my is the required macro name defined by role-hint -->
+  <param name="id" value="example1"/>
+  <param name="file" value="test/net/sf/buildbox/args/ArgsParserTest.java"/>
+</macro>
+
+---+++ Java binding rules
+
+Command:
+   * is represented by java class implementing ExecutableCommand
+   * it has only one public constructor
+      * this constructor params determine command arguments
+      * to define variable argument list, declare last constructor parameter as java array - for instance, String[] files
+Option:
+   * is represented by public nonstatic void methods on command class
+   * method params map to option values; it can be zero or more, but cannot be variable
+
+Global option:
+   * similar to Option, but is defined by a class passed to parser as a global option holder - it does not have to implement ExecutableCommand
+
+---+++ Standard commands
+
+   * help - global, per-command
+   * version - simple, detailed with all libraries
+

@@ -1,0 +1,17 @@
+---+  Commandline Injection Library - library name
+
+---++ Words and buzzwords
+
+   * *CLI* because it is for Command Line Interface
+   * *DI* like Dependency Injection which is performed by the library
+   * *inject* because we do injection
+   * *IOC* as Inversion Of Control which is basically synonymum for DI
+   * *ARGS* because _args[]_ is conventional name for arguments being processed by static method "main"
+
+---++ Name suggestions
+   * cl-inject
+   * args-inject
+   * _args4j already taken by Kohsuke_
+   * commandline4j
+   * clioc
+
