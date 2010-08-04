@@ -120,4 +120,14 @@ public class SingleCommandBuilder {
     public static ExecutableCommand buildCommand(ArgsSetup declarationSetup, String... args) throws ParseException {
         return new SingleCommandBuilder(declarationSetup).buildCommand(args);
     }
+
+    public static boolean main(ArgsSetup setup, String... args) throws Exception {
+        try {
+            new SingleCommandBuilder(setup).buildCommand(args).call();
+            return true;
+        } catch (Exception e) {
+            System.err.println("ERROR: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+            return false;
+        }
+    }
 }

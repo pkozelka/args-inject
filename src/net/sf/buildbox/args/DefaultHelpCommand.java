@@ -48,7 +48,7 @@ public class DefaultHelpCommand implements ExecutableCommand {
 
     private void commandHelp(CommandDeclaration cmdDecl) {
         final String programName = declaration.getProgramName();
-        final String shortDesc = "///todo///";
+        final String shortDesc = "///todo: shortDesc///";
         out.println(cmdDecl + ": " + shortDesc);
         out.println("Usage:");
         final StringBuilder usage = new StringBuilder("   ");
@@ -63,6 +63,8 @@ public class DefaultHelpCommand implements ExecutableCommand {
             usage.append(symbolicName);
         }
         out.println(usage);
+        out.println();
+        out.println("///todo: longDesc///");
     }
 
     public void globalHelp() {

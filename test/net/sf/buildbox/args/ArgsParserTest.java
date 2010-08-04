@@ -32,7 +32,7 @@ public class ArgsParserTest {
     public void testCommandHelp() throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("testCommandHelp");
         setup.setSupportedCommands(DefaultHelpCommand.class);
-        SingleCommandBuilder.buildCommand(setup, "help", "help").call();
+        SingleCommandBuilder.main(setup, "help", "help");
     }
 
     @Test(expected = ParseException.class)
