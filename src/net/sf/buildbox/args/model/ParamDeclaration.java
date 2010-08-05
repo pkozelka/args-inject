@@ -7,6 +7,7 @@ public final class ParamDeclaration {
     private String format;
     private String timeZone;
     private String listSeparator = File.pathSeparator;
+    private boolean vararg;
 
     public ParamDeclaration(Class<?> type) {
         this.type = type;
@@ -38,5 +39,13 @@ public final class ParamDeclaration {
 
     public void setListSeparator(String listSeparator) {
         this.listSeparator = listSeparator;
+    }
+
+    public boolean isVararg() {
+        return vararg;
+    }
+
+    public void setVararg(boolean vararg) {
+        this.vararg = vararg;
     }
 }
