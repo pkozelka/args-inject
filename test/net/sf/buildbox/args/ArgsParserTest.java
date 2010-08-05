@@ -11,7 +11,11 @@ public class ArgsParserTest {
         // START SNIPPET: example1
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("myapp");
         setup.setDefaultCommand(DemoFileLister.class);
-        final ExecutableCommand cmd = SingleCommandBuilder.buildCommand(setup, "-D", "a", "b", "false", "17", "/tmp", "/var", "/root", "-C=true", "--property", "xxx", "yyy");
+        final ExecutableCommand cmd = SingleCommandBuilder.buildCommand(setup,
+                "-D", "a", "b",
+                "false", "17", "/tmp", "/var", "/root",
+                "-C=true",
+                "--property", "xxx", "yyy");
         System.out.println("--- execute ---");
         cmd.call();
         // END SNIPPET: example1
@@ -41,4 +45,14 @@ public class ArgsParserTest {
         setup.setSupportedCommands(DefaultHelpCommand.class);
         SingleCommandBuilder.buildCommand(setup, "invaLID").call();
     }
+
+    // START SNIPPET: sample-main
+    public static void main(String[] args) throws Exception {
+        final AnnottationAwareSetup setup = new AnnottationAwareSetup("myapp");
+        setup.setDefaultCommand(DemoFileLister.class);
+        if (!SingleCommandBuilder.main(setup, args)) {
+            System.exit(1); // indicate failure to shell
+        }
+    }
+    // END SNIPPET: sample-main
 }

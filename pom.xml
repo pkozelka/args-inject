@@ -13,6 +13,7 @@
   </parent>
   <name>${project.artifactId}:${project.version}</name>
   <description>Commandline Arguments Injection</description>
+  <url>http://buildbox.sf.net/args-inject</url>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -20,6 +21,13 @@
       <version>4.8.1</version>
       <scope>test</scope>
     </dependency>
+    <!--
+        <dependency>
+          <groupId>net.sourceforge.xmlfacade</groupId>
+          <artifactId>xmlfacade</artifactId>
+          <version>1.0-SNAPSHOT</version>
+        </dependency>
+    -->
   </dependencies>
   <build>
     <finalName>${project.artifactId}</finalName>
@@ -72,77 +80,15 @@
           <siteDirectory>site</siteDirectory>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.1.2</version>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>dependencies</report>
-              <report>project-team</report>
-              <report>dependency-convergence</report>
-              <report>plugins</report>
-              <report>issue-tracking</report>
-              <report>license</report>
-              <report>scm</report>
-              <report>summary</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>2.5</version>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>report-only</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.4</version>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>1.2</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <version>2.5</version>
-        <configuration>
-          <!--<linkXref>true</linkXref>-->
-          <sourceEncoding>UTF-8</sourceEncoding>
-          <minimumTokens>30</minimumTokens>
-          <targetJdk>1.5</targetJdk>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jxr-plugin</artifactId>
-        <version>2.2</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.7</version>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>javadoc</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
     </plugins>
   </reporting>
+  <distributionManagement>
+    <downloadUrl>http://buildbox.sf.net/${project.artifactId}</downloadUrl>
+    <site>
+      <id>buildbox.sf.net</id>
+      <url>sftp://web.sf.net/home/groups/b/bu/buildbox/htdocs/${project.artifactId}</url>
+    </site>
+  </distributionManagement>
   <developers>
     <developer>
       <name>Petr Kozelka</name>
@@ -150,4 +96,109 @@
       <url>http://kozelka.net</url>
     </developer>
   </developers>
+  <mailingLists>
+    <mailingList>
+      <archive>http://groups.google.com/group/buildbox</archive>
+      <name>buildbox</name>
+      <post>buildbox@googlegroups.com</post>
+      <subscribe>http://groups.google.com/group/buildbox</subscribe>
+      <unsubscribe>buildbox+unsubscribe@googlegroups.com</unsubscribe>
+    </mailingList>
+  </mailingLists>
+  <issueManagement>
+    <system>sourceforge</system>
+    <url>https://sourceforge.net/tracker/?func=browse&amp;group_id=198902&amp;atid=1281115</url>
+  </issueManagement>
+  <profiles>
+    <profile>
+      <id>all-reports</id>
+      <reporting>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <version>2.1.2</version>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>dependencies</report>
+                  <report>project-team</report>
+                  <report>dependency-convergence</report>
+                  <report>plugins</report>
+                  <report>issue-tracking</report>
+                  <report>license</report>
+                  <report>scm</report>
+                  <report>summary</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.5</version>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>report-only</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.4</version>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+            <version>1.2</version>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+            <version>2.5</version>
+            <configuration>
+              <!--<linkXref>true</linkXref>-->
+              <sourceEncoding>UTF-8</sourceEncoding>
+              <minimumTokens>30</minimumTokens>
+              <targetJdk>1.5</targetJdk>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jxr-plugin</artifactId>
+            <version>2.2</version>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.7</version>
+            <configuration>
+              <linksource>true</linksource>
+              <links>
+                <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
+                <link>http://xmlfacade.sourceforge.net/site/apidocs</link>
+                <!--
+                            <link>http://hc.apache.org/httpcomponents-client/httpclient/apidocs/</link>
+                            <link>http://hc.apache.org/httpcomponents-core/httpcore/apidocs/</link>
+                            <link>http://groovy.codehaus.org/api/</link>
+                            <link>http://json-lib.sourceforge.net/apidocs/jdk15</link>
+                            <link>http://xml.apache.org/commons/components/apidocs/resolver</link>
+                -->
+              </links>
+            </configuration>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>javadoc</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+        </plugins>
+      </reporting>
+    </profile>
+  </profiles>
 </project>

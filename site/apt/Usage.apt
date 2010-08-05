@@ -1,0 +1,64 @@
+ ------
+ Usage
+ ------
+ Petr Kozelka
+
+args-inject: Usage
+
+%{toc|fromDepth=2}
+
+* Annottations
+
+ To create a complete declaration (=setup), all the command classes are introspected, and there are few
+ annottations that can be used to bind it with commandline arguments.
+
+** @CliCommand
+
+ <TODO>
+
+*** varargs - variable argument list
+
+ <TODO>
+
+** @CliOption
+
+ <TODO>
+
+*** Option syntax styles
+
+   * flag
+
+   * property
+
+   * assignment
+
+   * presence
+
+   * plus/minus/none
+
+ <TODO>
+
+** @CliParam
+
+ <TODO>
+
+*** Type conversions
+
+   * file
+
+   * time
+
+   * numbers
+
+   * lists
+
+ <TODO>
+
+* Sample Command class
+
+%{code-snippet|brush=java|file=test/net/sf/buildbox/args/DemoFileLister.java}
+
+
+* Sample main method
+
+%{code-snippet|id=sample-main|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}

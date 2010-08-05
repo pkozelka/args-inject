@@ -1,0 +1,26 @@
+ ------
+ Comparison with other libraries
+ ------
+ Petr Kozelka
+
+args-inject: How it differs from other known libraries
+
+* Known commandline-handling libraries
+
+   * commons-cli
+
+   * args4j
+
+* Important differences
+
+   * unmarshalling, i.e. translating the value to the target type <<<(note: args4j has unmarshalling)>>>
+
+   * support for declarative setup <<<(note: args4j has declarative setup)>>>
+
+   * injection to client (command) object
+
+   * explicit, straightforward support for multiple commands
+
+   * exception handling
+
+

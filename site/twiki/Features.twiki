@@ -1,3 +1,4 @@
+---+  Feature Analysis
 ---+  Commandline Injection Library
 
 (yet another one, see Comparison with similar libraries)
@@ -44,19 +45,7 @@ Options can occur anywhere before/after the command and any argument without hav
 Options having values must have these values next to it, in order of their definition.
 
 ---+++ Example
-%{snippet|id=example1|file=test/net/sf/buildbox/args/ArgsParserTest.java}
-
-or
-
-%snippet|id=example1|file=test/net/sf/buildbox/args/ArgsParserTest.java%
-
-or
-
-<macro name="snippet"> <!-- my is the required macro name defined by role-hint -->
-  <param name="id" value="example1"/>
-  <param name="file" value="test/net/sf/buildbox/args/ArgsParserTest.java"/>
-</macro>
-
+%snippet{id=example1|file=test/net/sf/buildbox/args/ArgsParserTest.java}%
 ---+++ Java binding rules
 
 Command:

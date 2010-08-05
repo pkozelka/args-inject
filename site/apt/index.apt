@@ -1,0 +1,45 @@
+ ------
+ Commandline Injection Library
+ ------
+ Petr Kozelka
+
+args-inject: Commandline Injection Library
+
+ Welcome to <<args-inject>>, the ultimate solution for your commandline nightmares.
+
+ Time to time, almost every programmer needs to write a simple utility which has only a trivial commandline interface.
+ As with anything else, it often happens that the simple utility grows to a complex full-featured application - but still enjoying commandline parametrization.
+
+ Besides that, many applications never saw the bright of life even if they would be quite simple - just because they still need a
+ lot of parameters <(let's omit that for some of them, it is perhaps better that they do not exist)>
+
+* How does <<args-inject>> work ?
+
+   The whole process of processing commandline has following parts:
+
+   * <setup> - defines rules for parsing the commandline
+
+   * <parse> - according to created setup, parses actual commandline arguments, creates a command objects and injects parameters and options to it
+
+   * <execution> - the desired command is invoked
+
+   * <exception handling> - any of above phases may produce errors. This part takes care of their proper display.
+
+ This looks big. Complex. Difficult. But it is not !
+
+ Most of these parts is hidden inside args-inject; and the only part left up to developer is, the business logic of his
+ program - including very thin declaration of command object and their option methods and params.
+
+* What is developer required to do ?
+
+   * depend on args-inject, of course - for maven project, add this to your pom dependencies:
+
+%{code-snippet|id=dependency|brush=xml|file=site/snip.xml}
+
+   * implement command classes, properly annottated to describe options and parameters
+     Command class must implement the ExecutableCommand interface which is called right after setting all options
+
+   * implement main method
+     Extremely simple because it is preimplemented with default exception handling
+
+%{code-snippet|id=example1|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}
