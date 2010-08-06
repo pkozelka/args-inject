@@ -57,7 +57,7 @@ public class DefaultHelpCommand implements MetaCommand {
         usage.append(cmdDecl.getName());
         usage.append(" [options]");
         //TODO: better args synopsis
-        for (ParamDeclaration paramDecl : cmdDecl.getParams()) {
+        for (ParamDeclaration paramDecl : cmdDecl.getParamDeclarations()) {
             usage.append(" ");
             final String symbolicName = paramDecl.getType().getSimpleName();
             usage.append(symbolicName);

@@ -8,8 +8,8 @@ public final class CommandDeclaration {
     private String name;
     private final List<String> alternateNames = new ArrayList<String>();
     private final Class<? extends ExecutableCommand> commandClass;
-    private final List<ParamDeclaration> params = new ArrayList<ParamDeclaration>();
-    private final List<OptionDeclaration> options = new ArrayList<OptionDeclaration>();
+    private final List<ParamDeclaration> paramDeclarations = new ArrayList<ParamDeclaration>();
+    private final List<OptionDeclaration> optionDeclarations = new ArrayList<OptionDeclaration>();
 
     public CommandDeclaration(Class<? extends ExecutableCommand> commandClass) {
         this.commandClass = commandClass;
@@ -35,20 +35,20 @@ public final class CommandDeclaration {
         this.alternateNames.addAll(alternateNames);
     }
 
-    public List<OptionDeclaration> getOptions() {
-        return options;
+    public List<OptionDeclaration> getOptionDeclarations() {
+        return optionDeclarations;
     }
 
-    public List<ParamDeclaration> getParams() {
-        return params;
+    public List<ParamDeclaration> getParamDeclarations() {
+        return paramDeclarations;
     }
 
-    public void addParam(ParamDeclaration param) {
-        params.add(param);
+    public void addParamDeclaration(ParamDeclaration paramDeclaration) {
+        paramDeclarations.add(paramDeclaration);
     }
 
-    public void addOption(OptionDeclaration optionDeclaration) {
-        options.add(optionDeclaration);
+    public void addOptionDeclaration(OptionDeclaration optionDeclaration) {
+        optionDeclarations.add(optionDeclaration);
     }
 
     @Override

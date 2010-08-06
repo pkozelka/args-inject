@@ -86,7 +86,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
                 final OptionDeclaration optionDeclaration = createOptionDecl(method);
                 cliDeclaration.addOption(optionDeclaration);
                 if (attachToCommandDeclaration != null) {
-                    attachToCommandDeclaration.addOption(optionDeclaration);
+                    attachToCommandDeclaration.addOptionDeclaration(optionDeclaration);
                 } else if (attachToGlobalObject != null) {
                     optionDeclaration.setGlobalObject(attachToGlobalObject);
                 }
@@ -106,7 +106,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
         ParamDeclaration paramDecl = null;
         for (Class paramType : con.getParameterTypes()) {
             paramDecl = createParamDecl(paramType);
-            cmdDecl.addParam(paramDecl);
+            cmdDecl.addParamDeclaration(paramDecl);
         }
         // if the constructor is varargs, note it in the last param declaration - which is expected to be array
         if (paramDecl != null && con.isVarArgs()) {
@@ -120,7 +120,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
         // note: @CliOption is mandatory
         final OptionDeclaration optionDeclaration = new OptionDeclaration(annOption.shortName(), annOption.longName(), method);
         for (Class<?> paramType : method.getParameterTypes()) {
-            optionDeclaration.addParam(createParamDecl(paramType));
+            optionDeclaration.addParamDeclaration(createParamDecl(paramType));
         }
         return optionDeclaration;
     }
@@ -152,7 +152,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
 
     public ExecutableCommand createCommandInstance(CommandDeclaration cmdDecl, LinkedList<String> cmdParams) throws ParseException {
         final String cmdName = cmdParams.removeFirst();
-        final List<Object> unmarshalledValues = ParamDeclaration.parseParamList("command " + cmdName, cmdDecl.getParams(), cmdParams);
+        final List<Object> unmarshalledValues = ParamDeclaration.parseParamList("command " + cmdName, cmdDecl.getParamDeclarations(), cmdParams);
         // find public constructor
         final Class<? extends ExecutableCommand> cmdClass = cmdDecl.getCommandClass();
         final Constructor<? extends ExecutableCommand> con = findPublicConstructor(cmdClass);

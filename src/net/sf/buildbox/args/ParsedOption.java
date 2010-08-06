@@ -29,7 +29,7 @@ public final class ParsedOption {
     }
 
     public void parse(LinkedList<String> actualValues) throws ParseException {
-        unmarshalledValues = ParamDeclaration.parseParamList("option " + usedName, optionDecl.getParams(), actualValues);
+        unmarshalledValues = ParamDeclaration.parseParamList("option " + usedName, optionDecl.getParamDeclarations(), actualValues);
     }
 
     @Override

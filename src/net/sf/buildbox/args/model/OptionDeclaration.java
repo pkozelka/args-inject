@@ -9,7 +9,7 @@ public final class OptionDeclaration {
     private final String shortName;
     private final String longName;
     private final Method optionMethod;
-    private final List<ParamDeclaration> params = new ArrayList<ParamDeclaration>();
+    private final List<ParamDeclaration> paramDeclarations = new ArrayList<ParamDeclaration>();
     private Object globalObject;
 
     public OptionDeclaration(String shortName, String longName, Method optionMethod) throws ParseException {
@@ -41,12 +41,12 @@ public final class OptionDeclaration {
         this.globalObject = globalObject;
     }
 
-    public List<ParamDeclaration> getParams() {
-        return params;
+    public List<ParamDeclaration> getParamDeclarations() {
+        return paramDeclarations;
     }
 
-    public void addParam(ParamDeclaration param) {
-        params.add(param);
+    public void addParamDeclaration(ParamDeclaration paramDeclaration) {
+        paramDeclarations.add(paramDeclaration);
     }
 
     @Override

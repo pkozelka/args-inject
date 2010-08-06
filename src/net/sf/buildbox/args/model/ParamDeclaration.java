@@ -108,4 +108,16 @@ public final class ParamDeclaration {
         }
         return unmarshalledValues;
     }
+
+    @Override
+    public String toString() {
+        //TODO: introduce symbolic name
+        if (isVarArgs()) {
+            return type.getComponentType().getSimpleName() + "...";
+        } else if (type.isArray()) {
+            return type.getComponentType().getSimpleName() + "s"; // dirty way to make plural form
+        } else {
+            return type.getSimpleName();
+        }
+    }
 }
