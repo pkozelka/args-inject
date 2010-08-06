@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.text.ParseException;
-import net.sf.buildbox.args.api.ExecutableCommand;
 
 public final class ArgsUtils {
     /**
@@ -24,6 +23,14 @@ public final class ArgsUtils {
         // not instantiable
     }
 
+    /**
+     * Elementary string conversion to a given type
+     *
+     * @param stringValue what to convert
+     * @param paramType   the desired type
+     * @return value as instance of desired type
+     * @throws ParseException if not possible
+     */
     public static Object stringToType(String stringValue, Class<?> paramType) throws ParseException {
         if (stringValue == null) {
             return null;
@@ -49,8 +56,25 @@ public final class ArgsUtils {
             return Long.valueOf(stringValue);
         }
 
-        //TODO: support Date and Calendar using specified format (simpleDateFormat)
-        //TODO: support arrays using a specified separator
+        if (paramType.equals(float.class)) {
+            return Float.valueOf(stringValue);
+        }
+
+        if (paramType.equals(double.class)) {
+            return Double.valueOf(stringValue);
+        }
+
+        if (paramType.equals(byte.class)) {
+            return Byte.valueOf(stringValue);
+        }
+
+        if (paramType.equals(char.class)) {
+            if (stringValue.length() != 1) {
+                throw new ParseException("cannot convert string '" + stringValue + "' to char", stringValue.length() - 1);
+            }
+            return stringValue.charAt(0);
+        }
+
 
         // try constructor with single string param
         try {
@@ -86,11 +110,4 @@ public final class ArgsUtils {
         throw new IllegalStateException("cannot convert " + stringValue + " to " + paramType.getName());
     }
 
-    @SuppressWarnings("unchecked")
-    public static Constructor<ExecutableCommand> findPublicConstructor(Class<? extends ExecutableCommand> cmdClass) {
-        for (Constructor<ExecutableCommand> constructor : cmdClass.getConstructors()) {
-            if (Modifier.isPublic(constructor.getModifiers())) return constructor;
-        }
-        throw new IllegalStateException("There is no public constructor on " + cmdClass);
-    }
 }

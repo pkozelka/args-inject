@@ -56,7 +56,11 @@ public class SingleCommandBuilder {
                 argName = arg;
             }
             final OptionDeclaration optionDecl;
-            if (arg.startsWith("--")) {
+            if (arg.equals("-") || arg.equals("--")) {
+                // allow stdfile value (-) and multi-varargs separator (--)
+                cmdParams.add(arg);
+                continue;
+            } else if (arg.startsWith("--")) {
                 optionDecl = declaration.lookupLongOption(argName);
                 if (optionDecl == null) {
                     // little trick to allow stuff like --help or --version behave as command:
@@ -128,6 +132,7 @@ public class SingleCommandBuilder {
      * @param setup commandline declaration
      * @param args  actual arguments to be processed
      * @return true if execution succeeded, false if it failed. It is a good idea to indicate failure to shell by terminating with {@link System#exit(int) System.exit(1)}
+     * @throws Exception used only if {@link net.sf.buildbox.args.ArgsUtils#debugMode}==true
      */
     public static boolean main(ArgsSetup setup, String... args) throws Exception {
         if (ArgsUtils.debugMode) {

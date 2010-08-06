@@ -7,9 +7,11 @@ args-inject: How it differs from other known libraries
 
 * Known commandline-handling libraries
 
-   * commons-cli
+   * commons-cli by Apache Commons: http://commons.apache.org/cli/
 
-   * args4j
+   * args4j by Kohsuke Kawaguchi: https://args4j.dev.java.net/
+
+      * Comparison in french: http://hikage.developpez.com/java/articles/api/cli-vs-args4j/?page=page_4#LIV
 
 * Important differences
 

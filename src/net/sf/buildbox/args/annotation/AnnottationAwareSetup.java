@@ -1,12 +1,15 @@
 package net.sf.buildbox.args.annotation;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.TimeZone;
 import net.sf.buildbox.args.ArgsUtils;
 import net.sf.buildbox.args.ParsedOption;
 import net.sf.buildbox.args.api.ArgsSetup;
@@ -99,9 +102,15 @@ public class AnnottationAwareSetup implements ArgsSetup {
             cmdDecl.setName(annCommand.name());
             cmdDecl.addAlternateNames(Arrays.asList(annCommand.aliases()));
         }
-        final Constructor<? extends ExecutableCommand> con = ArgsUtils.findPublicConstructor(cmdDecl.getCommandClass());
+        final Constructor<? extends ExecutableCommand> con = findPublicConstructor(cmdDecl.getCommandClass());
+        ParamDeclaration paramDecl = null;
         for (Class paramType : con.getParameterTypes()) {
-            cmdDecl.addParam(createParamDecl(paramType));
+            paramDecl = createParamDecl(paramType);
+            cmdDecl.addParam(paramDecl);
+        }
+        // if the constructor is varargs, note it in the last param declaration - which is expected to be array
+        if (paramDecl != null && con.isVarArgs()) {
+            paramDecl.setVarArgs(true);
         }
         return cmdDecl;
     }
@@ -122,8 +131,16 @@ public class AnnottationAwareSetup implements ArgsSetup {
         final ParamDeclaration paramDecl = new ParamDeclaration(paramType);
         final String format = annParam == null ? null : annParam.format();
         paramDecl.setFormat("".equals(format) ? null : format);
-        final String listSeparator = annParam == null ? "" : annParam.listSeparator();
-        paramDecl.setListSeparator("".equals(listSeparator) ? File.pathSeparator : listSeparator);
+        if (paramType.isArray()) {
+            final String listSeparator = annParam == null ? "" : annParam.listSeparator();
+            if (!"".equals(listSeparator)) {
+                paramDecl.setListSeparator(listSeparator);
+            } else if (paramType.getComponentType().equals(File.class)) {
+                paramDecl.setListSeparator(File.pathSeparator);
+            } else {
+                paramDecl.setListSeparator(",");
+            }
+        }
         final String timeZone = annParam == null ? "" : annParam.timezone();
         paramDecl.setTimeZone("".equals(timeZone) ? TimeZone.getDefault().getID() : timeZone);
         return paramDecl;
@@ -134,33 +151,14 @@ public class AnnottationAwareSetup implements ArgsSetup {
     }
 
     public ExecutableCommand createCommandInstance(CommandDeclaration cmdDecl, LinkedList<String> cmdParams) throws ParseException {
-        //TODO: use ParamDeclarations
         final String cmdName = cmdParams.removeFirst();
-        final Class<? extends ExecutableCommand> cmdClass = cmdDecl.getCommandClass();
-        // parse remaining tokens as the public constructor's params
-        final List<Object> cmdParamsUnmarshalled = new ArrayList<Object>();
-        for (ParamDeclaration paramDecl : cmdDecl.getParams()) {
-            final Class paramType = paramDecl.getType();
-            if (paramType.isArray()) {
-                final List<Object> lastArrayParam = new ArrayList<Object>();
-                while (!cmdParams.isEmpty()) {
-                    lastArrayParam.add(ArgsUtils.stringToType(cmdParams.removeFirst(), paramType.getComponentType()));
-                }
-                final Object array = Array.newInstance(paramType.getComponentType(), lastArrayParam.size());
-                cmdParamsUnmarshalled.add(lastArrayParam.toArray((Object[]) array));
-            } else {
-                if (cmdParams.isEmpty()) {
-                    throw new ParseException("command " + cmdName + ": not enough parameters provided", 0);
-                }
-                cmdParamsUnmarshalled.add(ArgsUtils.stringToType(cmdParams.removeFirst(), paramType));
-            }
-        }
-        // instantiate cmdClass
+        final List<Object> unmarshalledValues = ParamDeclaration.parseParamList("command " + cmdName, cmdDecl.getParams(), cmdParams);
         // find public constructor
-        final Constructor<? extends ExecutableCommand> con = ArgsUtils.findPublicConstructor(cmdClass);
-        ArgsUtils.debug("cmd constructor: %s%s", con, cmdParamsUnmarshalled);
+        final Class<? extends ExecutableCommand> cmdClass = cmdDecl.getCommandClass();
+        final Constructor<? extends ExecutableCommand> con = findPublicConstructor(cmdClass);
+        ArgsUtils.debug("cmd constructor: %s%s", con, unmarshalledValues);
         try {
-            return con.newInstance(cmdParamsUnmarshalled.toArray(new Object[cmdParamsUnmarshalled.size()]));
+            return con.newInstance(unmarshalledValues.toArray(new Object[unmarshalledValues.size()]));
         } catch (InvocationTargetException e) {
             throw new IllegalStateException(e.getCause());
         } catch (IllegalAccessException e) {
@@ -175,10 +173,11 @@ public class AnnottationAwareSetup implements ArgsSetup {
         // set options on command instance
         L1:
         for (ParsedOption option : parsedOptions) {
-            final Object[] values = option.getValues();
+            final List<Object> unmarshalledValues = option.getValues();
             final Method method = option.getOptionDecl().getOptionMethod();
-            ArgsUtils.debug("  option method: %s%s", method, values.length == 0 ? "" : Arrays.asList(values));
+            ArgsUtils.debug("  option method: %s%s", method, unmarshalledValues.isEmpty() ? "" : unmarshalledValues);
             try {
+                final Object[] values = unmarshalledValues.toArray(new Object[unmarshalledValues.size()]);
                 final Class<?> declaringClass = method.getDeclaringClass();
                 if (declaringClass.isAssignableFrom(cmdClass)) {
                     method.invoke(commandInstance, values);
@@ -204,5 +203,14 @@ public class AnnottationAwareSetup implements ArgsSetup {
             final MetaCommand h = (MetaCommand) commandInstance;
             h.setDeclaration(cliDeclaration);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Constructor<ExecutableCommand> findPublicConstructor(Class<? extends ExecutableCommand> cmdClass) {
+        //TODO: fail if more public constructors exist
+        for (Constructor<ExecutableCommand> constructor : cmdClass.getConstructors()) {
+            if (Modifier.isPublic(constructor.getModifiers())) return constructor;
+        }
+        throw new IllegalStateException("There is no public constructor on " + cmdClass);
     }
 }
