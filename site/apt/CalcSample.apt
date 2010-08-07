@@ -1,0 +1,16 @@
+ ------
+ CalcSample
+ ------
+ Petr Kozelka
+
+
+CalcSample
+
+ Implements a trivial commandline application with two commands
+
+   * <<plus>> gets variable number of integer arguments and computes their sum
+
+   * <<minus>> gets two integer arguments and computes their difference
+
+%{code-snippet|brush=java|file=test/net/sf/buildbox/args/calcsample/CalcSample.java}
+

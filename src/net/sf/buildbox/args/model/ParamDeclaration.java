@@ -88,7 +88,13 @@ public final class ParamDeclaration {
                     list.add(paramDecl.stringToType(value, paramType.getComponentType()));
                 }
                 final Object array = Array.newInstance(paramType.getComponentType(), list.size());
-                unmarshalledValues.add(list.toArray((Object[]) array));
+                int i = 0;
+                for (Object item : list) {
+                    Array.set(array, i, item);
+                    i++;
+                }
+                unmarshalledValues.add(array);
+//                unmarshalledValues.add(list.toArray((Object[]) array));
             } else if (actualValues.isEmpty()) {
                 throw new ParseException(context + ": not enough parameters provided", 0);
             } else if (paramType.isArray()) {
