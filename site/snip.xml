@@ -1,11 +1,9 @@
 <snippets>
-  <dependencies>
-    <!-- START SNIPPET: dependency -->
-    <dependency>
-      <groupId>net.sf.buildbox</groupId>
-      <artifactId>args-inject</artifactId>
-      <version>1-SNAPSHOT</version>
-    </dependency>
-    <!-- END SNIPPET: dependency -->
-  </dependencies>
+  <!-- START SNIPPET: dependency -->
+  <dependency>
+    <groupId>net.sf.buildbox</groupId>
+    <artifactId>args-inject</artifactId>
+    <version>1.0.0-alpha-1</version>
+  </dependency>
+  <!-- END SNIPPET: dependency -->
 </snippets>

@@ -3,13 +3,13 @@ package net.sf.buildbox.args.model;
 import java.io.File;
 import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import net.sf.buildbox.args.ArgsUtils;
 
 public final class ParamDeclaration {
     private Class<?> type;
     private String format;
-    private String timeZone;
     private String listSeparator = File.pathSeparator;
     private boolean varArgs;
 
@@ -27,14 +27,6 @@ public final class ParamDeclaration {
 
     public void setFormat(String format) {
         this.format = format;
-    }
-
-    public String getTimeZone() {
-        return timeZone;
-    }
-
-    public void setTimeZone(String timeZone) {
-        this.timeZone = timeZone;
     }
 
     public String getListSeparator() {
@@ -55,11 +47,17 @@ public final class ParamDeclaration {
 
     private Object stringToType(String stringValue, Class<?> paramType) throws ParseException {
         // TODO: support for custom per-option or per-type unmarshalling should be implemented here
+        // TODO: the value of 'format' field should be thoroughly reconsidered. Shouldn't we support more formats at once ? Should we expose SDF's parameter or wrap it with a logical nama like, DATE, TIME, DATETIME, TIMEMILLIS, DATETIMEMILLIS etc ? This needs to be clarified in light of some real app. usecases
         if (paramType.equals(Date.class)) {
-            //TODO: support Date using format and timezone
-            throw new UnsupportedOperationException();
+            // support Date using format
+            final SimpleDateFormat f = new SimpleDateFormat(format == null ? "yyyy-MM-dd'T'HH:mm:ss.SSS" : format);
+            return f.parse(stringValue);
         } else if (paramType.equals(Calendar.class)) {
-            //TODO: support Calendar using format and timezone
+            // support Calendar using format
+            final Calendar cal = Calendar.getInstance();
+            final SimpleDateFormat f = new SimpleDateFormat(format == null ? "yyyy-MM-dd'T'HH:mm:ss.SSS" : format);
+            final Date date = f.parse(stringValue);
+            cal.setTime(date);
             throw new UnsupportedOperationException();
         } else {
             return ArgsUtils.stringToType(stringValue, paramType);

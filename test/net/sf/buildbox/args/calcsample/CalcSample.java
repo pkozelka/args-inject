@@ -1,8 +1,12 @@
 package net.sf.buildbox.args.calcsample;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import net.sf.buildbox.args.BasicArgsParser;
 import net.sf.buildbox.args.DefaultHelpCommand;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
+import net.sf.buildbox.args.annotation.Option;
+import net.sf.buildbox.args.annotation.Param;
 import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.ExecutableCommand;
 
@@ -40,11 +44,34 @@ public class CalcSample {
         }
     }
 
+    @SubCommand(name = "timeoffset")
+    public static class TimeOffsetCommand implements ExecutableCommand {
+        private final Date basetime;
+        private final long offset;
+        private SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+        public TimeOffsetCommand(@Param(format = "") Date basetime, long offset) {
+            this.basetime = basetime;
+            this.offset = offset;
+        }
+
+        public void call() throws Exception {
+            final String result = timeFormat.format(new Date(basetime.getTime() + offset));
+            System.out.println(result);
+        }
+
+        @Option(shortName = "-f", longName = "--time-format")
+        public void setTimeFormat(SimpleDateFormat timeFormat) {
+            this.timeFormat = timeFormat;
+        }
+    }
+
     static boolean run(String... args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("calcsample");
-        setup.setSubCommands(DefaultHelpCommand.class,
-                PlusCommand.class,
-                MinusCommand.class);
+        setup.addSubCommand(DefaultHelpCommand.class);
+        setup.addSubCommand(PlusCommand.class);
+        setup.addSubCommand(MinusCommand.class);
+        setup.addSubCommand(TimeOffsetCommand.class);
         return BasicArgsParser.process(setup, args);
     }
 

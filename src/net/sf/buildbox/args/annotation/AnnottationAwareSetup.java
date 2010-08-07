@@ -1,6 +1,7 @@
 package net.sf.buildbox.args.annotation;
 
 import java.io.File;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -9,7 +10,6 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TimeZone;
 import net.sf.buildbox.args.ArgsUtils;
 import net.sf.buildbox.args.ParsedOption;
 import net.sf.buildbox.args.api.ArgsSetup;
@@ -108,8 +108,10 @@ public class AnnottationAwareSetup implements ArgsSetup {
         }
         final Constructor<? extends ExecutableCommand> con = findPublicConstructor(cmdDecl.getCommandClass());
         ParamDeclaration paramDecl = null;
-        for (Class paramType : con.getParameterTypes()) {
-            paramDecl = createParamDecl(paramType);
+        for (int i = 0; i < con.getParameterTypes().length; i++) {
+            final Class<?> paramType = con.getParameterTypes()[i];
+            final Annotation[] pa = con.getParameterAnnotations()[i];
+            paramDecl = createParamDecl(paramType, pa);
             cmdDecl.addParamDeclaration(paramDecl);
         }
         // if the constructor is varargs, note it in the last param declaration - which is expected to be array
@@ -123,14 +125,21 @@ public class AnnottationAwareSetup implements ArgsSetup {
         final Option annOption = method.getAnnotation(Option.class);
         // note: @Option is mandatory
         final OptionDeclaration optionDeclaration = new OptionDeclaration(annOption.shortName(), annOption.longName(), method);
-        for (Class<?> paramType : method.getParameterTypes()) {
-            optionDeclaration.addParamDeclaration(createParamDecl(paramType));
+        for (int i = 0; i < method.getParameterTypes().length; i++) {
+            final Class<?> paramType = method.getParameterTypes()[i];
+            final Annotation[] pa = method.getParameterAnnotations()[i];
+            optionDeclaration.addParamDeclaration(createParamDecl(paramType, pa));
         }
         return optionDeclaration;
     }
 
-    private ParamDeclaration createParamDecl(Class<?> paramType) {
-        final Param annParam = paramType.getAnnotation(Param.class);
+    private ParamDeclaration createParamDecl(Class<?> paramType, Annotation[] pa) {
+        Param annParam = null;
+        for (Annotation annotation : pa) {
+            if (annotation instanceof Param) {
+                annParam = (Param) annotation;
+            }
+        }
         // note: @Param is optional
         final ParamDeclaration paramDecl = new ParamDeclaration(paramType);
         final String format = annParam == null ? null : annParam.format();
@@ -145,8 +154,6 @@ public class AnnottationAwareSetup implements ArgsSetup {
                 paramDecl.setListSeparator(",");
             }
         }
-        final String timeZone = annParam == null ? "" : annParam.timezone();
-        paramDecl.setTimeZone("".equals(timeZone) ? TimeZone.getDefault().getID() : timeZone);
         return paramDecl;
     }
 

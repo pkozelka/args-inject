@@ -34,6 +34,8 @@ args-inject: Commandline Injection Library
 
    * depend on args-inject, of course - for maven project, add this to your pom dependencies:
 
+   <Note: use actual value in version element>
+
 %{code-snippet|id=dependency|brush=xml|file=site/snip.xml}
 
    * implement subcommand classes, properly annottated to describe options and parameters

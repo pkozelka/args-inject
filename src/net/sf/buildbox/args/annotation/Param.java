@@ -7,11 +7,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target(ElementType.PARAMETER)
 public @interface Param {
     public String format() default "";
-
-    public String timezone() default "LOCAL";
 
     /**
      * sequence separating items of list, if the type is array.

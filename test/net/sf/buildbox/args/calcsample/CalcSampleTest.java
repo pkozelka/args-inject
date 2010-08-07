@@ -3,6 +3,7 @@ package net.sf.buildbox.args.calcsample;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import net.sf.buildbox.args.ArgsUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,6 +18,12 @@ public class CalcSampleTest {
     @Test
     public void testMinus() throws Exception {
         final String stdout = calcsample("minus", "37", "25");
+        Assert.assertEquals("12", stdout);
+    }
+
+    @Test
+    public void testTimeOffset() throws Exception {
+        final String stdout = calcsample("timeoffset", "2010-10-31T14:55:01.000-0200", "768000");
         Assert.assertEquals("12", stdout);
     }
 
@@ -41,7 +48,7 @@ public class CalcSampleTest {
      * @throws Exception -
      */
     private String calcsample(String... args) throws Exception {
-//        ArgsUtils.debugMode = true;
+        ArgsUtils.debugMode = true;
         // trap stdout to a string
         System.err.println("calcsample " + Arrays.toString(args));
         final PrintStream origOut = System.out;
