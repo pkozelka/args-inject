@@ -1,12 +1,12 @@
  ------
- CalcSample
+ MiniCalc Sample
  ------
  Petr Kozelka
 
 
-CalcSample
+MiniCalc
 
- Implements a trivial commandline application with two subcommands
+ Implements a small commandline application with two subcommands
 
    * <<plus>> gets variable number of integer arguments and computes their sum
 
@@ -14,5 +14,5 @@ CalcSample
 
  The whole implementation is so trivial that I decided to write all classes in single Java file.
 
-%{code-snippet|brush=java|file=test/net/sf/buildbox/args/calcsample/CalcSample.java}
+%{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}
 

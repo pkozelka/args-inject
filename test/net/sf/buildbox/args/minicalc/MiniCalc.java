@@ -1,4 +1,4 @@
-package net.sf.buildbox.args.calcsample;
+package net.sf.buildbox.args.minicalc;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -6,11 +6,10 @@ import net.sf.buildbox.args.BasicArgsParser;
 import net.sf.buildbox.args.DefaultHelpCommand;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import net.sf.buildbox.args.annotation.Option;
-import net.sf.buildbox.args.annotation.Param;
 import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.ExecutableCommand;
 
-public class CalcSample {
+public class MiniCalc {
 
     @SubCommand(name = "plus")
     public static class PlusCommand implements ExecutableCommand {
@@ -44,34 +43,34 @@ public class CalcSample {
         }
     }
 
-    @SubCommand(name = "timeoffset")
-    public static class TimeOffsetCommand implements ExecutableCommand {
+    @SubCommand(name = "timeshift")
+    public static class TimeShiftCommand implements ExecutableCommand {
         private final Date basetime;
         private final long offset;
-        private SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        private SimpleDateFormat outputTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
-        public TimeOffsetCommand(@Param(format = "") Date basetime, long offset) {
+        public TimeShiftCommand(Date basetime, long offset) {
             this.basetime = basetime;
             this.offset = offset;
         }
 
         public void call() throws Exception {
-            final String result = timeFormat.format(new Date(basetime.getTime() + offset));
+            final String result = outputTimeFormat.format(new Date(basetime.getTime() + offset));
             System.out.println(result);
         }
 
-        @Option(shortName = "-f", longName = "--time-format")
-        public void setTimeFormat(SimpleDateFormat timeFormat) {
-            this.timeFormat = timeFormat;
+        @Option(shortName = "-f", longName = "--output-time-format")
+        public void setOutputTimeFormat(SimpleDateFormat outputTimeFormat) {
+            this.outputTimeFormat = outputTimeFormat;
         }
     }
 
     static boolean run(String... args) throws Exception {
-        final AnnottationAwareSetup setup = new AnnottationAwareSetup("calcsample");
+        final AnnottationAwareSetup setup = new AnnottationAwareSetup("minicalc");
         setup.addSubCommand(DefaultHelpCommand.class);
         setup.addSubCommand(PlusCommand.class);
         setup.addSubCommand(MinusCommand.class);
-        setup.addSubCommand(TimeOffsetCommand.class);
+        setup.addSubCommand(TimeShiftCommand.class);
         return BasicArgsParser.process(setup, args);
     }
 
