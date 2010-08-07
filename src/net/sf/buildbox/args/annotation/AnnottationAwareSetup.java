@@ -15,14 +15,14 @@ import net.sf.buildbox.args.ParsedOption;
 import net.sf.buildbox.args.api.ArgsSetup;
 import net.sf.buildbox.args.api.ExecutableCommand;
 import net.sf.buildbox.args.api.MetaCommand;
-import net.sf.buildbox.args.model.CliDeclaration;
+import net.sf.buildbox.args.model.CommandlineDeclaration;
 import net.sf.buildbox.args.model.OptionDeclaration;
 import net.sf.buildbox.args.model.ParamDeclaration;
-import net.sf.buildbox.args.model.SubcommandDeclaration;
+import net.sf.buildbox.args.model.SubCommandDeclaration;
 
 public class AnnottationAwareSetup implements ArgsSetup {
 
-    private final CliDeclaration cliDeclaration = new CliDeclaration();
+    private final CommandlineDeclaration cliDeclaration = new CommandlineDeclaration();
 
     public AnnottationAwareSetup(String programName) {
         cliDeclaration.setProgramName(programName);
@@ -31,27 +31,31 @@ public class AnnottationAwareSetup implements ArgsSetup {
     /**
      * Default command to be used if none is present explicitly.
      *
-     * @param cmdClass the command class to be used when the first non-option argument matches none of {@link #setSupportedCommands(Class[]) supportedCommands}
+     * @param subCommand the command class to be used when the first non-option argument matches none of {@link #setSubCommands(Class[]) supportedCommands}
      * @throws ParseException -
      */
-    public void setDefaultSubcommand(Class<? extends ExecutableCommand> cmdClass) throws ParseException {
-        if (cmdClass != null) {
-            final SubcommandDeclaration subcommandDeclaration = createCmdDecl(cmdClass);
-            cliDeclaration.setDefaultCommand(subcommandDeclaration);
-            introspectOptions(cmdClass, subcommandDeclaration, null);
+    public void setDefaultSubCommand(Class<? extends ExecutableCommand> subCommand) throws ParseException {
+        if (subCommand != null) {
+            final SubCommandDeclaration subCommandDeclaration = createCmdDecl(subCommand);
+            cliDeclaration.setDefaultCommand(subCommandDeclaration);
+            introspectOptions(subCommand, subCommandDeclaration, null);
         }
     }
 
     /**
      * Specify all commands that can be dispatched by the parser using their name.
      *
-     * @param supportedCommands all command classes
+     * @param subCommands all command classes
      * @throws java.text.ParseException when parsing fails
      */
-    public void setSupportedCommands(Class<? extends ExecutableCommand>... supportedCommands) throws ParseException {
-        for (Class<? extends ExecutableCommand> cmdClass : supportedCommands) {
-            introspectCommands(cmdClass);
+    public void setSubCommands(Class<? extends ExecutableCommand>... subCommands) throws ParseException {
+        for (Class<? extends ExecutableCommand> subCommand : subCommands) {
+            addSubCommand(subCommand);
         }
+    }
+
+    public void addSubCommand(Class<? extends ExecutableCommand> subCommand) throws ParseException {
+        introspectCommands(subCommand);
     }
 
     /**
@@ -68,25 +72,25 @@ public class AnnottationAwareSetup implements ArgsSetup {
     }
 
     private void introspectCommands(Class<? extends ExecutableCommand> cmdClass) throws ParseException {
-        final SubcommandDeclaration subcommandDeclaration = createCmdDecl(cmdClass);
-        cliDeclaration.addCommand(subcommandDeclaration);
-        introspectOptions(cmdClass, subcommandDeclaration, null);
+        final SubCommandDeclaration subCommandDeclaration = createCmdDecl(cmdClass);
+        cliDeclaration.addSubCommand(subCommandDeclaration);
+        introspectOptions(cmdClass, subCommandDeclaration, null);
     }
 
-    private void introspectOptions(Class<?> cmdClass, SubcommandDeclaration attachToSubcommandDeclaration, Object attachToGlobalObject) throws ParseException {
-        for (Class iface : cmdClass.getInterfaces()) {
-            introspectOptions(iface, attachToSubcommandDeclaration, attachToGlobalObject);
+    private void introspectOptions(Class<?> subCommand, SubCommandDeclaration attachToSubCommandDeclaration, Object attachToGlobalObject) throws ParseException {
+        for (Class iface : subCommand.getInterfaces()) {
+            introspectOptions(iface, attachToSubCommandDeclaration, attachToGlobalObject);
         }
-        final Class<?> superclass = cmdClass.getSuperclass();
+        final Class<?> superclass = subCommand.getSuperclass();
         if (superclass != null && !superclass.equals(Object.class)) {
-            introspectOptions(superclass, attachToSubcommandDeclaration, attachToGlobalObject);
+            introspectOptions(superclass, attachToSubCommandDeclaration, attachToGlobalObject);
         }
-        for (Method method : cmdClass.getMethods()) {
+        for (Method method : subCommand.getMethods()) {
             if (method.getAnnotation(Option.class) != null) {
                 final OptionDeclaration optionDeclaration = createOptionDecl(method);
                 cliDeclaration.addOption(optionDeclaration);
-                if (attachToSubcommandDeclaration != null) {
-                    attachToSubcommandDeclaration.addOptionDeclaration(optionDeclaration);
+                if (attachToSubCommandDeclaration != null) {
+                    attachToSubCommandDeclaration.addOptionDeclaration(optionDeclaration);
                 } else if (attachToGlobalObject != null) {
                     optionDeclaration.setGlobalObject(attachToGlobalObject);
                 }
@@ -94,10 +98,10 @@ public class AnnottationAwareSetup implements ArgsSetup {
         }
     }
 
-    private SubcommandDeclaration createCmdDecl(Class<? extends ExecutableCommand> cmdClass) {
+    private SubCommandDeclaration createCmdDecl(Class<? extends ExecutableCommand> cmdClass) {
         final SubCommand annCommand = cmdClass.getAnnotation(SubCommand.class);
         // note: @SubCommand is optional
-        final SubcommandDeclaration cmdDecl = new SubcommandDeclaration(cmdClass);
+        final SubCommandDeclaration cmdDecl = new SubCommandDeclaration(cmdClass);
         if (annCommand != null) {
             cmdDecl.setName(annCommand.name());
             cmdDecl.addAlternateNames(Arrays.asList(annCommand.aliases()));
@@ -146,11 +150,11 @@ public class AnnottationAwareSetup implements ArgsSetup {
         return paramDecl;
     }
 
-    public CliDeclaration getDeclaration() {
+    public CommandlineDeclaration getDeclaration() {
         return cliDeclaration;
     }
 
-    public ExecutableCommand createSubcommand(SubcommandDeclaration cmdDecl, LinkedList<String> cmdParams) throws ParseException {
+    public ExecutableCommand createSubCommand(SubCommandDeclaration cmdDecl, LinkedList<String> cmdParams) throws ParseException {
         final String cmdName = cmdParams.removeFirst();
         final List<Object> unmarshalledValues = ParamDeclaration.parseParamList("command " + cmdName, cmdDecl.getParamDeclarations(), cmdParams);
         // find public constructor

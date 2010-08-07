@@ -10,7 +10,7 @@ public class ArgsParserTest {
     public void testMultiFiles() throws Exception {
         // START SNIPPET: example1
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("myapp");
-        setup.setDefaultSubcommand(DemoFileLister.class);
+        setup.setDefaultSubCommand(DemoFileLister.class);
         final ExecutableCommand cmd = SingleCommandBuilder.buildCommand(setup,
                 "-D", "a", "b",
                 "false", "17", "/tmp", "/var", "/root",
@@ -24,8 +24,8 @@ public class ArgsParserTest {
     @Test
     public void testGlobalHelp() throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("testGlobalHelp");
-        setup.setDefaultSubcommand(DemoFileLister.class);
-        setup.setSupportedCommands(DefaultHelpCommand.class);
+        setup.setDefaultSubCommand(DemoFileLister.class);
+        setup.setSubCommands(DefaultHelpCommand.class);
         System.err.println("=== using 'help' ===");
         SingleCommandBuilder.buildCommand(setup, "help").call();
         System.err.println("=== using '--help' ===");
@@ -35,21 +35,21 @@ public class ArgsParserTest {
     @Test
     public void testCommandHelp() throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("testCommandHelp");
-        setup.setSupportedCommands(DefaultHelpCommand.class);
+        setup.setSubCommands(DefaultHelpCommand.class);
         SingleCommandBuilder.main(setup, "help", "help");
     }
 
     @Test(expected = ParseException.class)
     public void testInvalidCommand() throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("testInvalidCommand");
-        setup.setSupportedCommands(DefaultHelpCommand.class);
+        setup.setSubCommands(DefaultHelpCommand.class);
         SingleCommandBuilder.buildCommand(setup, "invaLID").call();
     }
 
     // START SNIPPET: sample-main
     public static void main(String[] args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("myapp");
-        setup.setDefaultSubcommand(DemoFileLister.class);
+        setup.setDefaultSubCommand(DemoFileLister.class);
         if (!SingleCommandBuilder.main(setup, args)) {
             System.exit(1); // indicate failure to shell
         }

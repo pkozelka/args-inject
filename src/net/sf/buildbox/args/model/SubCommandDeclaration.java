@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import net.sf.buildbox.args.api.ExecutableCommand;
 
-public final class SubcommandDeclaration {
+public final class SubCommandDeclaration {
     private String name;
     private final List<String> alternateNames = new ArrayList<String>();
     private final Class<? extends ExecutableCommand> commandClass;
     private final List<ParamDeclaration> paramDeclarations = new ArrayList<ParamDeclaration>();
     private final List<OptionDeclaration> optionDeclarations = new ArrayList<OptionDeclaration>();
 
-    public SubcommandDeclaration(Class<? extends ExecutableCommand> commandClass) {
+    public SubCommandDeclaration(Class<? extends ExecutableCommand> commandClass) {
         this.commandClass = commandClass;
     }
 

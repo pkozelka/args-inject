@@ -7,9 +7,9 @@ import java.util.Comparator;
 import java.util.List;
 import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.MetaCommand;
-import net.sf.buildbox.args.model.CliDeclaration;
+import net.sf.buildbox.args.model.CommandlineDeclaration;
 import net.sf.buildbox.args.model.ParamDeclaration;
-import net.sf.buildbox.args.model.SubcommandDeclaration;
+import net.sf.buildbox.args.model.SubCommandDeclaration;
 
 /**
  * Usecases:
@@ -22,7 +22,7 @@ import net.sf.buildbox.args.model.SubcommandDeclaration;
  */
 @SubCommand(name = "help", aliases = {"--help", "?", "h"})
 public class DefaultHelpCommand implements MetaCommand {
-    private CliDeclaration declaration = null;
+    private CommandlineDeclaration declaration = null;
     private final String command;
     private PrintStream out = System.err;
 
@@ -30,7 +30,7 @@ public class DefaultHelpCommand implements MetaCommand {
         this.command = params.length == 0 ? null : params[0];
     }
 
-    public void setDeclaration(CliDeclaration declaration) {
+    public void setDeclaration(CommandlineDeclaration declaration) {
         this.declaration = declaration;
     }
 
@@ -38,7 +38,7 @@ public class DefaultHelpCommand implements MetaCommand {
         if (command == null) {
             globalHelp();
         } else {
-            final SubcommandDeclaration cmdDecl = declaration.lookupCommand(command, false);
+            final SubCommandDeclaration cmdDecl = declaration.lookupCommand(command, false);
             if (cmdDecl == null) {
                 throw new IllegalArgumentException(command + ": unknown command");
             }
@@ -46,7 +46,7 @@ public class DefaultHelpCommand implements MetaCommand {
         }
     }
 
-    private void commandHelp(SubcommandDeclaration cmdDecl) {
+    private void commandHelp(SubCommandDeclaration cmdDecl) {
         final String programName = declaration.getProgramName();
         final String shortDesc = "///todo: shortDesc///";
         out.println(cmdDecl + ": " + shortDesc);
@@ -75,13 +75,13 @@ public class DefaultHelpCommand implements MetaCommand {
         out.println("Type '" + programName + " help <subcommand>' for help on a specific subcommand");
         out.println();
         out.println("Available subcommands:");
-        final List<SubcommandDeclaration> sortedList = new ArrayList<SubcommandDeclaration>(declaration.getCommandDeclarations());
-        Collections.sort(sortedList, new Comparator<SubcommandDeclaration>() {
-            public int compare(SubcommandDeclaration o1, SubcommandDeclaration o2) {
+        final List<SubCommandDeclaration> sortedList = new ArrayList<SubCommandDeclaration>(declaration.getCommandDeclarations());
+        Collections.sort(sortedList, new Comparator<SubCommandDeclaration>() {
+            public int compare(SubCommandDeclaration o1, SubCommandDeclaration o2) {
                 return o1.toString().compareToIgnoreCase(o2.toString());
             }
         });
-        for (SubcommandDeclaration cmd : sortedList) {
+        for (SubCommandDeclaration cmd : sortedList) {
             out.println("   " + cmd);
         }
     }

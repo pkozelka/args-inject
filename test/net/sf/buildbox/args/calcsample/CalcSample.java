@@ -42,7 +42,7 @@ public class CalcSample {
 
     static boolean run(String... args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("calcsample");
-        setup.setSupportedCommands(DefaultHelpCommand.class,
+        setup.setSubCommands(DefaultHelpCommand.class,
                 PlusCommand.class,
                 MinusCommand.class);
         return SingleCommandBuilder.main(setup, args);

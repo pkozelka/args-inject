@@ -7,8 +7,8 @@ public class DefaultHelpXmlCommandTest {
     @Test
     public void testXmlHelp() throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("testXmlHelp");
-        setup.setDefaultSubcommand(DemoFileLister.class);
-        setup.setSupportedCommands(DefaultHelpCommand.class, DefaultHelpXmlCommand.class);
+        setup.setDefaultSubCommand(DemoFileLister.class);
+        setup.setSubCommands(DefaultHelpCommand.class, DefaultHelpXmlCommand.class);
         if (!SingleCommandBuilder.main(setup, "help-xml")) {
             System.exit(1);
         }

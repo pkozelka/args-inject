@@ -7,9 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 import net.sf.buildbox.args.api.ArgsSetup;
 import net.sf.buildbox.args.api.ExecutableCommand;
-import net.sf.buildbox.args.model.CliDeclaration;
+import net.sf.buildbox.args.model.CommandlineDeclaration;
 import net.sf.buildbox.args.model.OptionDeclaration;
-import net.sf.buildbox.args.model.SubcommandDeclaration;
+import net.sf.buildbox.args.model.SubCommandDeclaration;
 
 /**
  * Supports one subcommand on the commandline.
@@ -35,7 +35,7 @@ public class SingleCommandBuilder {
      * @throws ParseException -
      */
     public ExecutableCommand buildCommand(String... args) throws ParseException {
-        final CliDeclaration declaration = declarationSetup.getDeclaration();
+        final CommandlineDeclaration declaration = declarationSetup.getDeclaration();
         final LinkedList<String> argsList = new LinkedList<String>(Arrays.asList(args));
         ArgsUtils.debug("Parsing commandline args: %s", argsList);
         final List<ParsedOption> parsedOptions = new ArrayList<ParsedOption>();
@@ -64,7 +64,7 @@ public class SingleCommandBuilder {
                 optionDecl = declaration.lookupLongOption(argName);
                 if (optionDecl == null) {
                     // little trick to allow stuff like --help or --version behave as command:
-                    final SubcommandDeclaration cmdDecl = declaration.lookupCommand(arg, false);
+                    final SubCommandDeclaration cmdDecl = declaration.lookupCommand(arg, false);
                     if (cmdDecl == null) {
                         throw new ParseException("invalid option: " + arg, 0);
                     }
@@ -90,17 +90,17 @@ public class SingleCommandBuilder {
         ArgsUtils.debug("  parsedOptions: %s", parsedOptions);
         // parse command
         String cmdName = cmdParams.getFirst();
-        SubcommandDeclaration cmdDecl = declaration.lookupCommand(cmdName, false);
-//        SubcommandDeclaration cmdDecl = commandsByName.get(cmdName);
+        SubCommandDeclaration cmdDecl = declaration.lookupCommand(cmdName, false);
+//        SubCommandDeclaration cmdDecl = commandsByName.get(cmdName);
         if (cmdDecl == null) {
-            if (declaration.getDefaultCommand() == null) {
+            if (declaration.getDefaultSubCommand() == null) {
                 throw new ParseException("unknown command: " + cmdName, 0);
             }
             cmdParams.addFirst(cmdName);
-            cmdDecl = declaration.getDefaultCommand();
+            cmdDecl = declaration.getDefaultSubCommand();
             cmdName = "<DEFAULT>";
         }
-        final ExecutableCommand commandInstance = declarationSetup.createSubcommand(cmdDecl, cmdParams);
+        final ExecutableCommand commandInstance = declarationSetup.createSubCommand(cmdDecl, cmdParams);
         // fail if any token remains
         if (!cmdParams.isEmpty()) {
             throw new ParseException("unparsed tokens: " + cmdParams, 0);
