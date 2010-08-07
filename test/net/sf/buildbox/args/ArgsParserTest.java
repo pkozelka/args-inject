@@ -11,7 +11,7 @@ public class ArgsParserTest {
         // START SNIPPET: example1
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("myapp");
         setup.setDefaultSubCommand(DemoFileLister.class);
-        final ExecutableCommand cmd = SingleCommandBuilder.buildCommand(setup,
+        final ExecutableCommand cmd = BasicArgsParser.parse(setup,
                 "-D", "a", "b",
                 "false", "17", "/tmp", "/var", "/root",
                 "-C=true",
@@ -27,30 +27,30 @@ public class ArgsParserTest {
         setup.setDefaultSubCommand(DemoFileLister.class);
         setup.setSubCommands(DefaultHelpCommand.class);
         System.err.println("=== using 'help' ===");
-        SingleCommandBuilder.buildCommand(setup, "help").call();
+        BasicArgsParser.parse(setup, "help").call();
         System.err.println("=== using '--help' ===");
-        SingleCommandBuilder.buildCommand(setup, "--help").call();
+        BasicArgsParser.parse(setup, "--help").call();
     }
 
     @Test
     public void testCommandHelp() throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("testCommandHelp");
         setup.setSubCommands(DefaultHelpCommand.class);
-        SingleCommandBuilder.main(setup, "help", "help");
+        BasicArgsParser.process(setup, "help", "help");
     }
 
     @Test(expected = ParseException.class)
     public void testInvalidCommand() throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("testInvalidCommand");
         setup.setSubCommands(DefaultHelpCommand.class);
-        SingleCommandBuilder.buildCommand(setup, "invaLID").call();
+        BasicArgsParser.parse(setup, "invaLID").call();
     }
 
     // START SNIPPET: sample-main
     public static void main(String[] args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("myapp");
         setup.setDefaultSubCommand(DemoFileLister.class);
-        if (!SingleCommandBuilder.main(setup, args)) {
+        if (!BasicArgsParser.process(setup, args)) {
             System.exit(1); // indicate failure to shell
         }
     }

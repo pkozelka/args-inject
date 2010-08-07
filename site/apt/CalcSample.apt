@@ -12,5 +12,7 @@ CalcSample
 
    * <<minus>> gets two integer arguments and computes their difference
 
+ The whole implementation is so trivial that I decided to write all classes in single Java file.
+
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/calcsample/CalcSample.java}
 

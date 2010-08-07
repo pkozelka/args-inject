@@ -1,7 +1,7 @@
 package net.sf.buildbox.args.zer;
 
+import net.sf.buildbox.args.BasicArgsParser;
 import net.sf.buildbox.args.DefaultHelpCommand;
-import net.sf.buildbox.args.SingleCommandBuilder;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import org.junit.Test;
 
@@ -14,7 +14,7 @@ public class BuildozerCliTest {
         setup.setDefaultSubCommand(ZerExecute.class);
         setup.setSubCommands(DefaultHelpCommand.class, ZerDepends.class, ZerInfo.class, ZerRegister.class, ZerUnregister.class);
         setup.setGlobalOptions(lo);
-//        SingleCommandBuilder.buildCommand(setup, "-vv", "hello", "z", "dd", "--xml").call();
-        SingleCommandBuilder.buildCommand(setup, "help").call();
+//        BasicArgsParser.parse(setup, "-vv", "hello", "z", "dd", "--xml").call();
+        BasicArgsParser.parse(setup, "help").call();
     }
 }

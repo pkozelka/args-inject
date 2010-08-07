@@ -1,7 +1,7 @@
 package net.sf.buildbox.args.calcsample;
 
+import net.sf.buildbox.args.BasicArgsParser;
 import net.sf.buildbox.args.DefaultHelpCommand;
-import net.sf.buildbox.args.SingleCommandBuilder;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.ExecutableCommand;
@@ -45,7 +45,7 @@ public class CalcSample {
         setup.setSubCommands(DefaultHelpCommand.class,
                 PlusCommand.class,
                 MinusCommand.class);
-        return SingleCommandBuilder.main(setup, args);
+        return BasicArgsParser.process(setup, args);
     }
 
     public static void main(String[] args) throws Exception {

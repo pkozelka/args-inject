@@ -20,10 +20,10 @@ import net.sf.buildbox.args.model.SubCommandDeclaration;
  * @todo print synopsis support
  * @todo print full help support
  */
-public class SingleCommandBuilder {
+public class BasicArgsParser {
     private final ArgsSetup declarationSetup;
 
-    public SingleCommandBuilder(ArgsSetup declarationSetup) {
+    public BasicArgsParser(ArgsSetup declarationSetup) {
         this.declarationSetup = declarationSetup;
     }
 
@@ -34,7 +34,7 @@ public class SingleCommandBuilder {
      * @return initialized command instance
      * @throws ParseException -
      */
-    public ExecutableCommand buildCommand(String... args) throws ParseException {
+    public ExecutableCommand parse(String... args) throws ParseException {
         final CommandlineDeclaration declaration = declarationSetup.getDeclaration();
         final LinkedList<String> argsList = new LinkedList<String>(Arrays.asList(args));
         ArgsUtils.debug("Parsing commandline args: %s", argsList);
@@ -109,8 +109,8 @@ public class SingleCommandBuilder {
         return commandInstance;
     }
 
-    public static ExecutableCommand buildCommand(ArgsSetup declarationSetup, String... args) throws ParseException {
-        return new SingleCommandBuilder(declarationSetup).buildCommand(args);
+    public static ExecutableCommand parse(ArgsSetup declarationSetup, String... args) throws ParseException {
+        return new BasicArgsParser(declarationSetup).parse(args);
     }
 
     /**
@@ -134,14 +134,14 @@ public class SingleCommandBuilder {
      * @return true if execution succeeded, false if it failed. It is a good idea to indicate failure to shell by terminating with {@link System#exit(int) System.exit(1)}
      * @throws Exception used only if {@link net.sf.buildbox.args.ArgsUtils#debugMode}==true
      */
-    public static boolean main(ArgsSetup setup, String... args) throws Exception {
+    public static boolean process(ArgsSetup setup, String... args) throws Exception {
         if (ArgsUtils.debugMode) {
-            new SingleCommandBuilder(setup).buildCommand(args).call();
+            new BasicArgsParser(setup).parse(args).call();
             // in debug mode, we let the exception pass up so that full stacktrace is shown; of course then false is never returned
             return true;
         } else {
             try {
-                new SingleCommandBuilder(setup).buildCommand(args).call();
+                new BasicArgsParser(setup).parse(args).call();
                 return true;
             } catch (Exception e) {
                 System.err.println("ERROR: " + e.getClass().getSimpleName() + " - " + e.getMessage());
