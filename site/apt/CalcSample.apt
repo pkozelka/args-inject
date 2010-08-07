@@ -6,7 +6,7 @@
 
 CalcSample
 
- Implements a trivial commandline application with two commands
+ Implements a trivial commandline application with two subcommands
 
    * <<plus>> gets variable number of integer arguments and computes their sum
 

@@ -9,10 +9,10 @@ args-inject: Usage
 
 * Annottations
 
- To create a complete declaration (=setup), all the command classes are introspected, and there are few
+ To create a complete declaration (=setup), all the subcommand classes are introspected, and there are few
  annottations that can be used to bind it with commandline arguments.
 
-** @CliCommand
+** @SubCommand
 
  <TODO>
 
@@ -20,7 +20,7 @@ args-inject: Usage
 
  <TODO>
 
-** @CliOption
+** @Option
 
  <TODO>
 
@@ -38,7 +38,7 @@ args-inject: Usage
 
  <TODO>
 
-** @CliParam
+** @Param
 
  <TODO>
 
@@ -54,7 +54,7 @@ args-inject: Usage
 
  <TODO>
 
-* Sample Command class
+* Sample subcommand class
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/DemoFileLister.java}
 

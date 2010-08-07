@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import net.sf.buildbox.args.annotation.CliCommand;
+import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.MetaCommand;
 import net.sf.buildbox.args.model.CliDeclaration;
-import net.sf.buildbox.args.model.CommandDeclaration;
 import net.sf.buildbox.args.model.ParamDeclaration;
+import net.sf.buildbox.args.model.SubcommandDeclaration;
 
 /**
  * Usecases:
@@ -20,7 +20,7 @@ import net.sf.buildbox.args.model.ParamDeclaration;
  * javaapp help SOMECMD
  * javaapp SOMECMD --help
  */
-@CliCommand(name = "help", aliases = {"--help", "?", "h"})
+@SubCommand(name = "help", aliases = {"--help", "?", "h"})
 public class DefaultHelpCommand implements MetaCommand {
     private CliDeclaration declaration = null;
     private final String command;
@@ -38,7 +38,7 @@ public class DefaultHelpCommand implements MetaCommand {
         if (command == null) {
             globalHelp();
         } else {
-            final CommandDeclaration cmdDecl = declaration.lookupCommand(command, false);
+            final SubcommandDeclaration cmdDecl = declaration.lookupCommand(command, false);
             if (cmdDecl == null) {
                 throw new IllegalArgumentException(command + ": unknown command");
             }
@@ -46,7 +46,7 @@ public class DefaultHelpCommand implements MetaCommand {
         }
     }
 
-    private void commandHelp(CommandDeclaration cmdDecl) {
+    private void commandHelp(SubcommandDeclaration cmdDecl) {
         final String programName = declaration.getProgramName();
         final String shortDesc = "///todo: shortDesc///";
         out.println(cmdDecl + ": " + shortDesc);
@@ -75,13 +75,13 @@ public class DefaultHelpCommand implements MetaCommand {
         out.println("Type '" + programName + " help <subcommand>' for help on a specific subcommand");
         out.println();
         out.println("Available subcommands:");
-        final List<CommandDeclaration> sortedList = new ArrayList<CommandDeclaration>(declaration.getCommandDeclarations());
-        Collections.sort(sortedList, new Comparator<CommandDeclaration>() {
-            public int compare(CommandDeclaration o1, CommandDeclaration o2) {
+        final List<SubcommandDeclaration> sortedList = new ArrayList<SubcommandDeclaration>(declaration.getCommandDeclarations());
+        Collections.sort(sortedList, new Comparator<SubcommandDeclaration>() {
+            public int compare(SubcommandDeclaration o1, SubcommandDeclaration o2) {
                 return o1.toString().compareToIgnoreCase(o2.toString());
             }
         });
-        for (CommandDeclaration cmd : sortedList) {
+        for (SubcommandDeclaration cmd : sortedList) {
             out.println("   " + cmd);
         }
     }

@@ -11,7 +11,7 @@ public class BuildozerCliTest {
     public void testBuildozer() throws Exception {
         final LogLevelCliOptions lo = new LogLevelCliOptions();
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("zer");
-        setup.setDefaultCommand(ZerExecute.class);
+        setup.setDefaultSubcommand(ZerExecute.class);
         setup.setSupportedCommands(DefaultHelpCommand.class, ZerDepends.class, ZerInfo.class, ZerRegister.class, ZerUnregister.class);
         setup.setGlobalOptions(lo);
 //        SingleCommandBuilder.buildCommand(setup, "-vv", "hello", "z", "dd", "--xml").call();

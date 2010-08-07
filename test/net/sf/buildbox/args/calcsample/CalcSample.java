@@ -3,12 +3,12 @@ package net.sf.buildbox.args.calcsample;
 import net.sf.buildbox.args.DefaultHelpCommand;
 import net.sf.buildbox.args.SingleCommandBuilder;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
-import net.sf.buildbox.args.annotation.CliCommand;
+import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.ExecutableCommand;
 
 public class CalcSample {
 
-    @CliCommand(name = "plus")
+    @SubCommand(name = "plus")
     public static class PlusCommand implements ExecutableCommand {
         private final int[] numbers;
 
@@ -25,7 +25,7 @@ public class CalcSample {
         }
     }
 
-    @CliCommand(name = "minus")
+    @SubCommand(name = "minus")
     public static class MinusCommand implements ExecutableCommand {
         private final int x;
         private final int y;

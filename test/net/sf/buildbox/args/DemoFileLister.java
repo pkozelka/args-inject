@@ -3,11 +3,11 @@ package net.sf.buildbox.args;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Properties;
-import net.sf.buildbox.args.annotation.CliCommand;
-import net.sf.buildbox.args.annotation.CliOption;
+import net.sf.buildbox.args.annotation.Option;
+import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.ExecutableCommand;
 
-@CliCommand(name = "ls")
+@SubCommand(name = "ls")
 public class DemoFileLister implements ExecutableCommand {
     private final boolean deep;
     private final int maxCount;
@@ -21,12 +21,12 @@ public class DemoFileLister implements ExecutableCommand {
         this.files = files;
     }
 
-    @CliOption(longName = "--property", shortName = "-D")
+    @Option(longName = "--property", shortName = "-D")
     public void addProperty(String propertyName, String propertyValue) {
         properties.put(propertyName, propertyValue);
     }
 
-    @CliOption(longName = "--color", shortName = "-C")
+    @Option(longName = "--color", shortName = "-C")
     public void setColorful(boolean colorful) {
         this.colorful = colorful;
     }

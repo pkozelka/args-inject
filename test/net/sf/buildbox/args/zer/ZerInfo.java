@@ -1,9 +1,9 @@
 package net.sf.buildbox.args.zer;
 
 import java.io.File;
-import net.sf.buildbox.args.annotation.CliCommand;
+import net.sf.buildbox.args.annotation.SubCommand;
 
-@CliCommand(name = "info")
+@SubCommand(name = "info")
 public class ZerInfo extends ZerXmlfulCommand {
     private final File[] modules;
 

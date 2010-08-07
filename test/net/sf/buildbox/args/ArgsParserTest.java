@@ -10,7 +10,7 @@ public class ArgsParserTest {
     public void testMultiFiles() throws Exception {
         // START SNIPPET: example1
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("myapp");
-        setup.setDefaultCommand(DemoFileLister.class);
+        setup.setDefaultSubcommand(DemoFileLister.class);
         final ExecutableCommand cmd = SingleCommandBuilder.buildCommand(setup,
                 "-D", "a", "b",
                 "false", "17", "/tmp", "/var", "/root",
@@ -24,7 +24,7 @@ public class ArgsParserTest {
     @Test
     public void testGlobalHelp() throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("testGlobalHelp");
-        setup.setDefaultCommand(DemoFileLister.class);
+        setup.setDefaultSubcommand(DemoFileLister.class);
         setup.setSupportedCommands(DefaultHelpCommand.class);
         System.err.println("=== using 'help' ===");
         SingleCommandBuilder.buildCommand(setup, "help").call();
@@ -49,7 +49,7 @@ public class ArgsParserTest {
     // START SNIPPET: sample-main
     public static void main(String[] args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("myapp");
-        setup.setDefaultCommand(DemoFileLister.class);
+        setup.setDefaultSubcommand(DemoFileLister.class);
         if (!SingleCommandBuilder.main(setup, args)) {
             System.exit(1); // indicate failure to shell
         }

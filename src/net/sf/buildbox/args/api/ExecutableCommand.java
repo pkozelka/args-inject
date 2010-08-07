@@ -7,7 +7,7 @@ package net.sf.buildbox.args.api;
  * <li>there is at most one public constructor</li>
  * <li>the public constructor's parameters define mandatory command arguments and their order</li>
  * <li>to have variable number of arguments, make the last param of array type</li>
- * <li>methods starting with "set", "add", "put" and equipped with {@link net.sf.buildbox.args.annotation.CliOption} annottations serve for feeding the instance with commandline options, possibly with values</li>
+ * <li>methods starting with "set", "add", "put" and equipped with {@link net.sf.buildbox.args.annotation.Option} annottations serve for feeding the instance with commandline options, possibly with values</li>
  * <li>method {@link #call} implements the command logic</li>
  * </ul>
  */

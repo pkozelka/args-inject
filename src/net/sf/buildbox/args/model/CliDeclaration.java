@@ -13,8 +13,8 @@ public final class CliDeclaration {
 
     private String programName;
     private Object[] globalOptionsObjects;
-    private CommandDeclaration defaultCommand;
-    private final Set<CommandDeclaration> commandDeclarations = new HashSet<CommandDeclaration>();
+    private SubcommandDeclaration defaultSubcommand;
+    private final Set<SubcommandDeclaration> subcommandDeclarations = new HashSet<SubcommandDeclaration>();
     private final Set<OptionDeclaration> optionDeclarations = new HashSet<OptionDeclaration>();
 
     public Object[] getGlobalOptionsObjects() {
@@ -25,16 +25,16 @@ public final class CliDeclaration {
         this.globalOptionsObjects = globalOptionsObjects;
     }
 
-    public CommandDeclaration getDefaultCommand() {
-        return defaultCommand;
+    public SubcommandDeclaration getDefaultCommand() {
+        return defaultSubcommand;
     }
 
-    public void setDefaultCommand(CommandDeclaration defaultCommand) {
-        this.defaultCommand = defaultCommand;
+    public void setDefaultCommand(SubcommandDeclaration defaultSubcommand) {
+        this.defaultSubcommand = defaultSubcommand;
     }
 
-    public void addCommand(CommandDeclaration cmdDecl) {
-        commandDeclarations.add(cmdDecl);
+    public void addCommand(SubcommandDeclaration cmdDecl) {
+        subcommandDeclarations.add(cmdDecl);
     }
 
     public void addOption(OptionDeclaration optionDeclaration) throws ParseException {
@@ -70,8 +70,8 @@ public final class CliDeclaration {
         }
     }
 
-    public CommandDeclaration lookupCommand(String command, boolean useDefault) {
-        for (CommandDeclaration decl : commandDeclarations) {
+    public SubcommandDeclaration lookupCommand(String command, boolean useDefault) {
+        for (SubcommandDeclaration decl : subcommandDeclarations) {
             if (command.equals(decl.getName())) {
                 return decl;
             }
@@ -79,7 +79,7 @@ public final class CliDeclaration {
                 return decl;
             }
         }
-        return useDefault ? defaultCommand : null;
+        return useDefault ? defaultSubcommand : null;
     }
 
     public OptionDeclaration lookupShortOption(String option) {
@@ -90,8 +90,8 @@ public final class CliDeclaration {
         return optionsByLongName.get(option);
     }
 
-    public Set<CommandDeclaration> getCommandDeclarations() {
-        return commandDeclarations;
+    public Set<SubcommandDeclaration> getCommandDeclarations() {
+        return subcommandDeclarations;
     }
 
     public String getProgramName() {

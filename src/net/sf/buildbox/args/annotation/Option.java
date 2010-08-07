@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface CliOption {
+public @interface Option {
     /**
      * Name of the option - typically the longer one, like: "--revision"
      *

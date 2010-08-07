@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface CliCommand {
+public @interface SubCommand {
     /**
      * Name of the (sub)command.
      */

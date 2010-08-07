@@ -19,16 +19,16 @@ args-inject: Commandline Injection Library
 
    * <setup> - defines rules for parsing the commandline
 
-   * <parse> - according to created setup, parses actual commandline arguments, creates a command objects and injects parameters and options to it
+   * <parse> - according to created setup, parses actual commandline arguments, creates a subcommand objects and injects parameters and options to it
 
-   * <execution> - the desired command is invoked
+   * <execution> - the desired subcommand is invoked
 
    * <exception handling> - any of above phases may produce errors. This part takes care of their proper display.
 
  This looks big. Complex. Difficult. But it is not !
 
  Most of these parts is hidden inside args-inject; and the only part left up to developer is, the business logic of his
- program - including very thin declaration of command object and their option methods and params.
+ program - including very thin declaration of subcommand object and their option methods and params.
 
 * What is developer required to do ?
 
@@ -36,10 +36,12 @@ args-inject: Commandline Injection Library
 
 %{code-snippet|id=dependency|brush=xml|file=site/snip.xml}
 
-   * implement command classes, properly annottated to describe options and parameters
-     Command class must implement the ExecutableCommand interface which is called right after setting all options
+   * implement subcommand classes, properly annottated to describe options and parameters
+
+     The subcommand class must implement the ExecutableCommand interface which is called right after setting all options
 
    * implement main method
+
      Extremely simple because it is preimplemented with default exception handling
 
 %{code-snippet|id=example1|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}

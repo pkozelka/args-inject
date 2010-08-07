@@ -21,7 +21,7 @@ args-inject: How it differs from other known libraries
 
    * support for declarative setup <<<(note: args4j has declarative setup)>>>
 
-   * injection to client (command) object
+   * injection to client (subcommand) object
 
    * explicit, straightforward support for multiple commands
 

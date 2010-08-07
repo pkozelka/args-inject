@@ -2,9 +2,9 @@ package net.sf.buildbox.args.zer;
 
 import java.util.Arrays;
 import java.util.List;
-import net.sf.buildbox.args.annotation.CliCommand;
+import net.sf.buildbox.args.annotation.SubCommand;
 
-@CliCommand(name = "depends")
+@SubCommand(name = "depends")
 public class ZerDepends extends ZerXmlfulCommand {
     private final List<String> what;
 

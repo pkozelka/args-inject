@@ -1,31 +1,31 @@
 package net.sf.buildbox.args.zer;
 
-import net.sf.buildbox.args.annotation.CliOption;
+import net.sf.buildbox.args.annotation.Option;
 
 public class LogLevelCliOptions {
     private String logLevel;
 
-    @CliOption(longName = "--log-level")
+    @Option(longName = "--log-level")
     public void setLogLevel(String logLevel) {
         this.logLevel = logLevel;
     }
 
-    @CliOption(shortName = "-vv")
+    @Option(shortName = "-vv")
     public void setLogLevelTRACE() {
         this.logLevel = "TRACE";
     }
 
-    @CliOption(shortName = "-v", longName = "--verbose")
+    @Option(shortName = "-v", longName = "--verbose")
     public void setLogLevelDEBUG() {
         this.logLevel = "DEBUG";
     }
 
-    @CliOption(shortName = "-q", longName = "--quiet")
+    @Option(shortName = "-q", longName = "--quiet")
     public void setLogLevelWARNING() {
         this.logLevel = "WARNING";
     }
 
-    @CliOption(shortName = "-qq")
+    @Option(shortName = "-qq")
     public void setLogLevelERROR() {
         this.logLevel = "ERROR";
     }

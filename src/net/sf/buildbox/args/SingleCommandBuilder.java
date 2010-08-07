@@ -8,8 +8,8 @@ import java.util.List;
 import net.sf.buildbox.args.api.ArgsSetup;
 import net.sf.buildbox.args.api.ExecutableCommand;
 import net.sf.buildbox.args.model.CliDeclaration;
-import net.sf.buildbox.args.model.CommandDeclaration;
 import net.sf.buildbox.args.model.OptionDeclaration;
+import net.sf.buildbox.args.model.SubcommandDeclaration;
 
 /**
  * Supports one subcommand on the commandline.
@@ -64,7 +64,7 @@ public class SingleCommandBuilder {
                 optionDecl = declaration.lookupLongOption(argName);
                 if (optionDecl == null) {
                     // little trick to allow stuff like --help or --version behave as command:
-                    final CommandDeclaration cmdDecl = declaration.lookupCommand(arg, false);
+                    final SubcommandDeclaration cmdDecl = declaration.lookupCommand(arg, false);
                     if (cmdDecl == null) {
                         throw new ParseException("invalid option: " + arg, 0);
                     }
@@ -90,8 +90,8 @@ public class SingleCommandBuilder {
         ArgsUtils.debug("  parsedOptions: %s", parsedOptions);
         // parse command
         String cmdName = cmdParams.getFirst();
-        CommandDeclaration cmdDecl = declaration.lookupCommand(cmdName, false);
-//        CommandDeclaration cmdDecl = commandsByName.get(cmdName);
+        SubcommandDeclaration cmdDecl = declaration.lookupCommand(cmdName, false);
+//        SubcommandDeclaration cmdDecl = commandsByName.get(cmdName);
         if (cmdDecl == null) {
             if (declaration.getDefaultCommand() == null) {
                 throw new ParseException("unknown command: " + cmdName, 0);
@@ -100,7 +100,7 @@ public class SingleCommandBuilder {
             cmdDecl = declaration.getDefaultCommand();
             cmdName = "<DEFAULT>";
         }
-        final ExecutableCommand commandInstance = declarationSetup.createCommandInstance(cmdDecl, cmdParams);
+        final ExecutableCommand commandInstance = declarationSetup.createSubcommand(cmdDecl, cmdParams);
         // fail if any token remains
         if (!cmdParams.isEmpty()) {
             throw new ParseException("unparsed tokens: " + cmdParams, 0);

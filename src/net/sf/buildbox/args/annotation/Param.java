@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface CliParam {
+public @interface Param {
     public String format() default "";
 
     public String timezone() default "LOCAL";

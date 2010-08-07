@@ -1,17 +1,17 @@
 package net.sf.buildbox.args;
 
 import javax.xml.namespace.QName;
-import net.sf.buildbox.args.annotation.CliCommand;
+import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.MetaCommand;
 import net.sf.buildbox.args.model.CliDeclaration;
-import net.sf.buildbox.args.model.CommandDeclaration;
 import net.sf.buildbox.args.model.ParamDeclaration;
+import net.sf.buildbox.args.model.SubcommandDeclaration;
 import net.sourceforge.xmlfacade.XmlFacade;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-@CliCommand(name = "help-xml")
+@SubCommand(name = "help-xml")
 public class DefaultHelpXmlCommand implements MetaCommand {
     private CliDeclaration declaration = null;
     private static final String NS = "http://buildbox.sf.net/args/help.xml";
@@ -26,7 +26,7 @@ public class DefaultHelpXmlCommand implements MetaCommand {
                 XmlFacade.createAttribute(doc, new QName("program"), declaration.getProgramName())
         );
         doc.appendChild(root);
-        for (CommandDeclaration decl : declaration.getCommandDeclarations()) {
+        for (SubcommandDeclaration decl : declaration.getCommandDeclarations()) {
             final Element cmd = XmlFacade.createElement(doc, new QName(NS, "command"),
                     createAttribute(doc, "name", decl.getName()),
                     createAttribute(doc, "class", decl.getCommandClass().getCanonicalName()));
