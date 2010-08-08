@@ -5,6 +5,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @todo get shortName and longName without leading dashes
+ */
 public final class OptionDeclaration {
     private final String shortName;
     private final String longName;

@@ -10,6 +10,8 @@ package net.sf.buildbox.args.api;
  * <li>methods starting with "set", "add", "put" and equipped with {@link net.sf.buildbox.args.annotation.Option} annottations serve for feeding the instance with commandline options, possibly with values</li>
  * <li>method {@link #call} implements the command logic</li>
  * </ul>
+ *
+ * @todo replace with Callable<Integer>, where returning non-zero exitcode will be for silent failure
  */
 public abstract interface ExecutableCommand {
     /**

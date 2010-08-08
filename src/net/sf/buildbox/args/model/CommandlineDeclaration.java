@@ -83,10 +83,12 @@ public final class CommandlineDeclaration {
     }
 
     public OptionDeclaration lookupShortOption(String option) {
+        //TODO: support value with/next to option name
         return optionsByShortName.get(option);
     }
 
     public OptionDeclaration lookupLongOption(String option) {
+        //TODO: support value assignment/next to option name
         return optionsByLongName.get(option);
     }
 

@@ -10,6 +10,8 @@ public final class ArgsUtils {
     /**
      * Enables diagnostic output.
      * Mostly useful for debugging args-inject itself or the commandline application.
+     *
+     * @todo reconsider impact on exception throwing
      */
     public static boolean debugMode = Boolean.getBoolean(System.getProperty("args.debug"));
 

@@ -19,6 +19,8 @@ import net.sf.buildbox.args.model.SubCommandDeclaration;
  * detailed help - synopsis of one command
  * javaapp help SOMECMD
  * javaapp SOMECMD --help
+ *
+ * @todo implement command onelinedesc, option onelinedesc, param symbolic name
  */
 @SubCommand(name = "help", aliases = {"--help", "?", "h"})
 public class DefaultHelpCommand implements MetaCommand {
