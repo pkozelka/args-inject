@@ -31,11 +31,12 @@ public class DemoFileLister implements ExecutableCommand {
         this.colorful = colorful;
     }
 
-    public void call() throws Exception {
+    public Integer call() throws Exception {
         System.out.println("colorful = " + colorful);
         System.out.println("deep = " + deep);
         System.out.println("maxCount = " + maxCount);
         System.out.println("files = " + Arrays.asList(files));
         System.out.println("properties = " + properties);
+        return 0;
     }
 }

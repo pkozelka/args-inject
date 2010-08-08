@@ -20,7 +20,7 @@ public class DefaultHelpXmlCommand implements MetaCommand {
         this.declaration = declaration;
     }
 
-    public void call() throws Exception {
+    public Integer call() throws Exception {
         final Document doc = XmlFacade.createDocument();
         final Element root = XmlFacade.createElement(doc, new QName(NS, "commandline"),
                 XmlFacade.createAttribute(doc, new QName("program"), declaration.getProgramName())
@@ -39,6 +39,7 @@ public class DefaultHelpXmlCommand implements MetaCommand {
             }
         }
         XmlFacade.saveXml(doc, System.out);
+        return 0;
     }
 
     public static Attr createAttribute(Document d, String name, String value) {

@@ -89,15 +89,19 @@ public class BasicArgsParser {
         ArgsUtils.debug("  cmdParams:     %s", cmdParams);
         ArgsUtils.debug("  parsedOptions: %s", parsedOptions);
         // parse command
+        final SubCommandDeclaration defaultSubCommand = declaration.getDefaultSubCommand();
+        if (cmdParams.isEmpty() && defaultSubCommand == null) {
+            throw new ParseException("no subcommand specified", 0);
+        }
         String cmdName = cmdParams.getFirst();
         SubCommandDeclaration cmdDecl = declaration.lookupCommand(cmdName, false);
 //        SubCommandDeclaration cmdDecl = commandsByName.get(cmdName);
         if (cmdDecl == null) {
-            if (declaration.getDefaultSubCommand() == null) {
-                throw new ParseException("unknown command: " + cmdName, 0);
+            if (defaultSubCommand == null) {
+                throw new ParseException("unknown subcommand: " + cmdName, 0);
             }
             cmdParams.addFirst(cmdName);
-            cmdDecl = declaration.getDefaultSubCommand();
+            cmdDecl = defaultSubCommand;
             cmdName = "<DEFAULT>";
         }
         final ExecutableCommand commandInstance = declarationSetup.createSubCommand(cmdDecl, cmdParams);
@@ -134,18 +138,19 @@ public class BasicArgsParser {
      * @return true if execution succeeded, false if it failed. It is a good idea to indicate failure to shell by terminating with {@link System#exit(int) System.exit(1)}
      * @throws Exception used only if {@link net.sf.buildbox.args.ArgsUtils#debugMode}==true
      */
-    public static boolean process(ArgsSetup setup, String... args) throws Exception {
+    public static Integer process(ArgsSetup setup, String... args) throws Exception {
         if (ArgsUtils.debugMode) {
-            new BasicArgsParser(setup).parse(args).call();
             // in debug mode, we let the exception pass up so that full stacktrace is shown; of course then false is never returned
-            return true;
+            return new BasicArgsParser(setup).parse(args).call();
         } else {
             try {
-                new BasicArgsParser(setup).parse(args).call();
-                return true;
+                return new BasicArgsParser(setup).parse(args).call();
+            } catch (ParseException e) {
+                System.err.println("ERROR: " + e.getMessage());
+                return 1;
             } catch (Exception e) {
                 System.err.println("ERROR: " + e.getClass().getSimpleName() + " - " + e.getMessage());
-                return false;
+                return 1;
             }
         }
     }

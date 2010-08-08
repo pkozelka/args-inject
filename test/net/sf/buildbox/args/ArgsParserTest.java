@@ -50,8 +50,9 @@ public class ArgsParserTest {
     public static void main(String[] args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("myapp");
         setup.setDefaultSubCommand(DemoFileLister.class);
-        if (!BasicArgsParser.process(setup, args)) {
-            System.exit(1); // indicate failure to shell
+        final int exitCode = BasicArgsParser.process(setup, args);
+        if (exitCode != 0) {
+            System.exit(exitCode); // indicate failure to shell
         }
     }
     // END SNIPPET: sample-main

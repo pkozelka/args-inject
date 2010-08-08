@@ -1,6 +1,7 @@
 package net.sf.buildbox.args;
 
 import java.io.PrintStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,15 +37,17 @@ public class DefaultHelpCommand implements MetaCommand {
         this.declaration = declaration;
     }
 
-    public void call() throws Exception {
+    public Integer call() throws Exception {
         if (command == null) {
             globalHelp();
+            return 0;
         } else {
             final SubCommandDeclaration cmdDecl = declaration.lookupCommand(command, false);
             if (cmdDecl == null) {
-                throw new IllegalArgumentException(command + ": unknown command");
+                throw new ParseException(command + ": unknown command", 0);
             }
             commandHelp(cmdDecl);
+            return 0;
         }
     }
 

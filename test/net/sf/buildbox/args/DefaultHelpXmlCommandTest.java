@@ -9,8 +9,9 @@ public class DefaultHelpXmlCommandTest {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("testXmlHelp");
         setup.setDefaultSubCommand(DemoFileLister.class);
         setup.setSubCommands(DefaultHelpCommand.class, DefaultHelpXmlCommand.class);
-        if (!BasicArgsParser.process(setup, "help-xml")) {
-            System.exit(1);
+        final int exitCode = BasicArgsParser.process(setup, "help-xml");
+        if (exitCode != 0) {
+            System.exit(exitCode);
         }
     }
 }

@@ -1,0 +1,5 @@
+#!/bin/sh
+D=$PWD
+CP=$D/target/classes:$D/target/test-classes
+CP=$CP:$HOME/.m2/repository/net/sourceforge/xmlfacade/1.0.0/xmlfacade-1.0.0.jar
+java -classpath $CP $ARGS_JVM_OPTS net.sf.buildbox.args.timmy.Timmy $*

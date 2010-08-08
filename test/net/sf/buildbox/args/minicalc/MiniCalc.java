@@ -16,12 +16,13 @@ public class MiniCalc {
             this.numbers = numbers;
         }
 
-        public void call() throws Exception {
+        public Integer call() throws Exception {
             int sum = 0;
             for (int number : numbers) {
                 sum += number;
             }
             System.out.println(sum);
+            return 0;
         }
     }
 
@@ -35,8 +36,9 @@ public class MiniCalc {
             this.y = y;
         }
 
-        public void call() throws Exception {
+        public Integer call() throws Exception {
             System.out.println(x - y);
+            return 0;
         }
     }
 
@@ -47,7 +49,7 @@ public class MiniCalc {
      * @return true if successful
      * @throws Exception -
      */
-    static boolean run(String... args) throws Exception {
+    static int run(String... args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("minicalc");
         setup.addSubCommand(DefaultHelpCommand.class);
         setup.addSubCommand(PlusCommand.class);
@@ -56,7 +58,7 @@ public class MiniCalc {
     }
 
     public static void main(String[] args) throws Exception {
-        if (!run(args)) {
+        if (run(args) != 0) {
             System.exit(-1);
         }
     }

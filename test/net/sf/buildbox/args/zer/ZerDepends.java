@@ -12,7 +12,8 @@ public class ZerDepends extends ZerXmlfulCommand {
         this.what = Arrays.asList(what);
     }
 
-    public void call() throws Exception {
+    public Integer call() throws Exception {
         //To change body of implemented methods use File | Settings | File Templates.
+        return 0;
     }
 }

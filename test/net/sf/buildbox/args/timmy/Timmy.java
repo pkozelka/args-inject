@@ -33,9 +33,10 @@ public class Timmy {
             this.outputTimeFormat = outputTimeFormat;
         }
 
-        public void call() throws Exception {
+        public Integer call() throws Exception {
             final String result = outputTimeFormat.format(new Date(basetime.getTime() + offset));
             System.out.println(result);
+            return 0;
         }
     }
 
@@ -50,9 +51,10 @@ public class Timmy {
             this.otherTime = otherTime;
         }
 
-        public void call() throws Exception {
+        public Integer call() throws Exception {
             final long delta = otherTime.getTime() - basetime.getTime();
             System.out.println(delta);
+            return 0;
         }
     }
 
@@ -63,7 +65,7 @@ public class Timmy {
      * @return true if successful
      * @throws Exception -
      */
-    static boolean run(String... args) throws Exception {
+    static int run(String... args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("minicalc");
         setup.addSubCommand(DefaultHelpCommand.class);
         setup.addSubCommand(TimeShiftCommand.class);
@@ -74,8 +76,9 @@ public class Timmy {
     }
 
     public static void main(String[] args) throws Exception {
-        if (!run(args)) {
-            System.exit(-1);
+        final int exitCode = run(args);
+        if (exitCode != 0) {
+            System.exit(exitCode);
         }
     }
 }

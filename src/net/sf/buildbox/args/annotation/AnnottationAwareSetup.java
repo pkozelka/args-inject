@@ -163,7 +163,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
 
     public ExecutableCommand createSubCommand(SubCommandDeclaration cmdDecl, LinkedList<String> cmdParams) throws ParseException {
         final String cmdName = cmdParams.removeFirst();
-        final List<Object> unmarshalledValues = ParamDeclaration.parseParamList("command " + cmdName, cmdDecl.getParamDeclarations(), cmdParams);
+        final List<Object> unmarshalledValues = ParamDeclaration.parseParamList("subcommand " + cmdName, cmdDecl.getParamDeclarations(), cmdParams);
         // find public constructor
         final Class<? extends ExecutableCommand> cmdClass = cmdDecl.getCommandClass();
         final Constructor<? extends ExecutableCommand> con = findPublicConstructor(cmdClass);
@@ -193,14 +193,13 @@ public class AnnottationAwareSetup implements ArgsSetup {
                 if (declaringClass.isAssignableFrom(cmdClass)) {
                     method.invoke(commandInstance, values);
                 } else {
-                    final Object[] globalOptionsObjects = cliDeclaration.getGlobalOptionsObjects();
-                    for (Object globalOptionsObject : globalOptionsObjects) {
+                    for (Object globalOptionsObject : cliDeclaration.getGlobalOptionsObjects()) {
                         if (declaringClass.isAssignableFrom(globalOptionsObject.getClass())) {
                             method.invoke(globalOptionsObject, values);
                             continue L1;
                         }
                     }
-                    throw new ParseException(String.format("command %s does not accept option '%s'",
+                    throw new ParseException(String.format("subcommand %s does not accept option '%s'",
                             cmdName, option.getUsedName()), 0);
                 }
             } catch (IllegalAccessException e) {

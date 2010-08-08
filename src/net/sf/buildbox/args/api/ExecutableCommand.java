@@ -1,5 +1,7 @@
 package net.sf.buildbox.args.api;
 
+import java.util.concurrent.Callable;
+
 /**
  * Must be implemented by classes representing (sub)command of the program.
  * Each implementing class is subject to following rules:
@@ -13,11 +15,12 @@ package net.sf.buildbox.args.api;
  *
  * @todo replace with Callable<Integer>, where returning non-zero exitcode will be for silent failure
  */
-public abstract interface ExecutableCommand {
+public abstract interface ExecutableCommand extends Callable<Integer> {
     /**
      * Executes the business logic of the command. All specified options have already been populated via their setters.
      *
+     * @return exitCode, typically 0
      * @throws Exception when anything goes wrong
      */
-    void call() throws Exception;
+    Integer call() throws Exception;
 }
