@@ -1,0 +1,14 @@
+ ------
+ Timmy Sample
+ ------
+ Petr Kozelka
+
+
+Timmy
+
+ Implements a  commandline application working with date/time arguments.
+
+ Please keep in mind that working with dates/times is still very immature.
+
+%{code-snippet|brush=java|file=test/net/sf/buildbox/args/timmy/Timmy.java}
+

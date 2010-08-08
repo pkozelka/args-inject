@@ -1,11 +1,8 @@
 package net.sf.buildbox.args.minicalc;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import net.sf.buildbox.args.BasicArgsParser;
 import net.sf.buildbox.args.DefaultHelpCommand;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
-import net.sf.buildbox.args.annotation.Option;
 import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.ExecutableCommand;
 
@@ -43,34 +40,18 @@ public class MiniCalc {
         }
     }
 
-    @SubCommand(name = "timeshift")
-    public static class TimeShiftCommand implements ExecutableCommand {
-        private final Date basetime;
-        private final long offset;
-        private SimpleDateFormat outputTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-
-        public TimeShiftCommand(Date basetime, long offset) {
-            this.basetime = basetime;
-            this.offset = offset;
-        }
-
-        public void call() throws Exception {
-            final String result = outputTimeFormat.format(new Date(basetime.getTime() + offset));
-            System.out.println(result);
-        }
-
-        @Option(shortName = "-f", longName = "--output-time-format")
-        public void setOutputTimeFormat(SimpleDateFormat outputTimeFormat) {
-            this.outputTimeFormat = outputTimeFormat;
-        }
-    }
-
+    /**
+     * Highest-possible level of invocation usable both from {@link #main} and from unit tests.
+     *
+     * @param args commandline arguments
+     * @return true if successful
+     * @throws Exception -
+     */
     static boolean run(String... args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("minicalc");
         setup.addSubCommand(DefaultHelpCommand.class);
         setup.addSubCommand(PlusCommand.class);
         setup.addSubCommand(MinusCommand.class);
-        setup.addSubCommand(TimeShiftCommand.class);
         return BasicArgsParser.process(setup, args);
     }
 

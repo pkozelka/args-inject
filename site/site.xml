@@ -24,6 +24,7 @@
     </menu>
     <menu name="Samples">
       <item name="MiniCalc" href="MiniCalc.html"/>
+      <item name="Timmy" href="Timmy.html"/>
     </menu>
 
     <menu ref="reports"/>

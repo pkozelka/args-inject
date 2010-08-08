@@ -1,9 +1,6 @@
 package net.sf.buildbox.args.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * On {@link net.sf.buildbox.args.api.ExecutableCommand command} classes, marks methods that define command options.
@@ -12,6 +9,7 @@ import java.lang.annotation.Target;
  * @see net.sf.buildbox.args.api.ExecutableCommand
  * @see net.sf.buildbox.args.ArgsUtils#stringToType(String, Class)
  */
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Option {
