@@ -9,6 +9,7 @@ import java.util.List;
 import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.MetaCommand;
 import net.sf.buildbox.args.model.CommandlineDeclaration;
+import net.sf.buildbox.args.model.OptionDeclaration;
 import net.sf.buildbox.args.model.ParamDeclaration;
 import net.sf.buildbox.args.model.SubCommandDeclaration;
 
@@ -21,10 +22,12 @@ import net.sf.buildbox.args.model.SubCommandDeclaration;
  * javaapp help SOMECMD
  * javaapp SOMECMD --help
  *
- * @todo implement command onelinedesc, option onelinedesc, param symbolic name
+ * @todo implement option onelinedesc, param symbolic name
  */
-@SubCommand(name = "help", aliases = {"--help", "?", "h"})
+@SubCommand(name = "help", aliases = {"--help", "?", "h"}, description = "shows help for the whole app. or for specified command")
 public class DefaultHelpCommand implements MetaCommand {
+    private static final String SP = "            ";
+    private static final String SPO = "                              ";
     private CommandlineDeclaration declaration = null;
     private final String command;
     private PrintStream out = System.err;
@@ -53,8 +56,8 @@ public class DefaultHelpCommand implements MetaCommand {
 
     private void commandHelp(SubCommandDeclaration cmdDecl) {
         final String programName = declaration.getProgramName();
-        final String shortDesc = "///todo: shortDesc///";
-        out.println(cmdDecl + ": " + shortDesc);
+        final String shortDesc = cmdDecl.getDescription();
+        out.println("Subcommand '" + cmdDecl + "': " + shortDesc);
         out.println("Usage:");
         final StringBuilder usage = new StringBuilder("   ");
         usage.append(programName);
@@ -68,6 +71,32 @@ public class DefaultHelpCommand implements MetaCommand {
             usage.append(symbolicName);
         }
         out.println(usage);
+
+        final List<OptionDeclaration> sortedOptions = new ArrayList<OptionDeclaration>(cmdDecl.getOptionDeclarations());
+        if (!sortedOptions.isEmpty()) {
+            out.println();
+            out.println("Valid options:");
+            Collections.sort(sortedOptions, new Comparator<OptionDeclaration>() {
+                public int compare(OptionDeclaration o1, OptionDeclaration o2) {
+                    return o1.toString().compareTo(o2.toString());
+                }
+            });
+            for (OptionDeclaration optionDeclaration : sortedOptions) {
+                final StringBuilder sb = new StringBuilder("   ");
+                final String s = optionDeclaration.toString();
+                final String desc = "todo: desc";
+                sb.append(s);
+                if (desc != null) {
+                    if (s.length() < SPO.length()) {
+                        sb.append(SPO.substring(s.length()));
+                    }
+                    sb.append(" ");
+                    sb.append(desc);
+                }
+                out.println(sb);
+            }
+        }
+
         out.println();
         out.println("///todo: longDesc///");
     }
@@ -77,18 +106,29 @@ public class DefaultHelpCommand implements MetaCommand {
         out.println("Usage:");
         out.println("   " + programName + " <subcommand> [options] [args]");
         out.println();
-        out.println("Type '" + programName + " help <subcommand>' for help on a specific subcommand");
-        out.println();
         out.println("Available subcommands:");
         final List<SubCommandDeclaration> sortedList = new ArrayList<SubCommandDeclaration>(declaration.getCommandDeclarations());
         Collections.sort(sortedList, new Comparator<SubCommandDeclaration>() {
             public int compare(SubCommandDeclaration o1, SubCommandDeclaration o2) {
-                return o1.toString().compareToIgnoreCase(o2.toString());
+                return o1.getName().compareToIgnoreCase(o2.getName());
             }
         });
         for (SubCommandDeclaration cmd : sortedList) {
-            out.println("   " + cmd);
+            final StringBuilder sb = new StringBuilder("   ");
+            final String cmdName = cmd.getName();
+            sb.append(cmdName);
+            final String description = cmd.getDescription();
+            if (description != null && !"".equals(description)) {
+                if (cmdName.length() < SP.length()) {
+                    sb.append(SP.substring(cmdName.length()));
+                }
+                sb.append(" ");
+                sb.append(description);
+            }
+            out.println(sb);
         }
+        out.println();
+        out.println("Type '" + programName + " help <subcommand>' for help on a specific subcommand");
     }
 
 }

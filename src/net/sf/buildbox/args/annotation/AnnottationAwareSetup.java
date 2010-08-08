@@ -105,6 +105,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
         if (annCommand != null) {
             cmdDecl.setName(annCommand.name());
             cmdDecl.addAlternateNames(Arrays.asList(annCommand.aliases()));
+            cmdDecl.setDescription(annCommand.description());
         }
         final Constructor<? extends ExecutableCommand> con = findPublicConstructor(cmdDecl.getCommandClass());
         ParamDeclaration paramDecl = null;

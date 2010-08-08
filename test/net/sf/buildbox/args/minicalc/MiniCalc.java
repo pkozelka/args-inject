@@ -8,7 +8,7 @@ import net.sf.buildbox.args.api.ExecutableCommand;
 
 public class MiniCalc {
 
-    @SubCommand(name = "plus")
+    @SubCommand(name = "plus", description = "computes sum of all given numbers")
     public static class PlusCommand implements ExecutableCommand {
         private final int[] numbers;
 
@@ -26,7 +26,7 @@ public class MiniCalc {
         }
     }
 
-    @SubCommand(name = "minus")
+    @SubCommand(name = "minus", description = "computes param2 - param1")
     public static class MinusCommand implements ExecutableCommand {
         private final int x;
         private final int y;

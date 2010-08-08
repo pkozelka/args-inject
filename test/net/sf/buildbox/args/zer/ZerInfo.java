@@ -3,7 +3,7 @@ package net.sf.buildbox.args.zer;
 import java.io.File;
 import net.sf.buildbox.args.annotation.SubCommand;
 
-@SubCommand(name = "info")
+@SubCommand(name = "info", description = "shows basic module information")
 public class ZerInfo extends ZerXmlfulCommand {
     private final File[] modules;
 

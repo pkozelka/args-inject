@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import net.sf.buildbox.args.annotation.SubCommand;
 
-@SubCommand(name = "depends")
+@SubCommand(name = "depends", description = "finds registered modules by dependency")
 public class ZerDepends extends ZerXmlfulCommand {
     private final List<String> what;
 

@@ -27,6 +27,12 @@ public class TimmyTest {
     }
 
     @Test
+    public void testHelpShift() throws Exception {
+        final int exitCode = Timmy.run("help", "shift");
+        Assert.assertEquals(0, exitCode);
+    }
+
+    @Test
     public void testInvalidCommand() throws Exception {
         final String stderr = timmyErr("travelto", "2048-01-01T10:15:21.000");
         Assert.assertEquals("ERROR: unknown subcommand: travelto", stderr);

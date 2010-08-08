@@ -3,7 +3,7 @@ package net.sf.buildbox.args.zer;
 import java.io.File;
 import net.sf.buildbox.args.annotation.SubCommand;
 
-@SubCommand(name = "unregister", aliases = "unreg")
+@SubCommand(name = "unregister", aliases = "unreg", description = "unregisters modules")
 public class ZerUnregister extends ZerXmlfulCommand {
     private final File[] modules;
 

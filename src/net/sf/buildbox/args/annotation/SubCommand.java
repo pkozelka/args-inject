@@ -20,4 +20,9 @@ public @interface SubCommand {
      * Alternate names for the (sub)command. Useful for keeping support for deprecated naming, or for shorter variants.
      */
     String[] aliases() default {};
+
+    /**
+     * Description to be used in command help
+     */
+    String description() default "";
 }

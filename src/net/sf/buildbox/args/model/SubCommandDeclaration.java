@@ -10,6 +10,7 @@ public final class SubCommandDeclaration {
     private final Class<? extends ExecutableCommand> commandClass;
     private final List<ParamDeclaration> paramDeclarations = new ArrayList<ParamDeclaration>();
     private final List<OptionDeclaration> optionDeclarations = new ArrayList<OptionDeclaration>();
+    private String description;
 
     public SubCommandDeclaration(Class<? extends ExecutableCommand> commandClass) {
         this.commandClass = commandClass;
@@ -25,6 +26,14 @@ public final class SubCommandDeclaration {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<String> getAlternateNames() {
