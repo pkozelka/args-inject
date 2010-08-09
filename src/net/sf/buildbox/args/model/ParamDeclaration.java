@@ -8,13 +8,15 @@ import java.util.*;
 import net.sf.buildbox.args.ArgsUtils;
 
 public final class ParamDeclaration {
-    private Class<?> type;
+    private final Class<?> type;
     private String format;
     private String listSeparator = File.pathSeparator;
     private boolean varArgs;
+    private String symbolicName;
 
     public ParamDeclaration(Class<?> type) {
         this.type = type;
+        this.symbolicName = type.getSimpleName().toLowerCase();
     }
 
     public Class<?> getType() {
@@ -111,6 +113,14 @@ public final class ParamDeclaration {
             }
         }
         return unmarshalledValues;
+    }
+
+    public String getSymbolicName() {
+        return symbolicName;
+    }
+
+    public void setSymbolicName(String symbolicName) {
+        this.symbolicName = symbolicName;
     }
 
     @Override

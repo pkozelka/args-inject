@@ -14,4 +14,10 @@ public @interface Param {
      * The default is {@link File#pathSeparator} because this case is often useful for paths
      */
     public String listSeparator() default "";
+
+
+    /**
+     * symbolic name for use in help
+     */
+    public String name() default "";
 }

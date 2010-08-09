@@ -1,7 +1,7 @@
 package net.sf.buildbox.args.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Method;
+import java.util.*;
 import net.sf.buildbox.args.api.ExecutableCommand;
 
 public final class SubCommandDeclaration {
@@ -9,7 +9,7 @@ public final class SubCommandDeclaration {
     private final List<String> alternateNames = new ArrayList<String>();
     private final Class<? extends ExecutableCommand> commandClass;
     private final List<ParamDeclaration> paramDeclarations = new ArrayList<ParamDeclaration>();
-    private final List<OptionDeclaration> optionDeclarations = new ArrayList<OptionDeclaration>();
+    private final Map<Method, OptionDeclaration> optionDeclarations = new HashMap<Method, OptionDeclaration>();
     private String description;
 
     public SubCommandDeclaration(Class<? extends ExecutableCommand> commandClass) {
@@ -44,8 +44,8 @@ public final class SubCommandDeclaration {
         this.alternateNames.addAll(alternateNames);
     }
 
-    public List<OptionDeclaration> getOptionDeclarations() {
-        return optionDeclarations;
+    public Set<OptionDeclaration> getOptionDeclarations() {
+        return new HashSet<OptionDeclaration>(optionDeclarations.values());
     }
 
     public List<ParamDeclaration> getParamDeclarations() {
@@ -57,7 +57,7 @@ public final class SubCommandDeclaration {
     }
 
     public void addOptionDeclaration(OptionDeclaration optionDeclaration) {
-        optionDeclarations.add(optionDeclaration);
+        optionDeclarations.put(optionDeclaration.getOptionMethod(), optionDeclaration);
     }
 
     @Override
