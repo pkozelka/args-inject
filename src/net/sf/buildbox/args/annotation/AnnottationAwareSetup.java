@@ -152,7 +152,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
         if (annParam != null) {
             final String format = annParam.format();
             paramDecl.setFormat("".equals(format) ? null : format);
-            final String name = annParam.name();
+            final String name = annParam.value();
             paramDecl.setSymbolicName("".equals(name) ? null : name);
         }
         if (paramType.isArray()) {

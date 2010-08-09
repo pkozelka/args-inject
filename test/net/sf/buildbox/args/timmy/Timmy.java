@@ -6,6 +6,7 @@ import net.sf.buildbox.args.BasicArgsParser;
 import net.sf.buildbox.args.DefaultHelpCommand;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import net.sf.buildbox.args.annotation.Option;
+import net.sf.buildbox.args.annotation.Param;
 import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.ExecutableCommand;
 
@@ -23,13 +24,13 @@ public class Timmy {
         private final long offset;
         private SimpleDateFormat outputTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
-        public TimeShiftCommand(Date basetime, long offset) {
+        public TimeShiftCommand(@Param("basetime") Date basetime, @Param("offset") long offset) {
             this.basetime = basetime;
             this.offset = offset;
         }
 
-        @Option(shortName = "-f", longName = "--output-time-format")
-        public void setOutputTimeFormat(SimpleDateFormat outputTimeFormat) {
+        @Option(shortName = "-f", longName = "--output-time-format", description = "result format spec. (SimpleDateFormat)")
+        public void setOutputTimeFormat(@Param("format") SimpleDateFormat outputTimeFormat) {
             this.outputTimeFormat = outputTimeFormat;
         }
 

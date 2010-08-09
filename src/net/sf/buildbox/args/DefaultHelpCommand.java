@@ -64,12 +64,7 @@ public class DefaultHelpCommand implements MetaCommand {
         usage.append(" ");
         usage.append(cmdDecl.getName());
         usage.append(" [options]");
-        //TODO: better args synopsis
-        for (ParamDeclaration paramDecl : cmdDecl.getParamDeclarations()) {
-            usage.append(" ");
-            final String symbolicName = paramDecl.getSymbolicName();
-            usage.append(symbolicName);
-        }
+        paramSynopsis(usage, cmdDecl.getParamDeclarations());
         out.println(usage);
 
         final List<OptionDeclaration> sortedOptions = new ArrayList<OptionDeclaration>(cmdDecl.getOptionDeclarations());
@@ -87,6 +82,7 @@ public class DefaultHelpCommand implements MetaCommand {
                 final String s = optionDeclaration.toString();
                 final String desc = optionDeclaration.getDescription();
                 sb.append(s);
+                paramSynopsis(sb, optionDeclaration.getParamDeclarations());
                 if (desc != null) {
                     if (s.length() < SPO.length()) {
                         sb.append(SPO.substring(s.length()));
@@ -100,6 +96,15 @@ public class DefaultHelpCommand implements MetaCommand {
 
         out.println();
         //todo: verbose description - from .txt resource located next to .class
+    }
+
+    private static void paramSynopsis(StringBuilder sb, List<ParamDeclaration> paramDeclarations) {
+        for (ParamDeclaration paramDecl : paramDeclarations) {
+            final String symbolicName = paramDecl.getSymbolicName();
+            sb.append(" <");
+            sb.append(symbolicName);
+            sb.append(">");
+        }
     }
 
     public void globalHelp() {

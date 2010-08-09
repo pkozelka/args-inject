@@ -9,7 +9,7 @@ import net.sf.buildbox.args.annotation.SubCommand;
 public class ZerDepends extends ZerXmlfulCommand {
     private final List<String> what;
 
-    public ZerDepends(@Param(name = "moduleId") String... what) {
+    public ZerDepends(@Param(value = "moduleId") String... what) {
         this.what = Arrays.asList(what);
     }
 

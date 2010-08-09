@@ -19,5 +19,5 @@ public @interface Param {
     /**
      * symbolic name for use in help
      */
-    public String name() default "";
+    public String value() default "";
 }

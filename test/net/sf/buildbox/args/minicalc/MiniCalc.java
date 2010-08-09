@@ -3,6 +3,7 @@ package net.sf.buildbox.args.minicalc;
 import net.sf.buildbox.args.BasicArgsParser;
 import net.sf.buildbox.args.DefaultHelpCommand;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
+import net.sf.buildbox.args.annotation.Param;
 import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.ExecutableCommand;
 
@@ -26,12 +27,12 @@ public class MiniCalc {
         }
     }
 
-    @SubCommand(name = "minus", description = "computes param2 - param1")
+    @SubCommand(name = "minus", description = "computes operand1 - operand2")
     public static class MinusCommand implements ExecutableCommand {
         private final int x;
         private final int y;
 
-        public MinusCommand(int x, int y) {
+        public MinusCommand(@Param("operand1") int x, @Param("operand2") int y) {
             this.x = x;
             this.y = y;
         }
