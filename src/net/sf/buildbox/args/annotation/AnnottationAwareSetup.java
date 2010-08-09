@@ -35,11 +35,9 @@ public class AnnottationAwareSetup implements ArgsSetup {
      * @throws ParseException -
      */
     public void setDefaultSubCommand(Class<? extends ExecutableCommand> subCommand) throws ParseException {
-        if (subCommand != null) {
-            final SubCommandDeclaration subCommandDeclaration = createCmdDecl(subCommand);
-            cliDeclaration.setDefaultCommand(subCommandDeclaration);
-            introspectOptions(subCommand, subCommandDeclaration, null);
-        }
+        final SubCommandDeclaration subCommandDeclaration = createCmdDecl(subCommand);
+        cliDeclaration.setDefaultCommand(subCommandDeclaration);
+        introspectOptions(subCommand, subCommandDeclaration, null);
     }
 
     /**
@@ -106,7 +104,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
         // note: @SubCommand is optional
         final SubCommandDeclaration cmdDecl = new SubCommandDeclaration(cmdClass);
         if (annCommand != null) {
-            cmdDecl.setName(annCommand.name());
+            cmdDecl.setName(annCommand.name().equals("") ? null : annCommand.name());
             cmdDecl.addAlternateNames(Arrays.asList(annCommand.aliases()));
             final String desc = annCommand.description();
             cmdDecl.setDescription("".equals(desc) ? null : desc);
@@ -172,8 +170,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
         return cliDeclaration;
     }
 
-    public ExecutableCommand createSubCommand(SubCommandDeclaration cmdDecl, LinkedList<String> cmdParams) throws ParseException {
-        final String cmdName = cmdParams.removeFirst();
+    public ExecutableCommand createSubCommand(String cmdName, SubCommandDeclaration cmdDecl, LinkedList<String> cmdParams) throws ParseException {
         final List<Object> unmarshalledValues = ParamDeclaration.parseParamList("subcommand " + cmdName, cmdDecl.getParamDeclarations(), cmdParams);
         // find public constructor
         final Class<? extends ExecutableCommand> cmdClass = cmdDecl.getCommandClass();

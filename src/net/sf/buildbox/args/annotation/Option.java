@@ -14,14 +14,16 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface Option {
     /**
-     * Name of the option - typically the longer one, like: "--revision"
+     * Name of the option - typically the longer one, like: "--revision".
+     * Supporting long option names is recommended for better readability; users are supposed to use them in scripts.
      *
      * @return -
      */
     public String longName() default "";
 
     /**
-     * Alternate option name, typically the shortened one
+     * Alternate option name, typically the shortened one.
+     * Supporting short option names is important for user convenience when this option is supposed to be used frequently.
      *
      * @return -
      */
@@ -29,6 +31,7 @@ public @interface Option {
 
     /**
      * Description to be used in command help
+     * @return -
      */
     String description() default "";
 }

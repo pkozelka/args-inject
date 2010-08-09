@@ -90,34 +90,38 @@ public class BasicArgsParser {
         ArgsUtils.debug("  parsedOptions: %s", parsedOptions);
         // parse command
         final SubCommandDeclaration defaultSubCommand = declaration.getDefaultSubCommand();
-        if (cmdParams.isEmpty() && defaultSubCommand == null) {
-            throw new ParseException("no subcommand specified", 0);
-        }
         SubCommandDeclaration cmdDecl;
         String cmdName;
         if (cmdParams.isEmpty()) {
-            cmdName = null;
-            cmdDecl = null;
-        } else {
-            cmdName = cmdParams.getFirst();
-            cmdDecl = declaration.lookupCommand(cmdName, false);
-        }
-//        SubCommandDeclaration cmdDecl = commandsByName.get(cmdName);
-        if (cmdDecl == null) {
             if (defaultSubCommand == null) {
-                throw new ParseException("unknown subcommand: " + cmdName, 0);
+                throw new ParseException("no subcommand specified", 0);
             }
-            cmdParams.addFirst(cmdName);
             cmdDecl = defaultSubCommand;
-            cmdName = "<DEFAULT>";
+            cmdName = cmdname(cmdDecl);
+        } else {
+            cmdName = cmdParams.removeFirst();
+            cmdDecl = declaration.lookupCommand(cmdName, false);
+            if (cmdDecl == null) {
+                if (defaultSubCommand == null) {
+                    throw new ParseException("unknown subcommand: " + cmdName, 0);
+                }
+                cmdParams.addFirst(cmdName); // return it back, it's value
+                cmdDecl = defaultSubCommand;
+                cmdName = cmdname(cmdDecl);
+            }
         }
-        final ExecutableCommand commandInstance = declarationSetup.createSubCommand(cmdDecl, cmdParams);
+        final ExecutableCommand commandInstance = declarationSetup.createSubCommand(cmdName, cmdDecl, cmdParams);
         // fail if any token remains
         if (!cmdParams.isEmpty()) {
             throw new ParseException("unparsed tokens: " + cmdParams, 0);
         }
         declarationSetup.injectOptions(commandInstance, parsedOptions, cmdName);
         return commandInstance;
+    }
+
+    private static String cmdname(SubCommandDeclaration cmdDecl) {
+        String name = cmdDecl.getName();
+        return name == null ? "<UNNAMED>" : name;
     }
 
     public static ExecutableCommand parse(ArgsSetup declarationSetup, String... args) throws ParseException {
@@ -142,10 +146,10 @@ public class BasicArgsParser {
      *
      * @param setup commandline declaration
      * @param args  actual arguments to be processed
-     * @return true if execution succeeded, false if it failed. It is a good idea to indicate failure to shell by terminating with {@link System#exit(int) System.exit(1)}
+     * @return exit code. It is a good idea to indicate failure to shell by terminating with {@link System#exit(int) System.exit(1)}
      * @throws Exception used only if {@link net.sf.buildbox.args.ArgsUtils#debugMode}==true
      */
-    public static Integer process(ArgsSetup setup, String... args) throws Exception {
+    public static int process(ArgsSetup setup, String... args) throws Exception {
         if (ArgsUtils.debugMode) {
             // in debug mode, we let the exception pass up so that full stacktrace is shown; of course then false is never returned
             return new BasicArgsParser(setup).parse(args).call();
@@ -155,7 +159,7 @@ public class BasicArgsParser {
             } catch (ParseException e) {
                 System.err.println("ERROR: " + e.getMessage());
                 return 1;
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 System.err.println("ERROR: " + e.getClass().getSimpleName() + " - " + e.getMessage());
                 return 1;
             }

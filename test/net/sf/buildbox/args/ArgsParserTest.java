@@ -4,6 +4,7 @@ import java.text.ParseException;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import net.sf.buildbox.args.api.ExecutableCommand;
 import org.junit.Test;
+import org.junit.Assert;
 
 public class ArgsParserTest {
     @Test
@@ -36,7 +37,16 @@ public class ArgsParserTest {
     public void testCommandHelp() throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("testCommandHelp");
         setup.setSubCommands(DefaultHelpCommand.class);
-        BasicArgsParser.process(setup, "help", "help");
+        final int exitCode = BasicArgsParser.process(setup, "help", "help");
+        Assert.assertEquals(0, exitCode);
+    }
+
+    @Test
+    public void testInvalidCommandHelp() throws Exception {
+        final AnnottationAwareSetup setup = new AnnottationAwareSetup("testCommandHelp");
+        setup.setSubCommands(DefaultHelpCommand.class);
+        final int exitCode = BasicArgsParser.process(setup, "help", "changeEarthRotation");
+        Assert.assertEquals(1, exitCode);
     }
 
     @Test(expected = ParseException.class)

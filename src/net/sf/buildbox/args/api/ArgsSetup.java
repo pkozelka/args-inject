@@ -10,7 +10,7 @@ import net.sf.buildbox.args.model.SubCommandDeclaration;
 public interface ArgsSetup {
     CommandlineDeclaration getDeclaration();
 
-    ExecutableCommand createSubCommand(SubCommandDeclaration cmdDecl, LinkedList<String> cmdParams) throws ParseException;
+    ExecutableCommand createSubCommand(String cmdName, SubCommandDeclaration cmdDecl, LinkedList<String> cmdParams) throws ParseException;
 
     void injectOptions(ExecutableCommand subCommandInstance, List<ParsedOption> parsedOptions, String cmdName) throws ParseException;
 }

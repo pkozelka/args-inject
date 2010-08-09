@@ -1,0 +1,13 @@
+ ------
+ MyPathTool Sample
+ ------
+ Petr Kozelka
+
+
+MyPathTool (mpt)
+
+ Implements a commandline application doing some useful stuff with path lists.
+
+
+%{code-snippet|brush=java|file=test/net/sf/buildbox/args/mypathtool/MyPathTool.java}
+

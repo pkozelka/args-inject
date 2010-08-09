@@ -17,14 +17,17 @@ public final class ParamDeclaration {
     public ParamDeclaration(Class<?> type) {
         this.type = type;
         this.symbolicName = type.getSimpleName().toLowerCase();
+        if (isVarArgs()) {
+            this.symbolicName = type.getComponentType().getSimpleName() + "...";
+        } else if (type.isArray()) {
+            this.symbolicName = type.getComponentType().getSimpleName() + "s"; // dirty way to make plural form
+        } else {
+            this.symbolicName = type.getSimpleName();
+        }
     }
 
     public Class<?> getType() {
         return type;
-    }
-
-    public String getFormat() {
-        return format;
     }
 
     public void setFormat(String format) {
@@ -60,7 +63,7 @@ public final class ParamDeclaration {
             final SimpleDateFormat f = new SimpleDateFormat(format == null ? "yyyy-MM-dd'T'HH:mm:ss.SSS" : format);
             final Date date = f.parse(stringValue);
             cal.setTime(date);
-            throw new UnsupportedOperationException();
+            return cal;
         } else {
             return ArgsUtils.stringToType(stringValue, paramType);
         }
@@ -125,13 +128,6 @@ public final class ParamDeclaration {
 
     @Override
     public String toString() {
-        //TODO: introduce symbolic name
-        if (isVarArgs()) {
-            return type.getComponentType().getSimpleName() + "...";
-        } else if (type.isArray()) {
-            return type.getComponentType().getSimpleName() + "s"; // dirty way to make plural form
-        } else {
-            return type.getSimpleName();
-        }
+        return symbolicName;
     }
 }

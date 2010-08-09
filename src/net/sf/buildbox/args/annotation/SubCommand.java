@@ -14,7 +14,7 @@ public @interface SubCommand {
     /**
      * Name of the (sub)command.
      */
-    String name();
+    String name() default "";
 
     /**
      * Alternate names for the (sub)command. Useful for keeping support for deprecated naming, or for shorter variants.

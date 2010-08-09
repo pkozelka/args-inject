@@ -47,7 +47,7 @@ public class DefaultHelpCommand implements MetaCommand {
         } else {
             final SubCommandDeclaration cmdDecl = declaration.lookupCommand(command, false);
             if (cmdDecl == null) {
-                throw new ParseException(command + ": unknown command", 0);
+                throw new ParseException(command + ": unknown subcommand - cannot help", 0);
             }
             commandHelp(cmdDecl);
             return 0;
@@ -67,6 +67,10 @@ public class DefaultHelpCommand implements MetaCommand {
         paramSynopsis(usage, cmdDecl.getParamDeclarations());
         out.println(usage);
 
+        showValidOptions(cmdDecl);
+    }
+
+    private void showValidOptions(SubCommandDeclaration cmdDecl) {
         final List<OptionDeclaration> sortedOptions = new ArrayList<OptionDeclaration>(cmdDecl.getOptionDeclarations());
         //TODO: somehow add global options
         if (!sortedOptions.isEmpty()) {
@@ -109,32 +113,50 @@ public class DefaultHelpCommand implements MetaCommand {
 
     public void globalHelp() {
         final String programName = declaration.getProgramName();
+        final List<SubCommandDeclaration> subcommands = new ArrayList<SubCommandDeclaration>(declaration.getCommandDeclarations());
+        //TODO: handle commands like help specially
         out.println("Usage:");
-        out.println("   " + programName + " <subcommand> [options] [args]");
-        out.println();
-        out.println("Available subcommands:");
-        final List<SubCommandDeclaration> sortedList = new ArrayList<SubCommandDeclaration>(declaration.getCommandDeclarations());
-        Collections.sort(sortedList, new Comparator<SubCommandDeclaration>() {
-            public int compare(SubCommandDeclaration o1, SubCommandDeclaration o2) {
-                return o1.getName().compareToIgnoreCase(o2.getName());
-            }
-        });
-        for (SubCommandDeclaration cmd : sortedList) {
-            final StringBuilder sb = new StringBuilder("   ");
-            final String cmdName = cmd.getName();
-            sb.append(cmdName);
-            final String description = cmd.getDescription();
-            if (description != null) {
-                if (cmdName.length() < SP.length()) {
-                    sb.append(SP.substring(cmdName.length()));
-                }
-                sb.append(" ");
-                sb.append(description);
-            }
-            out.println(sb);
+        final StringBuilder usage = new StringBuilder("   ");
+        usage.append(programName);
+        if (!subcommands.isEmpty()) {
+            usage.append(" <subcommand>");
         }
+        usage.append(" [options]");
+        usage.append(" [args]");
+        out.println(usage);
         out.println();
-        out.println("Type '" + programName + " help <subcommand>' for help on a specific subcommand");
+        if (!subcommands.isEmpty()) {
+            out.println("Available subcommands:");
+            Collections.sort(subcommands, new Comparator<SubCommandDeclaration>() {
+                public int compare(SubCommandDeclaration o1, SubCommandDeclaration o2) {
+                    return o1.getName().compareToIgnoreCase(o2.getName());
+                }
+            });
+            for (SubCommandDeclaration cmd : subcommands) {
+                final StringBuilder sb = new StringBuilder("   ");
+                final String cmdName = cmd.getName();
+                sb.append(cmdName);
+                final String description = cmd.getDescription();
+                if (description != null) {
+                    if (cmdName.length() < SP.length()) {
+                        sb.append(SP.substring(cmdName.length()));
+                    }
+                    sb.append(" ");
+                    sb.append(description);
+                }
+                out.println(sb);
+            }
+            out.println();
+        }
+        final SubCommandDeclaration defaultSubCommand = declaration.getDefaultSubCommand();
+        // TODO show help for default command (if unnamed)
+        if (defaultSubCommand == null) {
+            out.println("Type '" + programName + " help <subcommand>' for help on a specific subcommand");
+        } else if (defaultSubCommand.getName() == null) {
+            showValidOptions(defaultSubCommand);
+        } else {
+            out.println("Type '" + programName + " help <subcommand>' for help on a specific subcommand");
+        }
     }
 
 }

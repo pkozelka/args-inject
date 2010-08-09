@@ -17,7 +17,7 @@ import net.sf.buildbox.args.api.ExecutableCommand;
  */
 public class Timmy {
 
-    @SubCommand(name = "shift", description = "computes time shift by given milliseconds")
+    @SubCommand(name = "shift", description = "shifts time by given milliseconds")
     public static class TimeShiftCommand implements ExecutableCommand {
         //TODO: option "unit" for offset
         private final Date basetime;
@@ -84,7 +84,7 @@ public class Timmy {
      */
     static int run(String... args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("timmy");
-//        setup.setDefaultSubCommand(TimeConvertCommand.class);
+        setup.setDefaultSubCommand(TimeConvertCommand.class);
         setup.addSubCommand(DefaultHelpCommand.class);
         setup.addSubCommand(TimeShiftCommand.class);
         setup.addSubCommand(TimeDeltaCommand.class);
