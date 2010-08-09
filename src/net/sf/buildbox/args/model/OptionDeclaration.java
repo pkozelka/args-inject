@@ -14,6 +14,7 @@ public final class OptionDeclaration {
     private final Method optionMethod;
     private final List<ParamDeclaration> paramDeclarations = new ArrayList<ParamDeclaration>();
     private Object globalObject;
+    private String description;
 
     public OptionDeclaration(String shortName, String longName, Method optionMethod) throws ParseException {
         this.shortName = "".equals(shortName) ? null : shortName;
@@ -34,6 +35,14 @@ public final class OptionDeclaration {
 
     public Method getOptionMethod() {
         return optionMethod;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Object getGlobalObject() {

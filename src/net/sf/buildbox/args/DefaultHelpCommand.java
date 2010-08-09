@@ -73,6 +73,7 @@ public class DefaultHelpCommand implements MetaCommand {
         out.println(usage);
 
         final List<OptionDeclaration> sortedOptions = new ArrayList<OptionDeclaration>(cmdDecl.getOptionDeclarations());
+        //TODO: somehow add global options
         if (!sortedOptions.isEmpty()) {
             out.println();
             out.println("Valid options:");
@@ -84,7 +85,7 @@ public class DefaultHelpCommand implements MetaCommand {
             for (OptionDeclaration optionDeclaration : sortedOptions) {
                 final StringBuilder sb = new StringBuilder("   ");
                 final String s = optionDeclaration.toString();
-                final String desc = "todo: desc";
+                final String desc = optionDeclaration.getDescription();
                 sb.append(s);
                 if (desc != null) {
                     if (s.length() < SPO.length()) {
@@ -98,7 +99,7 @@ public class DefaultHelpCommand implements MetaCommand {
         }
 
         out.println();
-        out.println("///todo: longDesc///");
+        //todo: verbose description - from .txt resource located next to .class
     }
 
     public void globalHelp() {
@@ -118,7 +119,7 @@ public class DefaultHelpCommand implements MetaCommand {
             final String cmdName = cmd.getName();
             sb.append(cmdName);
             final String description = cmd.getDescription();
-            if (description != null && !"".equals(description)) {
+            if (description != null) {
                 if (cmdName.length() < SP.length()) {
                     sb.append(SP.substring(cmdName.length()));
                 }

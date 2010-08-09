@@ -6,7 +6,7 @@ import net.sf.buildbox.args.api.ExecutableCommand;
 public abstract class ZerXmlfulCommand implements ExecutableCommand {
     private boolean xmlOutput;
 
-    @Option(longName = "--xml")
+    @Option(longName = "--xml", description = "ensures that output is in xml format")
     public void setXmlOutput() {
         this.xmlOutput = true;
     }

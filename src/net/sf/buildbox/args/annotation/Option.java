@@ -26,4 +26,9 @@ public @interface Option {
      * @return -
      */
     public String shortName() default "";
+
+    /**
+     * Description to be used in command help
+     */
+    String description() default "";
 }

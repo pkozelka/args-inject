@@ -78,6 +78,9 @@ public class AnnottationAwareSetup implements ArgsSetup {
     }
 
     private void introspectOptions(Class<?> subCommand, SubCommandDeclaration attachToSubCommandDeclaration, Object attachToGlobalObject) throws ParseException {
+        final String cn = subCommand.getName();
+        if (cn.startsWith("java.")) return;
+//        System.out.println("cls " + cn);
         for (Class iface : subCommand.getInterfaces()) {
             introspectOptions(iface, attachToSubCommandDeclaration, attachToGlobalObject);
         }
@@ -105,7 +108,8 @@ public class AnnottationAwareSetup implements ArgsSetup {
         if (annCommand != null) {
             cmdDecl.setName(annCommand.name());
             cmdDecl.addAlternateNames(Arrays.asList(annCommand.aliases()));
-            cmdDecl.setDescription(annCommand.description());
+            final String desc = annCommand.description();
+            cmdDecl.setDescription("".equals(desc) ? null : desc);
         }
         final Constructor<? extends ExecutableCommand> con = findPublicConstructor(cmdDecl.getCommandClass());
         ParamDeclaration paramDecl = null;
@@ -131,6 +135,8 @@ public class AnnottationAwareSetup implements ArgsSetup {
             final Annotation[] pa = method.getParameterAnnotations()[i];
             optionDeclaration.addParamDeclaration(createParamDecl(paramType, pa));
         }
+        final String desc = annOption.description();
+        optionDeclaration.setDescription("".equals(desc) ? null : desc);
         return optionDeclaration;
     }
 
