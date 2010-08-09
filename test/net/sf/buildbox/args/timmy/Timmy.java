@@ -59,6 +59,22 @@ public class Timmy {
         }
     }
 
+    @SubCommand(name = "timeconvert", description = "converts given times to millis since epoch; uses current time if none specified")
+    public static class TimeConvertCommand implements ExecutableCommand {
+        private final Date[] times;
+
+        public TimeConvertCommand(@Param("times") Date... times) {
+            this.times = times.length == 0 ? new Date[]{new Date()} : times;
+        }
+
+        public Integer call() throws Exception {
+            for (Date time : times) {
+                System.out.println(time.getTime());
+            }
+            return 0;
+        }
+    }
+
     /**
      * Highest-possible level of invocation usable both from {@link #main} and from unit tests.
      *
@@ -68,6 +84,7 @@ public class Timmy {
      */
     static int run(String... args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("timmy");
+//        setup.setDefaultSubCommand(TimeConvertCommand.class);
         setup.addSubCommand(DefaultHelpCommand.class);
         setup.addSubCommand(TimeShiftCommand.class);
         setup.addSubCommand(TimeDeltaCommand.class);

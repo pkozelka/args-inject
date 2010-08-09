@@ -3,6 +3,7 @@ package net.sf.buildbox.args.timmy;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import net.sf.buildbox.args.ArgsUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,6 +30,13 @@ public class TimmyTest {
     @Test
     public void testHelpShift() throws Exception {
         final int exitCode = Timmy.run("help", "shift");
+        Assert.assertEquals(0, exitCode);
+    }
+
+    @Test
+    public void testDefaultCommand() throws Exception {
+        ArgsUtils.debugMode = true;
+        final int exitCode = Timmy.run();
         Assert.assertEquals(0, exitCode);
     }
 

@@ -93,8 +93,15 @@ public class BasicArgsParser {
         if (cmdParams.isEmpty() && defaultSubCommand == null) {
             throw new ParseException("no subcommand specified", 0);
         }
-        String cmdName = cmdParams.getFirst();
-        SubCommandDeclaration cmdDecl = declaration.lookupCommand(cmdName, false);
+        SubCommandDeclaration cmdDecl;
+        String cmdName;
+        if (cmdParams.isEmpty()) {
+            cmdName = null;
+            cmdDecl = null;
+        } else {
+            cmdName = cmdParams.getFirst();
+            cmdDecl = declaration.lookupCommand(cmdName, false);
+        }
 //        SubCommandDeclaration cmdDecl = commandsByName.get(cmdName);
         if (cmdDecl == null) {
             if (defaultSubCommand == null) {
