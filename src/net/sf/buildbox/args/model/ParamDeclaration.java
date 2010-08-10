@@ -16,13 +16,15 @@ public final class ParamDeclaration {
 
     public ParamDeclaration(Class<?> type) {
         this.type = type;
-        this.symbolicName = type.getSimpleName().toLowerCase();
+    }
+
+    private String defaultSymName() {
         if (isVarArgs()) {
-            this.symbolicName = type.getComponentType().getSimpleName() + "...";
+            return type.getComponentType().getSimpleName() + "...";
         } else if (type.isArray()) {
-            this.symbolicName = type.getComponentType().getSimpleName() + "s"; // dirty way to make plural form
+            return type.getComponentType().getSimpleName() + "s"; // dirty way to make plural form
         } else {
-            this.symbolicName = type.getSimpleName();
+            return type.getSimpleName().toLowerCase();
         }
     }
 
@@ -119,7 +121,7 @@ public final class ParamDeclaration {
     }
 
     public String getSymbolicName() {
-        return symbolicName;
+        return symbolicName == null ? defaultSymName() : symbolicName;
     }
 
     public void setSymbolicName(String symbolicName) {

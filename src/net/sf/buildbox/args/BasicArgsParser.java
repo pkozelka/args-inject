@@ -150,19 +150,22 @@ public class BasicArgsParser {
      * @throws Exception used only if {@link net.sf.buildbox.args.ArgsUtils#debugMode}==true
      */
     public static int process(ArgsSetup setup, String... args) throws Exception {
-        if (ArgsUtils.debugMode) {
-            // in debug mode, we let the exception pass up so that full stacktrace is shown; of course then false is never returned
-            return new BasicArgsParser(setup).parse(args).call();
-        } else {
-            try {
-                return new BasicArgsParser(setup).parse(args).call();
-            } catch (ParseException e) {
-                System.err.println("ERROR: " + e.getMessage());
-                return 1;
-            } catch (IllegalArgumentException e) {
-                System.err.println("ERROR: " + e.getClass().getSimpleName() + " - " + e.getMessage());
-                return 1;
+        try {
+            final int exitCode = new BasicArgsParser(setup).parse(args).call();
+            ArgsUtils.debug("exitCode = %d", exitCode);
+            return exitCode;
+        } catch (ParseException e) {
+            System.err.println("ERROR: " + e.getMessage());
+            if (ArgsUtils.debugMode) {
+                e.printStackTrace();
             }
+            return 1;
+        } catch (IllegalArgumentException e) {
+            System.err.println("ERROR: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+            if (ArgsUtils.debugMode) {
+                e.printStackTrace();
+            }
+            return 1;
         }
     }
 }

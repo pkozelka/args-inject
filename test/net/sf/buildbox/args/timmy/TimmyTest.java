@@ -44,6 +44,13 @@ public class TimmyTest {
         Assert.assertEquals("ERROR: subcommand delta does not accept option '--output-time-format'", stderr);
     }
 
+    @Test
+    public void testInvalidOptionErr() throws Exception {
+        final String stderr = timmyErr("delta", "-z");
+        Assert.assertEquals("ERROR: invalid option: -z", stderr);
+    }
+
+
     /**
      * Runs {@link net.sf.buildbox.args.timmy.Timmy#run} and returns its standard output as a string.
      * It imitates execution from commandline but actually does not leave JVM.

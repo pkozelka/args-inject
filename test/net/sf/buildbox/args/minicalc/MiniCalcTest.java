@@ -33,6 +33,12 @@ public class MiniCalcTest {
     }
 
     @Test
+    public void testNoSubcommandErr() throws Exception {
+        final String stderr = minicalcErr();
+        Assert.assertEquals("ERROR: no subcommand specified", stderr);
+    }
+
+    @Test
     public void testNotEnoughParamsErr() throws Exception {
         final String stderr = minicalcErr("minus", "7");
         Assert.assertEquals("ERROR: subcommand minus: not enough parameters provided", stderr);
