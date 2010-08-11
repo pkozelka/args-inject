@@ -2,10 +2,7 @@ package net.sf.buildbox.args;
 
 import java.io.PrintStream;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import net.sf.buildbox.args.annotation.SubCommand;
 import net.sf.buildbox.args.api.MetaCommand;
 import net.sf.buildbox.args.model.CommandlineDeclaration;
@@ -21,13 +18,10 @@ import net.sf.buildbox.args.model.SubCommandDeclaration;
  * detailed help - synopsis of one command
  * javaapp help SOMECMD
  * javaapp SOMECMD --help
- *
- * @todo implement option onelinedesc, param symbolic name
  */
 @SubCommand(name = "help", aliases = {"--help", "?", "h"}, description = "shows help for the whole app. or for specified command")
 public class DefaultHelpCommand implements MetaCommand {
     private static final String SP = "            ";
-    private static final String SPO = "                              ";
     private CommandlineDeclaration declaration = null;
     private final String command;
     private PrintStream out = System.err;
@@ -81,25 +75,37 @@ public class DefaultHelpCommand implements MetaCommand {
                     return o1.toString().compareTo(o2.toString());
                 }
             });
+            final Map<String,String> optMap = new LinkedHashMap<String, String>();
+            int max = 0;
+            // gather option table, and find longest declaration
             for (OptionDeclaration optionDeclaration : sortedOptions) {
-                final StringBuilder sb = new StringBuilder("   ");
-                final String s = optionDeclaration.toString();
-                final String desc = optionDeclaration.getDescription();
-                sb.append(s);
-                paramSynopsis(sb, optionDeclaration.getParamDeclarations());
-                if (desc != null) {
-                    if (s.length() < SPO.length()) {
-                        sb.append(SPO.substring(s.length()));
-                    }
-                    sb.append(" ");
-                    sb.append(desc);
+                final String strDecl = optionDeclaration.toString();
+                if (strDecl.length() > max) {
+                    max = strDecl.length();
                 }
-                out.println(sb);
+                final String desc = optionDeclaration.getDescription();
+                optMap.put(strDecl, desc);
             }
+            // print it
+            max += 2; // two more spaces
+            final String fmt = "%-" + max + "s";
+            printTable(optMap, fmt);
         }
 
         out.println();
-        //todo: verbose description - from .txt resource located next to .class
+        //todo: add verbose description - from .txt resource located next to .class
+    }
+
+    private void printTable(Map<String, String> optMap, String fmt) {
+        for (Map.Entry<String, String> entry : optMap.entrySet()) {
+            out.print("   ");
+            out.print(String.format(fmt, entry.getKey()));
+            if (entry.getValue() != null) {
+                out.print(entry.getValue());
+            }
+            out.println();
+        }
+        out.println();
     }
 
     private static void paramSynopsis(StringBuilder sb, List<ParamDeclaration> paramDeclarations) {
@@ -132,24 +138,24 @@ public class DefaultHelpCommand implements MetaCommand {
                     return o1.getName().compareToIgnoreCase(o2.getName());
                 }
             });
-            for (SubCommandDeclaration cmd : subcommands) {
-                final StringBuilder sb = new StringBuilder("   ");
-                final String cmdName = cmd.getName();
-                sb.append(cmdName);
-                final String description = cmd.getDescription();
-                if (description != null) {
-                    if (cmdName.length() < SP.length()) {
-                        sb.append(SP.substring(cmdName.length()));
-                    }
-                    sb.append(" ");
-                    sb.append(description);
+            final Map<String,String> optMap = new LinkedHashMap<String, String>();
+            int max = 0;
+            // gather option table, and find longest declaration
+            for (SubCommandDeclaration subCommandDeclaration : subcommands) {
+                final String cmdName = subCommandDeclaration.getName();
+                if (cmdName.length() > max) {
+                    max = cmdName.length();
                 }
-                out.println(sb);
+                final String desc = subCommandDeclaration.getDescription();
+                optMap.put(cmdName, desc);
             }
-            out.println();
+            // print it
+            max += 4; // two more spaces
+            final String fmt = "%-" + max + "s";
+            printTable(optMap, fmt);
         }
         final SubCommandDeclaration defaultSubCommand = declaration.getDefaultSubCommand();
-        // TODO show help for default command (if unnamed)
+        // show help for default command (if unnamed)
         if (defaultSubCommand == null) {
             out.println("Type '" + programName + " help <subcommand>' for help on a specific subcommand");
         } else if (defaultSubCommand.getName() == null) {

@@ -32,6 +32,10 @@ public final class ParamDeclaration {
         return type;
     }
 
+    public String getFormat() {
+        return format;
+    }
+
     public void setFormat(String format) {
         this.format = format;
     }
@@ -131,5 +135,9 @@ public final class ParamDeclaration {
     @Override
     public String toString() {
         return symbolicName;
+    }
+
+    public String[] getAliases() {
+        return new String[0];  //To change body of created methods use File | Settings | File Templates.
     }
 }

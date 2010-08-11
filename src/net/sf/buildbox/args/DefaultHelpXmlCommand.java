@@ -31,13 +31,34 @@ public class DefaultHelpXmlCommand implements MetaCommand {
                     createAttribute(doc, "name", decl.getName()),
                     createAttribute(doc, "class", decl.getCommandClass().getCanonicalName()));
             root.appendChild(cmd);
+            // aliases
+            for (String alias : decl.getAlternateNames()) {
+                Element aliasElem = XmlFacade.createElement(doc, new QName(NS, "alias"),
+                        createAttribute(doc, "name", alias));
+                cmd.appendChild(aliasElem);
+            }
+            // params
             for (ParamDeclaration paramDecl : decl.getParamDeclarations()) {
                 final Element param = XmlFacade.createElement(doc, new QName(NS, "param"),
+                        createAttribute(doc, "symbolic-name", paramDecl.getSymbolicName()),
                         createAttribute(doc, "type", paramDecl.getType().getCanonicalName())
                 );
+                final String format = paramDecl.getFormat();
+                if (format != null) {
+                    param.setAttributeNode(createAttribute(doc, "format", format));
+                }
+                final String listSep = paramDecl.getListSeparator();
+                if (listSep != null) {
+                    param.setAttributeNode(createAttribute(doc, "list-separator", listSep));
+                }
+                if (paramDecl.isVarArgs()) {
+                    param.setAttributeNode(createAttribute(doc, "varargs", "true"));
+                }
                 cmd.appendChild(param);
             }
+            //TODO: valid options
         }
+        //TODO: option declarations
         XmlFacade.saveXml(doc, System.out);
         return 0;
     }
