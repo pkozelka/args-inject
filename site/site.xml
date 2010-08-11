@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="args-inject">
+<project name="args-inject" xmlns="http://maven.apache.org/DECORATION/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
   <bannerLeft>
     <name>Commandline Arguments Injector</name>
     <src>http://buildbox.sourceforge.net/logo-wide.png</src>
@@ -22,10 +23,21 @@
       <item name="Usage" href="Usage.html"/>
       <!--<item name="Road Map" href="roadmap.html"/>-->
     </menu>
+    <menu name="Use it">
+      <item name="CLI types"/>
+      <item name="Default help support"/>
+      <item name="Varargs"/>
+      <item name="Typical main() method"/>
+      <item name="Custom data types"/>
+    </menu>
+    <menu name="Hack it">
+      <item name="Write custom parser"/>
+      <item name="Write declaration analyzer"/>
+    </menu>
     <menu name="Samples">
       <item name="MiniCalc" href="MiniCalc.html"/>
-      <item name="Timmy" href="Timmy.html"/>
       <item name="MyPathTool" href="MyPathTool.html"/>
+      <item name="Timmy" href="Timmy.html"/>
     </menu>
 
     <menu ref="reports"/>

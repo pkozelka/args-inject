@@ -37,16 +37,35 @@ parsing (java.text.ParseException)
    * command %s: syntax error: %s
    * command %s: unparsed tokens: %s
 
----++ args-inject approach
-Commandline Injector sees the commandline as a mix of options, its values, and commands with zero or more arguments.
+---++ Commandline styles
+
+---+++ BasicArgsParser (SVN-like)
+
+- the commandline is a mix of options, its values, and commands with zero or more arguments.
 
 Options can occur anywhere before/after the command and any argument without having functional impact.
 
 Options having values must have these values next to it, in order of their definition.
 
----+++ Example
+---++++ Example
 %snippet{id=example1|file=test/net/sf/buildbox/args/ArgsParserTest.java}%
----+++ Java binding rules
+
+---+++ TODO: StrictArgs Parser (CVS-like)
+
+commandline consists of:
+   * global options (0..n)
+   * command
+   * command-specific options (0..n)
+
+---+++ TODO: MultiArgsParser
+
+commandline consists of:
+   * global options (0..n)
+   * command specs (1..n), each consisting of:
+      * command
+      * command-specific options (0..n)
+
+---++ Java binding rules
 
 Command:
    * is represented by java class implementing ExecutableCommand
@@ -62,6 +81,6 @@ Global option:
 
 ---+++ Standard commands
 
-   * help - global, per-command
-   * version - simple, detailed with all libraries
+   * help - global or per-command
+   * TODO: version - simple or detailed with all libraries
 
