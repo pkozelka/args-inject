@@ -1,0 +1,1 @@
+Just a reference serving for translation of resource urls to filesystem paths

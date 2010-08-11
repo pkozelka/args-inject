@@ -1,0 +1,14 @@
+ ------
+ main(String[] args)
+ ------
+ Petr Kozelka
+
+Defining program entry point (main)
+
+* Sample main method
+
+%{code-snippet|id=sample-main|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}
+
+* Supporting testability of the application
+
+TODO

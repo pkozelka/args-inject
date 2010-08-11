@@ -8,6 +8,19 @@ MyPathTool (mpt)
 
  Implements a commandline application doing some useful stuff with path lists.
 
+ Demonstrates:
+
+   * application without subcommands (all functionality implemented by one, unnamed, subcommand)
+
+   * mapping pathlist to File[] array - separated by colon or semicolon depending on operating system
+
+   * mapping comma separated exclussion list to String[] array
+
+   * using paramless option method
+
+   * using option method with boolean value
+
+===
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/mypathtool/MyPathTool.java}
 

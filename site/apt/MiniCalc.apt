@@ -14,5 +14,13 @@ MiniCalc
 
  The whole implementation is so trivial that I decided to write all classes in single Java file.
 
+   Demonstrates:
+
+   * using variable parameter list (<<<plus>>>)
+
+   * working with floating-point values
+
+===
+
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}
 

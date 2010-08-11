@@ -1,0 +1,11 @@
+ ------
+ Varargs
+ ------
+ Petr Kozelka
+
+Declaring variable list of parameters
+
+  used in {{{./MiniCalc.html}MiniCalc}} - see its subcommand <<<plus>>>.
+
+TODO
+

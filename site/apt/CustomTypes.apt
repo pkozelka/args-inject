@@ -1,0 +1,38 @@
+ ------
+ Custom types
+ ------
+ Petr Kozelka
+
+Custom value types
+
+ By default, number of common types is converted from commandline String values. User can also define its own types to be convertible.
+
+ Following sections describe how it can be done.
+
+* static valueOf(String) method
+
+   Define static valueOf method which:
+
+   * is public
+
+   * returns type of its declaring class
+
+   * takes exactly one argument, which is of type String
+
+   Then this method will be used to produce instance of given class from a String.
+
+   This makes, for instance, all enumerations to be usable out of the box.
+
+  TODO: add sample
+
+* public constructor with single argument of type String
+
+   Define constructor which
+
+   * is public
+
+   * takes exactly one argument, which is of type String
+
+   This makes some existing value types usable - for instance, BigDecimal etc.
+
+  TODO: add sample

@@ -1,0 +1,12 @@
+ ------
+ Design
+ ------
+ Petr Kozelka
+
+Internal design of <<args-inject>>
+
+ Following picture shows components participating in commandline parsing:
+
+[ArgsInjectProcessing.png] Commandline processing using args-inject
+
+   Note that XmlSetup is not yet implemented.

@@ -21,7 +21,6 @@ import net.sf.buildbox.args.model.SubCommandDeclaration;
  */
 @SubCommand(name = "help", aliases = {"--help", "?", "h"}, description = "shows help for the whole app. or for specified command")
 public class DefaultHelpCommand implements MetaCommand {
-    private static final String SP = "            ";
     private CommandlineDeclaration declaration = null;
     private final String command;
     private PrintStream out = System.err;
@@ -75,11 +74,12 @@ public class DefaultHelpCommand implements MetaCommand {
                     return o1.toString().compareTo(o2.toString());
                 }
             });
-            final Map<String,String> optMap = new LinkedHashMap<String, String>();
+            final Map<String, String> optMap = new LinkedHashMap<String, String>();
             int max = 0;
             // gather option table, and find longest declaration
             for (OptionDeclaration optionDeclaration : sortedOptions) {
                 final String strDecl = optionDeclaration.toString();
+                // TODO: add value synopsis to strDecl
                 if (strDecl.length() > max) {
                     max = strDecl.length();
                 }
@@ -138,7 +138,7 @@ public class DefaultHelpCommand implements MetaCommand {
                     return o1.getName().compareToIgnoreCase(o2.getName());
                 }
             });
-            final Map<String,String> optMap = new LinkedHashMap<String, String>();
+            final Map<String, String> optMap = new LinkedHashMap<String, String>();
             int max = 0;
             // gather option table, and find longest declaration
             for (SubCommandDeclaration subCommandDeclaration : subcommands) {

@@ -3,8 +3,8 @@ package net.sf.buildbox.args;
 import java.text.ParseException;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import net.sf.buildbox.args.api.ExecutableCommand;
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
 
 public class ArgsParserTest {
     @Test
@@ -24,9 +24,11 @@ public class ArgsParserTest {
 
     @Test
     public void testGlobalHelp() throws Exception {
+        // START SNIPPET: default-help
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("testGlobalHelp");
+        setup.addSubCommand(DefaultHelpCommand.class);
+        // END SNIPPET: default-help
         setup.setDefaultSubCommand(DemoFileLister.class);
-        setup.setSubCommands(DefaultHelpCommand.class);
         System.err.println("=== using 'help' ===");
         BasicArgsParser.parse(setup, "help").call();
         System.err.println("=== using '--help' ===");

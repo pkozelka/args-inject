@@ -10,5 +10,17 @@ Timmy
 
  Please keep in mind that working with dates/times is still very immature.
 
+ Demonstrates:
+
+   * using default command (<<<timeconvert>>>)
+
+   * using variable parameter list (<<<timeconvert>>>)
+
+   * "custom" type with String constructor - <<<SimpleDateFormat>>>
+
+   * working with datetimes
+
+===
+
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/timmy/Timmy.java}
 

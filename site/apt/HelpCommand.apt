@@ -1,0 +1,42 @@
+ ------
+ Default Help Command
+ ------
+ Petr Kozelka
+
+Using default help command
+
+* Adding default help command 
+
+ To add support for default "help" command, using declared documentation, add <<<DefaultHelpCommand.class>>> command class:
+
+%{code-snippet|id=default-help|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}
+
+ Note that help command works just like any other command.
+
+* Global help
+
+ Shows
+
+   * generic synopsis
+
+   * list of commands, with short descriptions
+
+   * list of global options (if any)
+
+   Look at the output of <<<minicalc --help>>>:
+
+%{snippet|file=target/test-classes/minicalc-help.txt}
+
+* Command-specific help
+
+ Shows
+
+   * command synopsis
+
+   * list of valid options (if any)
+
+   * list of valid global options (if any)
+
+   Look at the output of <<<minicalc --help log>>>:
+
+%{snippet|file=target/test-classes/minicalc-help-log.txt}

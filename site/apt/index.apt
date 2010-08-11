@@ -30,10 +30,6 @@ args-inject: Commandline Injection Library
  Most of these parts is hidden inside args-inject; and the only part left up to developer is, the business logic of his
  program - including very thin declaration of subcommand object and their option methods and params.
 
- Following picture shows components participating in commandline parsing:
-
-[ArgsInjectProcessing.png] Commandline processing using args-inject
-
 * What is developer required to do ?
 
    * depend on args-inject, of course - for maven project, add this to your pom dependencies:
@@ -48,6 +44,4 @@ args-inject: Commandline Injection Library
 
    * implement main method
 
-     Extremely simple because it is preimplemented with default exception handling
-
-%{code-snippet|id=example1|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}
+     Extremely simple because it is preimplemented with default exception handling; see {{{./MainEntryPoint.html}Defining program entry point}} for details.
