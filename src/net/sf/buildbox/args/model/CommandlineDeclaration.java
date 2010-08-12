@@ -34,6 +34,10 @@ public final class CommandlineDeclaration {
         subCommandDeclarations.add(cmdDecl);
     }
 
+    public Set<OptionDeclaration> getOptionDeclarations() {
+        return optionDeclarations;
+    }
+
     public void addOption(OptionDeclaration optionDeclaration) throws ParseException {
         boolean isnew = true;
         final String shortName = optionDeclaration.getShortName();

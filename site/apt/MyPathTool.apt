@@ -20,7 +20,7 @@ MyPathTool (mpt)
 
    * using option method with boolean value
 
-===
+Code:
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/mypathtool/MyPathTool.java}
 

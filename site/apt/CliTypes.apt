@@ -5,7 +5,7 @@
 
 Types of commandline structure
 
-  Commandline structure can be structured in many ways. The class BasicArgsParser implements support for those most useful ones;
+  Commandline parametrization can be structured in many ways. The class BasicArgsParser implements support for those most useful ones;
   however, the component design allows to reuse most args-inject code (gathering declaration) when implementing another parser.
 
   Following sections describe the what BasicArgsParser currently supports:
@@ -40,4 +40,8 @@ Types of commandline structure
 
    * multiple commands supported, multiple in execution
 
-   * <no known example - just possible> - not currently supported
+   * <no known example - just possible>
+
+   * the idea is something like this:
+
+     <<<mythreadmanager --config /etc/mtm.xml mailProcessingThread --only-text-mails jmsProcessingThread --jmsType=binary>>>

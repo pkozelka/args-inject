@@ -2,6 +2,7 @@ package net.sf.buildbox.args.model;
 
 import java.io.File;
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -10,7 +11,7 @@ import net.sf.buildbox.args.ArgsUtils;
 public final class ParamDeclaration {
     private final Class<?> type;
     private String format;
-    private String listSeparator = File.pathSeparator;
+    private String listSeparator;
     private boolean varArgs;
     private String symbolicName;
 
@@ -20,12 +21,40 @@ public final class ParamDeclaration {
 
     private String defaultSymName() {
         if (isVarArgs()) {
-            return type.getComponentType().getSimpleName() + "...";
+            return type.getComponentType().getSimpleName().toLowerCase() + "...";
         } else if (type.isArray()) {
-            return type.getComponentType().getSimpleName() + "s"; // dirty way to make plural form
+            return type.getComponentType().getSimpleName().toLowerCase() + "s"; // dirty way to make plural form
+        } else if (type.equals(boolean.class) || type.equals(Boolean.class)) {
+            return "true|false";
+        } else if (Enum.class.isAssignableFrom(type)) {
+            @SuppressWarnings("unchecked")
+            final Class<Enum> etype = (Class<Enum>) type;
+            try {
+                final Object valuesObject = etype.getMethod("values").invoke(null);
+                final Object[] values = (Object[]) valuesObject;
+                final StringBuilder sb = new StringBuilder();
+                for (Object value : values) {
+                    if (sb.length() > 0) {
+                        sb.append('|');
+                    }
+                    sb.append(value);
+                }
+                return sb.toString();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            return "enum";
         } else {
             return type.getSimpleName().toLowerCase();
         }
+    }
+
+    static enum MyEnum {
+        A,B,C
     }
 
     public Class<?> getType() {

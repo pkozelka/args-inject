@@ -53,7 +53,9 @@ public class AnnottationAwareSetup implements ArgsSetup {
     }
 
     public void addSubCommand(Class<? extends ExecutableCommand> subCommand) throws ParseException {
-        introspectCommands(subCommand);
+        final SubCommandDeclaration subCommandDeclaration = createCmdDecl(subCommand);
+        cliDeclaration.addSubCommand(subCommandDeclaration);
+        introspectOptions(subCommand, subCommandDeclaration, null);
     }
 
     /**
@@ -69,24 +71,18 @@ public class AnnottationAwareSetup implements ArgsSetup {
         }
     }
 
-    private void introspectCommands(Class<? extends ExecutableCommand> cmdClass) throws ParseException {
-        final SubCommandDeclaration subCommandDeclaration = createCmdDecl(cmdClass);
-        cliDeclaration.addSubCommand(subCommandDeclaration);
-        introspectOptions(cmdClass, subCommandDeclaration, null);
-    }
-
-    private void introspectOptions(Class<?> subCommand, SubCommandDeclaration attachToSubCommandDeclaration, Object attachToGlobalObject) throws ParseException {
-        final String cn = subCommand.getName();
+    private void introspectOptions(Class<?> classWithOptions, SubCommandDeclaration attachToSubCommandDeclaration, Object attachToGlobalObject) throws ParseException {
+        final String cn = classWithOptions.getName();
         if (cn.startsWith("java.")) return;
 //        System.out.println("cls " + cn);
-        for (Class iface : subCommand.getInterfaces()) {
+        for (Class iface : classWithOptions.getInterfaces()) {
             introspectOptions(iface, attachToSubCommandDeclaration, attachToGlobalObject);
         }
-        final Class<?> superclass = subCommand.getSuperclass();
+        final Class<?> superclass = classWithOptions.getSuperclass();
         if (superclass != null && !superclass.equals(Object.class)) {
             introspectOptions(superclass, attachToSubCommandDeclaration, attachToGlobalObject);
         }
-        for (Method method : subCommand.getMethods()) {
+        for (Method method : classWithOptions.getMethods()) {
             if (method.getAnnotation(Option.class) != null) {
                 final OptionDeclaration optionDeclaration = createOptionDecl(method);
                 cliDeclaration.addOption(optionDeclaration);

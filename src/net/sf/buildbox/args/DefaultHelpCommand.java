@@ -57,7 +57,7 @@ public class DefaultHelpCommand implements MetaCommand {
         usage.append(" ");
         usage.append(cmdDecl.getName());
         usage.append(" [options]");
-        paramSynopsis(usage, cmdDecl.getParamDeclarations());
+        usage.append(paramSynopsis(cmdDecl.getParamDeclarations()));
         out.println(usage);
 
         showValidOptions(cmdDecl);
@@ -78,7 +78,8 @@ public class DefaultHelpCommand implements MetaCommand {
             int max = 0;
             // gather option table, and find longest declaration
             for (OptionDeclaration optionDeclaration : sortedOptions) {
-                final String strDecl = optionDeclaration.toString();
+                final String strDecl = optionDeclaration.toString() + paramSynopsis(optionDeclaration.getParamDeclarations());
+;
                 // TODO: add value synopsis to strDecl
                 if (strDecl.length() > max) {
                     max = strDecl.length();
@@ -108,13 +109,15 @@ public class DefaultHelpCommand implements MetaCommand {
         out.println();
     }
 
-    private static void paramSynopsis(StringBuilder sb, List<ParamDeclaration> paramDeclarations) {
+    private static String paramSynopsis(List<ParamDeclaration> paramDeclarations) {
+        final StringBuilder sb = new StringBuilder();
         for (ParamDeclaration paramDecl : paramDeclarations) {
             final String symbolicName = paramDecl.getSymbolicName();
             sb.append(" <");
             sb.append(symbolicName);
             sb.append(">");
         }
+        return sb.toString();
     }
 
     public void globalHelp() {

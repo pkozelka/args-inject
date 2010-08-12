@@ -20,7 +20,7 @@ MiniCalc
 
    * working with floating-point values
 
-===
+Code:
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}
 

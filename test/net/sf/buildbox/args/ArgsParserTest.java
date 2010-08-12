@@ -25,7 +25,7 @@ public class ArgsParserTest {
     @Test
     public void testGlobalHelp() throws Exception {
         // START SNIPPET: default-help
-        final AnnottationAwareSetup setup = new AnnottationAwareSetup("testGlobalHelp");
+        final AnnottationAwareSetup setup = new AnnottationAwareSetup("DemoFileLister");
         setup.addSubCommand(DefaultHelpCommand.class);
         // END SNIPPET: default-help
         setup.setDefaultSubCommand(DemoFileLister.class);
