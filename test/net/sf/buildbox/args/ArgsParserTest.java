@@ -1,8 +1,8 @@
 package net.sf.buildbox.args;
 
 import java.text.ParseException;
+import java.util.concurrent.Callable;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
-import net.sf.buildbox.args.api.ExecutableCommand;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,7 +12,7 @@ public class ArgsParserTest {
         // START SNIPPET: example1
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("myapp");
         setup.setDefaultSubCommand(DemoFileLister.class);
-        final ExecutableCommand cmd = BasicArgsParser.parse(setup,
+        final Callable<Integer> cmd = BasicArgsParser.parse(setup,
                 "-D", "a", "b",
                 "false", "17", "/tmp", "/var", "/root",
                 "-C=true",

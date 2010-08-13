@@ -10,10 +10,10 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import net.sf.buildbox.args.ArgsUtils;
 import net.sf.buildbox.args.ParsedOption;
 import net.sf.buildbox.args.api.ArgsSetup;
-import net.sf.buildbox.args.api.ExecutableCommand;
 import net.sf.buildbox.args.api.MetaCommand;
 import net.sf.buildbox.args.model.CommandlineDeclaration;
 import net.sf.buildbox.args.model.OptionDeclaration;
@@ -34,7 +34,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
      * @param subCommand the command class to be used when the first non-option argument matches none of {@link #setSubCommands(Class[]) supportedCommands}
      * @throws ParseException -
      */
-    public void setDefaultSubCommand(Class<? extends ExecutableCommand> subCommand) throws ParseException {
+    public void setDefaultSubCommand(Class<? extends Callable<Integer>> subCommand) throws ParseException {
         final SubCommandDeclaration subCommandDeclaration = createCmdDecl(subCommand);
         cliDeclaration.setDefaultCommand(subCommandDeclaration);
         introspectOptions(subCommand, subCommandDeclaration, null);
@@ -46,13 +46,13 @@ public class AnnottationAwareSetup implements ArgsSetup {
      * @param subCommands all command classes
      * @throws java.text.ParseException when parsing fails
      */
-    public void setSubCommands(Class<? extends ExecutableCommand>... subCommands) throws ParseException {
-        for (Class<? extends ExecutableCommand> subCommand : subCommands) {
+    public void setSubCommands(Class<? extends Callable<Integer>>... subCommands) throws ParseException {
+        for (Class<? extends Callable<Integer>> subCommand : subCommands) {
             addSubCommand(subCommand);
         }
     }
 
-    public void addSubCommand(Class<? extends ExecutableCommand> subCommand) throws ParseException {
+    public void addSubCommand(Class<? extends Callable<Integer>> subCommand) throws ParseException {
         final SubCommandDeclaration subCommandDeclaration = createCmdDecl(subCommand);
         cliDeclaration.addSubCommand(subCommandDeclaration);
         introspectOptions(subCommand, subCommandDeclaration, null);
@@ -95,7 +95,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
         }
     }
 
-    private SubCommandDeclaration createCmdDecl(Class<? extends ExecutableCommand> cmdClass) {
+    private SubCommandDeclaration createCmdDecl(Class<? extends Callable<Integer>> cmdClass) {
         final SubCommand annCommand = cmdClass.getAnnotation(SubCommand.class);
         // note: @SubCommand is optional
         final SubCommandDeclaration cmdDecl = new SubCommandDeclaration(cmdClass);
@@ -105,7 +105,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
             final String desc = annCommand.description();
             cmdDecl.setDescription("".equals(desc) ? null : desc);
         }
-        final Constructor<? extends ExecutableCommand> con = findPublicConstructor(cmdDecl.getCommandClass());
+        final Constructor<? extends Callable<Integer>> con = findPublicConstructor(cmdDecl.getCommandClass());
         ParamDeclaration paramDecl = null;
         for (int i = 0; i < con.getParameterTypes().length; i++) {
             final Class<?> paramType = con.getParameterTypes()[i];
@@ -166,11 +166,11 @@ public class AnnottationAwareSetup implements ArgsSetup {
         return cliDeclaration;
     }
 
-    public ExecutableCommand createSubCommand(String cmdName, SubCommandDeclaration cmdDecl, LinkedList<String> cmdParams) throws ParseException {
+    public Callable<Integer> createSubCommand(String cmdName, SubCommandDeclaration cmdDecl, LinkedList<String> cmdParams) throws ParseException {
         final List<Object> unmarshalledValues = ParamDeclaration.parseParamList("subcommand " + cmdName, cmdDecl.getParamDeclarations(), cmdParams);
         // find public constructor
-        final Class<? extends ExecutableCommand> cmdClass = cmdDecl.getCommandClass();
-        final Constructor<? extends ExecutableCommand> con = findPublicConstructor(cmdClass);
+        final Class<? extends Callable<Integer>> cmdClass = cmdDecl.getCommandClass();
+        final Constructor<? extends Callable<Integer>> con = findPublicConstructor(cmdClass);
         ArgsUtils.debug("cmd constructor: %s%s", con, unmarshalledValues);
         try {
             return con.newInstance(unmarshalledValues.toArray(new Object[unmarshalledValues.size()]));
@@ -183,8 +183,8 @@ public class AnnottationAwareSetup implements ArgsSetup {
         }
     }
 
-    public void injectOptions(ExecutableCommand commandInstance, List<ParsedOption> parsedOptions, String cmdName) throws ParseException {
-        final Class<? extends ExecutableCommand> cmdClass = commandInstance.getClass();
+    public void injectOptions(Callable<Integer> commandInstance, List<ParsedOption> parsedOptions, String cmdName) throws ParseException {
+        final Class<? extends Callable<Integer>> cmdClass = (Class<? extends Callable<Integer>>) commandInstance.getClass();
         // set options on command instance
         L1:
         for (ParsedOption option : parsedOptions) {
@@ -220,10 +220,10 @@ public class AnnottationAwareSetup implements ArgsSetup {
     }
 
     @SuppressWarnings("unchecked")
-    public static Constructor<ExecutableCommand> findPublicConstructor(Class<? extends ExecutableCommand> cmdClass) {
+    public static Constructor<Callable<Integer>> findPublicConstructor(Class<? extends Callable<Integer>> cmdClass) {
         //TODO: fail if more public constructors exist
-        for (Constructor<ExecutableCommand> constructor : cmdClass.getConstructors()) {
-            if (Modifier.isPublic(constructor.getModifiers())) return constructor;
+        for (Constructor<?> constructor : cmdClass.getConstructors()) {
+            if (Modifier.isPublic(constructor.getModifiers())) return (Constructor<Callable<Integer>>) constructor;
         }
         throw new IllegalStateException("There is no public constructor on " + cmdClass);
     }

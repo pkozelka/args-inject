@@ -3,9 +3,9 @@ package net.sf.buildbox.args.annotation;
 import java.lang.annotation.*;
 
 /**
- * Annottates class representing {@link net.sf.buildbox.args.api.ExecutableCommand command} (a.k.a. subcommand - like "checkout" in "svn checkout").
- *
- * @see net.sf.buildbox.args.api.ExecutableCommand
+ * Annottates class representing subcommand (like "checkout" in "svn checkout").
+ * It is expected to implement {@link java.util.concurrent.Callable Callable&lt;Integer&gt;}.
+ * @see java.util.concurrent.Callable
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

@@ -1,17 +1,17 @@
 package net.sf.buildbox.args.minicalc;
 
+import java.util.concurrent.Callable;
 import net.sf.buildbox.args.BasicArgsParser;
 import net.sf.buildbox.args.DefaultHelpCommand;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import net.sf.buildbox.args.annotation.Option;
 import net.sf.buildbox.args.annotation.Param;
 import net.sf.buildbox.args.annotation.SubCommand;
-import net.sf.buildbox.args.api.ExecutableCommand;
 
 public class MiniCalc {
 
     @SubCommand(name = "plus", description = "computes sum of all given numbers")
-    public static class PlusCommand implements ExecutableCommand {
+    public static class PlusCommand implements Callable<Integer> {
         private final int[] numbers;
 
         public PlusCommand(int... numbers) {
@@ -29,7 +29,7 @@ public class MiniCalc {
     }
 
     @SubCommand(name = "minus", description = "computes operand1 - operand2")
-    public static class MinusCommand implements ExecutableCommand {
+    public static class MinusCommand implements Callable<Integer> {
         private final int x;
         private final int y;
 
@@ -45,7 +45,7 @@ public class MiniCalc {
     }
 
     @SubCommand(name = "log", description = "computes logarithm of given argument")
-    public static class Logarithm implements ExecutableCommand {
+    public static class Logarithm implements Callable<Integer> {
         private final double x;
         private double base = 0;
 

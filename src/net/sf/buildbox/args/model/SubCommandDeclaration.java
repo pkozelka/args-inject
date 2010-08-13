@@ -2,21 +2,21 @@ package net.sf.buildbox.args.model;
 
 import java.lang.reflect.Method;
 import java.util.*;
-import net.sf.buildbox.args.api.ExecutableCommand;
+import java.util.concurrent.Callable;
 
 public final class SubCommandDeclaration {
     private String name;
     private final List<String> alternateNames = new ArrayList<String>();
-    private final Class<? extends ExecutableCommand> commandClass;
+    private final Class<? extends Callable<Integer>> commandClass;
     private final List<ParamDeclaration> paramDeclarations = new ArrayList<ParamDeclaration>();
     private final Map<Method, OptionDeclaration> optionDeclarations = new HashMap<Method, OptionDeclaration>();
     private String description;
 
-    public SubCommandDeclaration(Class<? extends ExecutableCommand> commandClass) {
+    public SubCommandDeclaration(Class<? extends Callable<Integer>> commandClass) {
         this.commandClass = commandClass;
     }
 
-    public Class<? extends ExecutableCommand> getCommandClass() {
+    public Class<? extends Callable<Integer>> getCommandClass() {
         return commandClass;
     }
 

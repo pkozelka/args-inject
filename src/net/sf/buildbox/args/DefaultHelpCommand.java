@@ -79,7 +79,6 @@ public class DefaultHelpCommand implements MetaCommand {
             // gather option table, and find longest declaration
             for (OptionDeclaration optionDeclaration : sortedOptions) {
                 final String strDecl = optionDeclaration.toString() + paramSynopsis(optionDeclaration.getParamDeclarations());
-;
                 // TODO: add value synopsis to strDecl
                 if (strDecl.length() > max) {
                     max = strDecl.length();

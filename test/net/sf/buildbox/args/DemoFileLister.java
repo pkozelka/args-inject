@@ -3,13 +3,13 @@ package net.sf.buildbox.args;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import net.sf.buildbox.args.annotation.Option;
 import net.sf.buildbox.args.annotation.SubCommand;
-import net.sf.buildbox.args.api.ExecutableCommand;
 
 @SubCommand(name = "ls")
-public class DemoFileLister implements ExecutableCommand {
+public class DemoFileLister implements Callable<Integer> {
     private final boolean deep;
     private final int maxCount;
     final File[] files;

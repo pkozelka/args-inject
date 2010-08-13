@@ -1,6 +1,7 @@
 package net.sf.buildbox.args.mypathtool;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.PrintStream;
 import java.util.Arrays;
 import org.junit.Assert;
@@ -28,8 +29,12 @@ public class MyPathToolTest {
 
     @Test
     public void testDedup() throws Exception {
-        final String stdout = mpt("/a/1:/a/2:/a/1:/a/3", "--keep-missing-paths", "true");
-        Assert.assertEquals("/a/1:/a/2:/a/3", stdout);
+        final File a1 = new File("/a/1").getAbsoluteFile();
+        final File a2 = new File("/a/2").getAbsoluteFile();
+        final File a3 = new File("/a/3").getAbsoluteFile();
+        final String S = File.pathSeparator;
+        final String stdout = mpt(a1+S+a2+S+a1+S+a3, "--keep-missing-paths", "true");
+        Assert.assertEquals(a1+S+a2+S+a3, stdout);
     }
 
     @Test

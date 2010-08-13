@@ -3,10 +3,9 @@ package net.sf.buildbox.args.annotation;
 import java.lang.annotation.*;
 
 /**
- * On {@link net.sf.buildbox.args.api.ExecutableCommand command} classes, marks methods that define command options.
+ * On command classes, marks methods that define command options.
  * Number and type of option arguments is constant, and corresponds to method parameters.
  *
- * @see net.sf.buildbox.args.api.ExecutableCommand
  * @see net.sf.buildbox.args.ArgsUtils#stringToType(String, Class)
  */
 @Documented

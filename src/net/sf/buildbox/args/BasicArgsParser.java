@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import net.sf.buildbox.args.api.ArgsSetup;
-import net.sf.buildbox.args.api.ExecutableCommand;
 import net.sf.buildbox.args.model.CommandlineDeclaration;
 import net.sf.buildbox.args.model.OptionDeclaration;
 import net.sf.buildbox.args.model.SubCommandDeclaration;
@@ -34,7 +34,7 @@ public class BasicArgsParser {
      * @return initialized command instance
      * @throws ParseException -
      */
-    public ExecutableCommand parse(String... args) throws ParseException {
+    public Callable<Integer> parse(String... args) throws ParseException {
         final CommandlineDeclaration declaration = declarationSetup.getDeclaration();
         final LinkedList<String> argsList = new LinkedList<String>(Arrays.asList(args));
         ArgsUtils.debug("Parsing commandline args: %s", argsList);
@@ -110,7 +110,7 @@ public class BasicArgsParser {
                 cmdName = cmdname(cmdDecl);
             }
         }
-        final ExecutableCommand commandInstance = declarationSetup.createSubCommand(cmdName, cmdDecl, cmdParams);
+        final Callable<Integer> commandInstance = declarationSetup.createSubCommand(cmdName, cmdDecl, cmdParams);
         // fail if any token remains
         if (!cmdParams.isEmpty()) {
             throw new ParseException("unparsed tokens: " + cmdParams, 0);
@@ -124,7 +124,7 @@ public class BasicArgsParser {
         return name == null ? "<UNNAMED>" : name;
     }
 
-    public static ExecutableCommand parse(ArgsSetup declarationSetup, String... args) throws ParseException {
+    public static Callable<Integer> parse(ArgsSetup declarationSetup, String... args) throws ParseException {
         return new BasicArgsParser(declarationSetup).parse(args);
     }
 
