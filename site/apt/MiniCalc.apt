@@ -12,7 +12,7 @@ MiniCalc
 
    * <<minus>> gets two integer arguments and computes their difference
 
- The whole implementation is so trivial that I decided to write all classes in single Java file.
+ The whole implementation is trivial that it can be stored in a single java file; but I have split it for better readability. 
 
    Demonstrates:
 
@@ -20,7 +20,19 @@ MiniCalc
 
    * working with floating-point values
 
-Code:
+* MiniCalc.java
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}
+
+* Plus.java
+
+%{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/Plus.java}
+
+* Minus.java
+
+%{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/Minus.java}
+
+* Logarithm.java
+
+%{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/Logarithm.java}
 

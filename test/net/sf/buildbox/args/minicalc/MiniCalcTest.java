@@ -110,7 +110,9 @@ public class MiniCalcTest {
         final PrintStream stream = new PrintStream(baos);
         System.setOut(stream);
         try {
+            // START SNIPPET: use-in-junit
             Assert.assertEquals(0, MiniCalc.run(args));
+            // END SNIPPET: use-in-junit
             baos.flush();
             final String result = baos.toString().trim();
             System.err.println("  ==> " + result);

@@ -11,4 +11,23 @@ Defining program entry point (main)
 
 * Supporting testability of the application
 
-TODO
+   The above main method is simple enough, but it still makes sense to split it into two parts if you wish to use utilize most of production code in your unit tests.
+
+   Look how it is done in the {{{./MiniCalc.html}MiniCalc}} sample:
+
+   * the part that constructs java mapping (setup)
+
+%{code-snippet|id=run|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}
+
+   * the part that can call <<<System.exit()>>> which is illegal in JUnit
+
+%{code-snippet|id=main|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}
+
+   []
+
+   Then your junit test can use it like this:
+
+%{code-snippet|id=use-in-junit|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalcTest.java}
+
+   You can also be interrested in trapping stdout/stderr for testing; it's fairly simple; for inspiration, look into <<<MiniCalcTest.java>>> how it can be accomplished.
+

@@ -1,78 +1,16 @@
 package net.sf.buildbox.args.minicalc;
 
-import java.util.concurrent.Callable;
 import net.sf.buildbox.args.BasicArgsParser;
 import net.sf.buildbox.args.DefaultHelpCommand;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
-import net.sf.buildbox.args.annotation.Option;
-import net.sf.buildbox.args.annotation.Param;
-import net.sf.buildbox.args.annotation.SubCommand;
 
+/**
+ * Sample application for <a href="http://buildbox.sf.net/args-inject">args-inject</a>
+ * @author <a href="mailto:pkozelka@gmail.com">Petr Kozelka</a>
+ */
 public class MiniCalc {
 
-    @SubCommand(name = "plus", description = "computes sum of all given numbers")
-    public static class PlusCommand implements Callable<Integer> {
-        private final int[] numbers;
-
-        public PlusCommand(int... numbers) {
-            this.numbers = numbers;
-        }
-
-        public Integer call() throws Exception {
-            int sum = 0;
-            for (int number : numbers) {
-                sum += number;
-            }
-            System.out.println(sum);
-            return 0;
-        }
-    }
-
-    @SubCommand(name = "minus", description = "computes operand1 - operand2")
-    public static class MinusCommand implements Callable<Integer> {
-        private final int x;
-        private final int y;
-
-        public MinusCommand(@Param("operand1") int x, @Param("operand2") int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public Integer call() throws Exception {
-            System.out.println(x - y);
-            return 0;
-        }
-    }
-
-    @SubCommand(name = "log", description = "computes logarithm of given argument")
-    public static class Logarithm implements Callable<Integer> {
-        private final double x;
-        private double base = 0;
-
-        public Logarithm(@Param("arg") double x) {
-            this.x = x;
-        }
-
-        @Option(longName = "--base", shortName = "-b", description = "the base of the logarithm")
-        public void setBase(@Param("base") double base) {
-            this.base = base;
-        }
-
-        public Integer call() throws Exception {
-            final double rv;
-            if (base == 0) {
-                // natural logarithm
-                rv = Math.log(x);
-            } else if (base == 10) {
-                rv = Math.log10(x);
-            } else {
-                rv = Math.log(x) / Math.log(base);
-            }
-            System.out.println(rv);
-            return 0;
-        }
-    }
-
+    // START SNIPPET: run
     /**
      * Highest-possible level of invocation usable both from {@link #main} and from unit tests.
      *
@@ -83,15 +21,19 @@ public class MiniCalc {
     static int run(String... args) throws Exception {
         final AnnottationAwareSetup setup = new AnnottationAwareSetup("minicalc");
         setup.addSubCommand(DefaultHelpCommand.class);
-        setup.addSubCommand(PlusCommand.class);
-        setup.addSubCommand(MinusCommand.class);
+        setup.addSubCommand(Plus.class);
+        setup.addSubCommand(Minus.class);
         setup.addSubCommand(Logarithm.class);
         return BasicArgsParser.process(setup, args);
     }
+    // END SNIPPET: run
 
+    // START SNIPPET: main
     public static void main(String[] args) throws Exception {
-        if (run(args) != 0) {
-            System.exit(-1);
+        final int exitCode = run(args);
+        if (exitCode != 0) {
+            System.exit(exitCode);
         }
     }
+    // END SNIPPET: main
 }

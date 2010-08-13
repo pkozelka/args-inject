@@ -5,7 +5,7 @@
 
 args-inject: Commandline Injection Library
 
- Welcome to <<args-inject>>, the ultimate solution for your commandline nightmares.
+ Welcome to <<args-inject>>, the ultimate solution for your commandline processing nightmare.
 
  Time to time, almost every programmer needs to write a simple utility which has only a trivial commandline interface.
  As with anything else, it often happens that the simple utility grows to a complex full-featured application - but still enjoying commandline parametrization.
@@ -13,9 +13,58 @@ args-inject: Commandline Injection Library
  Besides that, many applications never saw the bright of life even if they would be quite simple - just because they still need a
  lot of parameters <(let's omit that for some of them, it is perhaps better that they do not exist)>
 
+
 * How does <<args-inject>> work ?
 
-   The whole process of processing commandline has following parts:
+** Basic concepts
+
+   The commandline application is supposed to consist of
+
+   * 1..n <<subcommands>> <(none or one can be default)>
+
+   * each <subcommand> takes <<<0..n>>> <<parameters>>, where <<<n>>> can be either fixed or {{{./Varargs.html}variable}} <(in the sense that user can specify 3 or 5 params without the need to recompile app.)>
+
+      * order of <subcommand parameters> usually <<is>> important
+
+   * each subcommand can be affected by <<<0..n>>> <<options>> (either <global> or <local>)
+
+      * order of <options> <<is not>> important
+
+   * each option accepts <<<0..n>>> parameters, where <<<n>>> is a fixed number
+
+      * order of <option parameters> <<is>> important
+
+** Mapping to java
+
+   Following mapping is implemented by <<<AnnottationAwareSetup>>> class:
+
+   * <<subcommand>> maps to a java <<class>> implementing interface Callable\<Integer\>
+
+      * annottation <<<@SubCommand>>> can optionally define more properties of the command
+
+      * without it, the command is unnamed and can only be used as the <default> command
+
+   * <<subcommand parameters>> map to <<constructor arguments>> of the <command class>
+
+      * annottation <<<@Param>>> can optionally define more properties of parameter
+
+      * <command class> is supposed to have exactly <<one>> public constructor
+
+   * <<option>> maps to <<void method>> of the <command class>
+
+      * annottation <<<@Option>>> defines more properties of the option and is mandatory <(only annottated methods are eligible for option mapping)>
+
+      * options declared on abstract ancestors or interfaces are considered <<global>>, others are <<local>> by default
+
+      * annottation <<<@Global>>> can be used to explicitly control what is global/local
+
+   * <<option parameters>> map to <<method arguments>> of the <option method>
+
+      * annottation <<<@Param>>> can optionally define more properties of parameter
+
+** Processing steps
+
+   The whole task of processing commandline has following steps:
 
    * <setup> - defines rules for parsing the commandline
 
@@ -25,14 +74,12 @@ args-inject: Commandline Injection Library
 
    * <exception handling> - any of above phases may produce errors. This part takes care of their proper display.
 
- This looks big. Complex. Difficult. But it is not !
-
- Most of these parts is hidden inside args-inject; and the only part left up to developer is, the business logic of his
- program - including very thin declaration of subcommand object and their option methods and params.
+ Most of these parts is hidden inside args-inject. The only part left up to developer is, the business logic of his
+ program, and very tiny declaration effort on command classes.
 
 * What is developer required to do ?
 
-   * depend on args-inject, of course - for maven project, add this to your pom dependencies:
+   * depend on args-inject, of course; for Maven2 project, add this to your pom dependencies:
 
    <Note: use actual value in version element>
 

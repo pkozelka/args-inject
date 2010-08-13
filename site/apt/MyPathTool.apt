@@ -12,15 +12,15 @@ MyPathTool (mpt)
 
    * application without subcommands (all functionality implemented by one, unnamed, subcommand)
 
-   * mapping pathlist to File[] array - separated by colon or semicolon depending on operating system
+   * mapping pathlist to <<<File[]>>> array - separated by colon or semicolon depending on operating system
 
-   * mapping comma separated exclussion list to String[] array
+   * mapping comma separated exclussion list to <<<String[]>>> array
 
    * using paramless option method
 
    * using option method with boolean value
 
-Code:
+* MyPathTool.java
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/mypathtool/MyPathTool.java}
 

@@ -20,7 +20,7 @@ Timmy
 
    * working with datetimes
 
-Code:
+* Timmy.java
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/timmy/Timmy.java}
 
