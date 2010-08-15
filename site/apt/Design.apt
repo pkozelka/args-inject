@@ -9,4 +9,4 @@ Internal design of <<args-inject>>
 
 [ArgsInjectProcessing.png] Commandline processing using args-inject
 
-   Note that XmlSetup is not yet implemented.
+   Note that XmlSetup is not yet implemented. It's present here just to visualize the idea of alternative declaration source.

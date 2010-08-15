@@ -60,15 +60,14 @@ public class DefaultHelpCommand implements MetaCommand {
         usage.append(paramSynopsis(cmdDecl.getParamDeclarations()));
         out.println(usage);
 
-        showValidOptions(cmdDecl);
+        showValidOptions(cmdDecl.getOptionDeclarations(), false);
+        showValidOptions(cmdDecl.getOptionDeclarations(), true);
     }
 
-    private void showValidOptions(SubCommandDeclaration cmdDecl) {
-        final List<OptionDeclaration> sortedOptions = new ArrayList<OptionDeclaration>(cmdDecl.getOptionDeclarations());
+    private void showValidOptions(Collection<OptionDeclaration> options, boolean global) {
+        final List<OptionDeclaration> sortedOptions = new ArrayList<OptionDeclaration>(options);
         //TODO: somehow add global options
         if (!sortedOptions.isEmpty()) {
-            out.println();
-            out.println("Valid options:");
             Collections.sort(sortedOptions, new Comparator<OptionDeclaration>() {
                 public int compare(OptionDeclaration o1, OptionDeclaration o2) {
                     return o1.toString().compareTo(o2.toString());
@@ -78,6 +77,7 @@ public class DefaultHelpCommand implements MetaCommand {
             int max = 0;
             // gather option table, and find longest declaration
             for (OptionDeclaration optionDeclaration : sortedOptions) {
+                if (optionDeclaration.isGlobal() != global) continue;
                 final String strDecl = optionDeclaration.toString() + paramSynopsis(optionDeclaration.getParamDeclarations());
                 // TODO: add value synopsis to strDecl
                 if (strDecl.length() > max) {
@@ -86,10 +86,13 @@ public class DefaultHelpCommand implements MetaCommand {
                 final String desc = optionDeclaration.getDescription();
                 optMap.put(strDecl, desc);
             }
-            // print it
-            max += 2; // two more spaces
-            final String fmt = "%-" + max + "s";
-            printTable(optMap, fmt);
+            if (!optMap.isEmpty()) {
+                out.println(global ? "Global options:" : "Valid options:");
+                // print it
+                max += 2; // two more spaces
+                final String fmt = "%-" + max + "s";
+                printTable(optMap, fmt);
+            }
         }
 
         out.println();
@@ -159,10 +162,13 @@ public class DefaultHelpCommand implements MetaCommand {
         final SubCommandDeclaration defaultSubCommand = declaration.getDefaultSubCommand();
         // show help for default command (if unnamed)
         if (defaultSubCommand == null) {
+            showValidOptions(declaration.getOptionDeclarations(), true);
             out.println("Type '" + programName + " help <subcommand>' for help on a specific subcommand");
         } else if (defaultSubCommand.getName() == null) {
-            showValidOptions(defaultSubCommand);
+            showValidOptions(defaultSubCommand.getOptionDeclarations(), false);
+            showValidOptions(defaultSubCommand.getOptionDeclarations(), true);
         } else {
+            showValidOptions(declaration.getOptionDeclarations(), true);
             out.println("Type '" + programName + " help <subcommand>' for help on a specific subcommand");
         }
     }

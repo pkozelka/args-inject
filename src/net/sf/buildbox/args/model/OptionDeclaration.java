@@ -15,6 +15,7 @@ public final class OptionDeclaration {
     private final List<ParamDeclaration> paramDeclarations = new ArrayList<ParamDeclaration>();
     private Object globalObject;
     private String description;
+    private boolean global;
 
     public OptionDeclaration(String shortName, String longName, Method optionMethod) throws ParseException {
         this.shortName = "".equals(shortName) ? null : shortName;
@@ -59,6 +60,14 @@ public final class OptionDeclaration {
 
     public void addParamDeclaration(ParamDeclaration paramDeclaration) {
         paramDeclarations.add(paramDeclaration);
+    }
+
+    public boolean isGlobal() {
+        return global;
+    }
+
+    public void setGlobal(boolean global) {
+        this.global = global;
     }
 
     @Override

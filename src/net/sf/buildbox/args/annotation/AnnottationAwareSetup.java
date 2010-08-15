@@ -58,19 +58,6 @@ public class AnnottationAwareSetup implements ArgsSetup {
         introspectOptions(subCommand, subCommandDeclaration, null);
     }
 
-    /**
-     * Attaches objects that will receive values of global options.
-     *
-     * @param globalOptionObjects -
-     * @throws ParseException -
-     */
-    public void setGlobalOptions(Object... globalOptionObjects) throws ParseException {
-        cliDeclaration.setGlobalOptions(globalOptionObjects);
-        for (Object globalOptionsObject : globalOptionObjects) {
-            introspectOptions(globalOptionsObject.getClass(), null, globalOptionsObject);
-        }
-    }
-
     private void introspectOptions(Class<?> classWithOptions, SubCommandDeclaration attachToSubCommandDeclaration, Object attachToGlobalObject) throws ParseException {
         final String cn = classWithOptions.getName();
         if (cn.startsWith("java.")) return;
@@ -122,6 +109,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
 
     private OptionDeclaration createOptionDecl(Method method) throws ParseException {
         final Option annOption = method.getAnnotation(Option.class);
+        final Global annGlobal = method.getAnnotation(Global.class);
         // note: @Option is mandatory
         final OptionDeclaration optionDeclaration = new OptionDeclaration(annOption.shortName(), annOption.longName(), method);
         for (int i = 0; i < method.getParameterTypes().length; i++) {
@@ -131,6 +119,13 @@ public class AnnottationAwareSetup implements ArgsSetup {
         }
         final String desc = annOption.description();
         optionDeclaration.setDescription("".equals(desc) ? null : desc);
+        if (annGlobal != null) {
+            optionDeclaration.setGlobal(annGlobal.value());
+        } else {
+            final boolean isClassAbstract = Modifier.isAbstract(method.getDeclaringClass().getModifiers());
+            final boolean isMethodAbstract = Modifier.isAbstract(method.getModifiers());
+            optionDeclaration.setGlobal(isClassAbstract || isMethodAbstract);
+        }
         return optionDeclaration;
     }
 
@@ -186,7 +181,6 @@ public class AnnottationAwareSetup implements ArgsSetup {
     public void injectOptions(Callable<Integer> commandInstance, List<ParsedOption> parsedOptions, String cmdName) throws ParseException {
         final Class<? extends Callable<Integer>> cmdClass = (Class<? extends Callable<Integer>>) commandInstance.getClass();
         // set options on command instance
-        L1:
         for (ParsedOption option : parsedOptions) {
             final List<Object> unmarshalledValues = option.getValues();
             final Method method = option.getOptionDecl().getOptionMethod();
@@ -197,12 +191,6 @@ public class AnnottationAwareSetup implements ArgsSetup {
                 if (declaringClass.isAssignableFrom(cmdClass)) {
                     method.invoke(commandInstance, values);
                 } else {
-                    for (Object globalOptionsObject : cliDeclaration.getGlobalOptionsObjects()) {
-                        if (declaringClass.isAssignableFrom(globalOptionsObject.getClass())) {
-                            method.invoke(globalOptionsObject, values);
-                            continue L1;
-                        }
-                    }
                     throw new ParseException(String.format("subcommand %s does not accept option '%s'",
                             cmdName, option.getUsedName()), 0);
                 }

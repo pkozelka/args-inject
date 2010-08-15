@@ -2,28 +2,19 @@ package net.sf.buildbox.args.model;
 
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public final class CommandlineDeclaration {
     private final Map<String, OptionDeclaration> optionsByShortName = new HashMap<String, OptionDeclaration>();
     private final Map<String, OptionDeclaration> optionsByLongName = new HashMap<String, OptionDeclaration>();
 
     private String programName;
-    @Deprecated
-    private Set<Object> globalOptionsObjects = new HashSet<Object>();
     private SubCommandDeclaration defaultSubCommand;
     private final Set<SubCommandDeclaration> subCommandDeclarations = new HashSet<SubCommandDeclaration>();
     private final Set<OptionDeclaration> optionDeclarations = new HashSet<OptionDeclaration>();
-
-    @Deprecated
-    public Set<Object> getGlobalOptionsObjects() {
-        return globalOptionsObjects;
-    }
-
-    @Deprecated
-    public void setGlobalOptions(Object... globalOptionsObjects) throws ParseException {
-        this.globalOptionsObjects = new HashSet<Object>(Arrays.asList(globalOptionsObjects));
-    }
 
     public SubCommandDeclaration getDefaultSubCommand() {
         return defaultSubCommand;

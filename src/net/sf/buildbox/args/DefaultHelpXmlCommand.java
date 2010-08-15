@@ -44,7 +44,7 @@ public class DefaultHelpXmlCommand implements MetaCommand {
             final Method method = decl.getOptionMethod();
             final Element opt = XmlFacade.createElement(doc, new QName(NS, "option"));
             root.appendChild(opt);
-            opt.setAttribute("id", method.getDeclaringClass().getName() + ":" +method.getName());
+            opt.setAttribute("id", method.getDeclaringClass().getName() + ":" + method.getName());
             showDescription(opt, decl.getDescription());
             final String longName = decl.getLongName();
             final String shortName = decl.getShortName();
@@ -53,6 +53,9 @@ public class DefaultHelpXmlCommand implements MetaCommand {
             }
             if (shortName != null) {
                 opt.setAttribute("short-name", shortName);
+            }
+            if (decl.isGlobal()) {
+                opt.setAttribute("global", "true");
             }
             showParams(opt, decl.getParamDeclarations());
         }
@@ -81,7 +84,7 @@ public class DefaultHelpXmlCommand implements MetaCommand {
         for (OptionDeclaration optionDeclaration : decl.getOptionDeclarations()) {
             final Method method = optionDeclaration.getOptionMethod();
             final Element opt = XmlFacade.createElement(doc, new QName(NS, "valid-option"));
-            opt.setAttribute("ref", method.getDeclaringClass().getName() + ":" +method.getName());
+            opt.setAttribute("ref", method.getDeclaringClass().getName() + ":" + method.getName());
             cmd.appendChild(opt);
         }
     }
