@@ -44,8 +44,9 @@
     </menu>
     <menu name="Use it">
       <item name="CLI types" href="CliTypes.html"/>
-      <item name="Default help support" href="HelpCommand.html"/>
+      <item name="Options" href="Options.html"/>
       <item name="Varargs" href="Varargs.html"/>
+      <item name="Default help support" href="HelpCommand.html"/>
       <item name="Typical main() method" href="MainEntryPoint.html"/>
       <item name="Custom data types" href="CustomTypes.html"/>
     </menu>

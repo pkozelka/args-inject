@@ -1,0 +1,65 @@
+ ------
+ Options
+ ------
+ Petr Kozelka
+
+Common option syntaxes
+
+* Presence
+
+   Used for options having no value. The typical effect of specifying the option includes <setting a property to true> or <incrementing a value>
+
+   Sample usage:
+
+   * <<<--xml>>> sets an internal flag ensuring that the output is in XML format - used in SVN this way
+
+   * <<<-q>>> turns the output to quiet mode (important messages only) - used in CVS this way
+
+* Simple
+
+ TODO: some more notes
+
+   Sample usage:
+
+   * <<<-r 219>>> or <<<--revision 219>>>
+
+* Property assignment
+
+ TODO: some more notes
+
+   Sample usage:
+
+   * -DpropertyName=propertyValue
+
+   * -propset svn:eol-style native
+
+Repeatability
+
+   Each option can be specified multiple times, and declaration is supported to prevent that.
+
+   Implementation can use it for advancing its internal state, or detect second use and fail in that case.
+   However, the most natural approach is that the value specified later override all preceding ones.
+
+Global vs. specific options
+
+   Some options can be considered more "specific" to command, while others are reused on so many commands that they are marked as global.
+   This marking is solely for help/documentation purposes; it has no processing consequences.
+
+   In more complex programs, there are many candidates for "global" options, but very few options are really really valid for ALL
+   the present commands. On the other hand, some options are quite often reused, but the author still preffers to mark and document them
+   as command-specific.
+
+   For this reason, all options are processed equally, but some can be marked global, either explicitly or implicitly.
+   <<Explicit>> marking happens by using the annottation <<<@Global>>> or <<<@Global(false)>>>.
+   <<Implicit>> marking happens when annottation <<<@Global>>> is not present; in that case, option methods which are abstract,
+   or defined on abstract class or interface, get the global flag set to true, while non-abstract option method declared on non-abstract command class sets global flag to false.
+
+Preventing inconsistent option declarations
+
+   To keep option definitions consistent, both syntactically and semantically, an important limitation is wired to the design and implementation:
+
+   <<Each option name can be implemented only once>>
+
+   meaning that the analyzer will fail if you, for example, implement option "--xml" on more than one classes/interfaces.
+
+   This limitation should be easy to accept and is supposed to have positive impact on good option structure.
