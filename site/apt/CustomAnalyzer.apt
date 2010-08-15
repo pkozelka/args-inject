@@ -5,4 +5,22 @@
 
 Writing a custom analyzer
 
-TODO
+   Custom analyzer is the part that takes "something" and translated it into declaration objects (see package <<<net.sf.buildbox.args.model>>>)
+
+   The class AnnottationAwareSetup implements analyzer which uses Java Reflections with some annottations to construct that model.
+
+   Alternative implementations can provide creating the declaration model from different input information, or using more elegant approach.
+
+   The support for custom analyzers may be subject to changes, because there is currently no existing alternative - therefore future can
+   show some weaknesses of current code.
+
+* Responsibilities
+
+   Analyzer class must implement the <<<ArgsSetup>>> interface, and is responsible for
+
+   * creating the declaration model
+
+   * creating instance of command class - <<<Callable\<Integer\>>>>
+
+   * calling neccessary option methods on that instance
+

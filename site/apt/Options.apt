@@ -3,9 +3,13 @@
  ------
  Petr Kozelka
 
-Common option syntaxes
+Commandline Options
 
-* Presence
+%{toc|fromDepth=2}
+
+* Common sytax styles
+
+** Just present (0 values)
 
    Used for options having no value. The typical effect of specifying the option includes <setting a property to true> or <incrementing a value>
 
@@ -15,32 +19,46 @@ Common option syntaxes
 
    * <<<-q>>> turns the output to quiet mode (important messages only) - used in CVS this way
 
-* Simple
+** Simple (1 value)
 
  TODO: some more notes
 
-   Sample usage:
+   Sample:
 
-   * <<<-r 219>>> or <<<--revision 219>>>
+   * value comes in next argument: <<<-r 219>>> or <<<--revision 219>>>
 
-* Property assignment
+   * value is right after <shortName>, using it as a prefix: <<<-r219>>>
+
+   * value assigment after <longName>: <<<--revision=210>>>
+
+** Property assignment (2 values)
 
  TODO: some more notes
 
-   Sample usage:
+   Sample:
 
-   * -DpropertyName=propertyValue
+   * <<<-DpropertyName=propertyValue>>> - used by java, javac, ant, maven, ...
 
-   * -propset svn:eol-style native
+   * <<<--set-property propertyName propertyValue>>>
 
-Repeatability
+** Multiple values
 
-   Each option can be specified multiple times, and declaration is supported to prevent that.
+   Not very frequent case, but possible - each value then comes from separate argument.
+
+   Sample:
+
+   * <<<--jdbc h2 tcp://localhost/testdb sa sapassword>>>
+
+Related features
+
+* Repeatability
+
+   Each option can be specified multiple times, and no declaration is supported to prevent that.
 
    Implementation can use it for advancing its internal state, or detect second use and fail in that case.
-   However, the most natural approach is that the value specified later override all preceding ones.
+   However, the most natural approach is that the value specified later overrides all preceding ones.
 
-Global vs. specific options
+* Global vs. specific options
 
    Some options can be considered more "specific" to command, while others are reused on so many commands that they are marked as global.
    This marking is solely for help/documentation purposes; it has no processing consequences.
@@ -50,11 +68,13 @@ Global vs. specific options
    as command-specific.
 
    For this reason, all options are processed equally, but some can be marked global, either explicitly or implicitly.
+
    <<Explicit>> marking happens by using the annottation <<<@Global>>> or <<<@Global(false)>>>.
+
    <<Implicit>> marking happens when annottation <<<@Global>>> is not present; in that case, option methods which are abstract,
    or defined on abstract class or interface, get the global flag set to true, while non-abstract option method declared on non-abstract command class sets global flag to false.
 
-Preventing inconsistent option declarations
+* Preventing inconsistent option declarations
 
    To keep option definitions consistent, both syntactically and semantically, an important limitation is wired to the design and implementation:
 

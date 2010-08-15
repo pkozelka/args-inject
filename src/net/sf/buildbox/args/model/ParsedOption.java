@@ -1,17 +1,18 @@
-package net.sf.buildbox.args;
+package net.sf.buildbox.args.model;
 
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
-import net.sf.buildbox.args.model.OptionDeclaration;
-import net.sf.buildbox.args.model.ParamDeclaration;
 
+/**
+ * Represents an option parsed from a command line, with all its values.
+ */
 public final class ParsedOption {
     private final String usedName;
     private final OptionDeclaration optionDecl;
     private List<Object> unmarshalledValues;
 
-    ParsedOption(String usedName, OptionDeclaration optionDecl) {
+    public ParsedOption(String usedName, OptionDeclaration optionDecl) {
         this.usedName = usedName;
         this.optionDecl = optionDecl;
     }

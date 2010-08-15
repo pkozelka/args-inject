@@ -9,6 +9,7 @@ import java.util.concurrent.Callable;
 import net.sf.buildbox.args.api.ArgsSetup;
 import net.sf.buildbox.args.model.CommandlineDeclaration;
 import net.sf.buildbox.args.model.OptionDeclaration;
+import net.sf.buildbox.args.model.ParsedOption;
 import net.sf.buildbox.args.model.SubCommandDeclaration;
 
 /**

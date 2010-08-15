@@ -4,8 +4,8 @@ import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import net.sf.buildbox.args.ParsedOption;
 import net.sf.buildbox.args.model.CommandlineDeclaration;
+import net.sf.buildbox.args.model.ParsedOption;
 import net.sf.buildbox.args.model.SubCommandDeclaration;
 
 public interface ArgsSetup {

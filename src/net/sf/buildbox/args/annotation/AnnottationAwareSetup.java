@@ -12,13 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import net.sf.buildbox.args.ArgsUtils;
-import net.sf.buildbox.args.ParsedOption;
 import net.sf.buildbox.args.api.ArgsSetup;
 import net.sf.buildbox.args.api.MetaCommand;
-import net.sf.buildbox.args.model.CommandlineDeclaration;
-import net.sf.buildbox.args.model.OptionDeclaration;
-import net.sf.buildbox.args.model.ParamDeclaration;
-import net.sf.buildbox.args.model.SubCommandDeclaration;
+import net.sf.buildbox.args.model.*;
 
 public class AnnottationAwareSetup implements ArgsSetup {
 

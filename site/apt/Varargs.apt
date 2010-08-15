@@ -5,7 +5,17 @@
 
 Declaring variable list of parameters
 
-  used in {{{./MiniCalc.html}MiniCalc}} - see its subcommand <<<plus>>>.
+ <<Varargs>> (VARiable ARGumentS) is useful when a functionality needs to accept any number of values - unknown at development time.
 
-TODO
+ This is typical for file operations - zipping, copying, moving or doing whatever else with multiple files is quite common task.
 
+ To declare it with <<<AnnottationAwareSetup>>>, you just equip your command class with a constructor using varargs in the latest parameter.
+
+ An example is in {{{./MiniCalc.html}MiniCalc}} - see its subcommand <<<plus>>>.
+
+
+Multiple varargs
+
+   This feature is currently not supported.
+
+   Future support will probably use argument "--" to separate subsequent varargs lists.
