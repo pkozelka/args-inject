@@ -37,7 +37,7 @@ public class AnnottationAwareSetup implements ArgsSetup {
     public void setDefaultSubCommand(Class<? extends Callable<Integer>> subCommand) throws ParseException {
         final SubCommandDeclaration subCommandDeclaration = createCmdDecl(subCommand);
         cliDeclaration.setDefaultCommand(subCommandDeclaration);
-        introspectOptions(subCommand, subCommandDeclaration, null);
+        introspectOptions(subCommand, subCommandDeclaration);
     }
 
     /**
@@ -55,19 +55,19 @@ public class AnnottationAwareSetup implements ArgsSetup {
     public void addSubCommand(Class<? extends Callable<Integer>> subCommand) throws ParseException {
         final SubCommandDeclaration subCommandDeclaration = createCmdDecl(subCommand);
         cliDeclaration.addSubCommand(subCommandDeclaration);
-        introspectOptions(subCommand, subCommandDeclaration, null);
+        introspectOptions(subCommand, subCommandDeclaration);
     }
 
-    private void introspectOptions(Class<?> classWithOptions, SubCommandDeclaration attachToSubCommandDeclaration, Object attachToGlobalObject) throws ParseException {
+    private void introspectOptions(Class<?> classWithOptions, SubCommandDeclaration attachToSubCommandDeclaration) throws ParseException {
         final String cn = classWithOptions.getName();
         if (cn.startsWith("java.")) return;
 //        System.out.println("cls " + cn);
         for (Class iface : classWithOptions.getInterfaces()) {
-            introspectOptions(iface, attachToSubCommandDeclaration, attachToGlobalObject);
+            introspectOptions(iface, attachToSubCommandDeclaration);
         }
         final Class<?> superclass = classWithOptions.getSuperclass();
         if (superclass != null && !superclass.equals(Object.class)) {
-            introspectOptions(superclass, attachToSubCommandDeclaration, attachToGlobalObject);
+            introspectOptions(superclass, attachToSubCommandDeclaration);
         }
         for (Method method : classWithOptions.getMethods()) {
             if (method.getAnnotation(Option.class) != null) {
@@ -75,8 +75,6 @@ public class AnnottationAwareSetup implements ArgsSetup {
                 cliDeclaration.addOption(optionDeclaration);
                 if (attachToSubCommandDeclaration != null) {
                     attachToSubCommandDeclaration.addOptionDeclaration(optionDeclaration);
-                } else if (attachToGlobalObject != null) {
-                    optionDeclaration.setGlobalObject(attachToGlobalObject);
                 }
             }
         }
