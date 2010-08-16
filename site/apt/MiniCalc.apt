@@ -28,15 +28,31 @@ MiniCalc
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}
 
+** minicalc help
+
+%{snippet|file=target/test-classes/minicalc-help.txt}
+
 * Plus.java
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/Plus.java}
+
+** minicalc help plus
+
+%{snippet|file=target/test-classes/minicalc-help-plus.txt}
 
 * Minus.java
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/Minus.java}
 
+** minicalc help minus
+
+%{snippet|file=target/test-classes/minicalc-help-minus.txt}
+
 * Logarithm.java
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/Logarithm.java}
+
+** minicalc help log
+
+%{snippet|file=target/test-classes/minicalc-help-log.txt}
 

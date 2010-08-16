@@ -1,15 +1,31 @@
  ------
- Custom types
+ Parameters and types
  ------
  Petr Kozelka
 
-Custom value types
+Parameters and types
+
+   Parameters are used at two places: as {{{./Subcommands.html}subcommand}} values and as {{{./Options.html}option}} values.
+
+* Standard value types
+
+  By default, <<args-inject>> supports:
+
+  * <<<java.lang.String>>> - as you probably expect, it's passed as is
+
+  * all primitive integer types - <<long>>, <<int>>, <<short>>, <<byte>> - using <<parse>> methods on their objectful cuonterparts
+
+  * <<char>> - by taking the first character of the string; fails if there is more or less characters
+
+  * <<java.util.Date>> and <<java.util.Callendar>> - experimental support, look at {{{./Timmy.html}Timmy sample}} for more information
+
+* Custom value types
 
  By default, number of common types is converted from commandline String values. User can also define its own types to be convertible.
 
  Following sections describe how it can be done.
 
-* static valueOf(String) method
+** static valueOf(String) method
 
    Define static valueOf method which:
 
@@ -25,7 +41,7 @@ Custom value types
 
   TODO: add sample
 
-* public constructor with single argument of type String
+** public constructor with single argument of type String
 
    Define constructor which
 
@@ -36,3 +52,29 @@ Custom value types
    This makes some existing value types usable - for instance, BigDecimal etc.
 
   TODO: add sample
+
+* Lists
+
+  For working with lists, <<args-inject>> supports two approaches:
+
+  * {{{./Varargs.html}varargs}} in command parameter list - click the link to read more
+
+  * string-separated lists <(discussed here)>
+
+  []
+
+  Lists are useful when you want to specify classpaths, exclussions, set of pages to print etc.
+
+  Lists are supported on parameters defined as <<java array>>.
+
+  You can use the <<<@Param.listSeparator>>> to explicitly set separator on given parameter; however there is very nice algorithm to compute default if you don't:
+
+  * for parameters with component type <<<java.io.File>>>, the default equals to platform-dependent property <<<path.separator>>> - which is colon on Linux and semicolon on Windows
+
+  * any other component types default to "," (comma) as the list separator.
+
+  []
+
+  Have a look at {{{./MyPathTool.html}MyPathTool sample}} to see it in action.
+
+  Note that the above applies to any component type.

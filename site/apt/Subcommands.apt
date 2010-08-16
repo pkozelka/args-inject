@@ -1,0 +1,56 @@
+ ------
+ Subcommands
+ ------
+ Petr Kozelka
+
+Subcommands
+
+   It is typical for commandline applications to handle multiple related tasks within a single problem domain. Each such task - in our terminology <<subcommand>> -
+   usually uses different set of options, attributes and properties, and therefore it makes sense to explicitly support the fact that subcommand argument <is>
+   something a bit different from options and values.
+
+   This approach is very common - you can see it on
+
+   * version control systems (<<cvs>>, <<svn>>, <<git>>, ...),
+
+   * build systems (<<Maven>>, <<Ant>>, ...)
+
+   * and many other tools (<<apt-get>>, <<emerge>>, <<equery>> ...)
+
+
+
+   <<Subcommand>> is represented with a java object implementing interface <<<Callable\<Integer\>>>>. This object is
+
+   * instantiated using public constructor, with parameters filled from commandline params
+
+   * configured with all specified options
+
+   * executed
+
+   []
+
+   During excution, it can throw any exception; with default processing, this is trapped and causes the application to exit JVM with exit code of 1.
+
+* Subcommand names
+
+   Each subcommand typically has at least one <<name>>. It can be also unnamed, but then it is only usable as the default subcommand.
+
+   Alternative names can be added, to serve convenience or compatibility purposes - see <<<@SubCommand.aliases()>>>.
+
+
+* Default subcommand
+
+   Application can define a <<default subcommand>>. The effect is following:
+
+   - if the first parameter after option extraction does not equal to a known command name, the control is passed to the default subcommand.
+
+** Unnamed default subcommand
+
+   If the default subcommand does not have any name declared, it causes that there is no other way to invoke it than as the default - that is, implicitly.
+
+   And if there is <<no other>> subcommand defined, the whole application serves as single-functionality invoker - something like <<java>>, <<javac>> and many many more.
+
+* Default help command
+
+   ... read more at {{{./HelpCommand.html}Default help command}} page.
+   

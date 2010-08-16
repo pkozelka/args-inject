@@ -1,24 +1,158 @@
  ------
- Usage
+ Tutorial
  ------
  Petr Kozelka
 
-args-inject: Usage
+Args-inject step-by-step tutorial
 
 %{toc|fromDepth=2}
 
-* Annottations
+* Creating a simple commandline application
 
- To create a complete declaration (=setup), all the subcommand classes are introspected, and there are few
- annottations that can be used to bind it with commandline arguments.
+   Basic steps
 
-** @SubCommand
+   * Add <<<args-inject>>> to your compile dependencies <(== javac classpath)>
 
- <TODO>
+   * Create SubCommand class
 
-*** varargs - variable argument list
+   * Define options methods
 
- <TODO>
+   * Create Application class
+
+   * Write JUnit test
+
+   * Creating wrapper shell script
+
+** Adding args-inject to dependencies
+
+*** Maven2 project
+
+   If you use Maven2, you have a project with a <<<pom.xml>>> so you will need to add something like this <(with the released version that you selected, of course)>:
+
+%{code-snippet|id=dependency|brush=xml|file=site/snip.xml}
+
+*** Ant project
+
+   If you compile your code with Ant, then fragments of following code might be useful to you:
+
+%{code-snippet|id=ant-maven-dependency|brush=xml|file=site/snip.xml}
+
+   Note that this uses the ant library {{{http://maven.apache.org/ant-tasks/}maven-ant-tasks}} which is an excellent way of reusing Maven artifacts in Ant code; I highly recommend it to your attention.
+
+*** Any other build system
+
+   Well, reading the above sections, you get the idea - use your skills to setup your system so that it compiles against args-inject, among other external libraries.
+
+** Creating SubCommand class
+
+   Rules
+
+   * the class must implement <<<Callable\<Integer\>>>>
+
+   * class should be annottated with <<<@SubCommand>>> with a little description
+
+   * create constructor with taking mandatory parameters of the command
+
+   * to allow unlimited number of params, your last constructor's parameter can be Java varargs array <(using notation <<<SomeType... myarray>>> )>
+
+   * the functionality must be implemented within the <<<Integer call()>>> method; usually you will want to return 0 from it
+
+   [] 
+
+   Hints
+
+   * create a common ancestor for your subcommand classes, to share functionality and option declarations
+
+   * to share only option declarations between commands, use dedicated interface
+
+   * unnamed subcommand class can only be used for default subcommand
+
+   * returning any other <exitCode> from <<<call()>>> makes only sense if you want your application to fail silently - or if your code already printed an error message
+
+   []
+
+*** Sample subcommand class
+
+%{code-snippet|brush=java|file=test/net/sf/buildbox/args/DemoFileLister.java}
+
+
+
+** Defining option method
+
+   Rules
+
+   * option method must be annottated with <<<@Option>>>, specifying at least one of <<<shortName>>> or <<<longName>>> attributes
+
+   * option method must return void and cannot be static
+
+   * option method is invoked for every occurence on the commandline
+
+   * method param(s) map to option value(s)
+
+   * varargs cannot be used for options (it works just as array)
+
+   []
+
+   Hints
+
+   * when design your commandline structure, you should make options really optional - "mandatory options" are not nice, and <<args-inject>> does not provide any specific support for it
+
+   * option can have as many values as you wish; however, using 0..2 params should usually make you happy enough
+
+   * make the functionality independent of mutual commandline order - it makes the functionality easier to predict
+
+** Creating application class
+
+   Rules
+
+
+   * implement both <<<main>>> and <<<run>>> as shown in <<MiniCalc sample>>
+   TODO
+
+   []
+
+   Hints
+
+   * use default help command
+
+   []
+
+*** Sample main method
+
+%{code-snippet|id=sample-main|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}
+
+
+** Writing JUnit tests
+
+   Rules
+
+   TODO
+
+** Creating wrapper shell script
+
+   Rules
+
+   * use the name you specified in <<<main()>>> as base
+
+   []
+
+   Hints
+
+   * remember to include all runtime dependencies in the resulting classpath
+
+   TODO
+
+* Finetuning
+
+   * TODO: using default command
+
+   * TODO: using help as the default
+
+   * TODO: specifying symbolic names to improve help outputs
+
+   * TODO: working with arrays
+
+* OLD CONTENT - WILL BE DISSOLVED:
 
 ** @Option
 
@@ -54,11 +188,3 @@ args-inject: Usage
 
  <TODO>
 
-* Sample subcommand class
-
-%{code-snippet|brush=java|file=test/net/sf/buildbox/args/DemoFileLister.java}
-
-
-* Sample main method
-
-%{code-snippet|id=sample-main|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}

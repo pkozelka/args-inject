@@ -75,6 +75,7 @@ public class BasicArgsParser {
             } else if (arg.startsWith("-")) {
                 optionDecl = declaration.lookupShortOption(argName);
                 if (optionDecl == null) {
+                    //TODO: if digits (with dot) follow, pass it as a value
                     throw new ParseException("invalid option: " + arg, 0);
                 }
             } else {

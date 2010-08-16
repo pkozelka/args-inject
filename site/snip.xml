@@ -6,4 +6,22 @@
     <version>1.0.0-alpha-1</version>
   </dependency>
   <!-- END SNIPPET: dependency -->
+
+  <!-- START SNIPPET: ant-maven-dependency -->
+  <project name="my-project"
+      xmlns="antlib:org.apache.tools.ant"
+      xmlns:artifact="urn:maven-artifact-ant">
+    <!-- add maven-ant-tasks -->
+    <typedef classpath="${user.home}/.m2/lib/maven-ant-tasks-2.2.1.jar"
+        resource="org/apache/maven/artifact/ant/antlib.xml"
+        uri="urn:maven-artifact-ant"/>
+    <!-- resolve the dependency -->
+    <artifact:dependencies>
+      <artifact:dependency groupId="net.sf.buildbox" artifactId="args-inject" version="1.0.0-alpha-1"/>
+    </artifact:dependencies>
+    <!-- use the dependency as a file -->
+    <echo>add this path to javac classpath: ${net.sf.buildbox:args-inject:jar}</echo>
+    <!-- ... -->
+    <!-- END SNIPPET: ant-maven-dependency -->
+  </project>
 </snippets>

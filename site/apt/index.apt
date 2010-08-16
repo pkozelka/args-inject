@@ -16,6 +16,8 @@ args-inject: Commandline Injection Library
 
 * How does <<args-inject>> work ?
 
+[ArgsInjectProcessingSimple.png] Simplified picture of commandline processing with args-inject
+
 ** Basic concepts
 
    The commandline application is supposed to consist of
@@ -33,6 +35,12 @@ args-inject: Commandline Injection Library
    * each option accepts <<<0..n>>> parameters, where <<<n>>> is a fixed number
 
       * order of <option parameters> <<is>> important
+
+   []
+
+ A commandline may look like this:
+
+[ArgsInjectCommandLine.png] Commandline structure
 
 ** Mapping to java
 
@@ -66,7 +74,7 @@ args-inject: Commandline Injection Library
 
    The whole task of processing commandline has following steps:
 
-   * <setup> - defines rules for parsing the commandline
+   * <setup> - generates declaration model defining rules for parsing the commandline
 
    * <parse> - according to created setup, parses actual commandline arguments, creates a subcommand objects and injects parameters and options to it
 
@@ -77,18 +85,3 @@ args-inject: Commandline Injection Library
  Most of these parts is hidden inside args-inject. The only part left up to developer is, the business logic of his
  program, and very tiny declaration effort on command classes.
 
-* What is developer required to do ?
-
-   * depend on args-inject, of course; for Maven2 project, add this to your pom dependencies:
-
-   <Note: use actual value in version element>
-
-%{code-snippet|id=dependency|brush=xml|file=site/snip.xml}
-
-   * implement subcommand classes, properly annottated to describe options and parameters
-
-     The subcommand class must implement the ExecutableCommand interface which is called right after setting all options
-
-   * implement main method
-
-     Extremely simple because it is preimplemented with default exception handling; see {{{./MainEntryPoint.html}Defining program entry point}} for details.
