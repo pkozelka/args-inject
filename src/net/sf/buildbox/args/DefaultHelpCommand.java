@@ -66,7 +66,6 @@ public class DefaultHelpCommand implements MetaCommand {
 
     private void showValidOptions(Collection<OptionDeclaration> options, boolean global) {
         final List<OptionDeclaration> sortedOptions = new ArrayList<OptionDeclaration>(options);
-        //TODO: somehow add global options
         if (!sortedOptions.isEmpty()) {
             Collections.sort(sortedOptions, new Comparator<OptionDeclaration>() {
                 public int compare(OptionDeclaration o1, OptionDeclaration o2) {
@@ -79,7 +78,6 @@ public class DefaultHelpCommand implements MetaCommand {
             for (OptionDeclaration optionDeclaration : sortedOptions) {
                 if (optionDeclaration.isGlobal() != global) continue;
                 final String strDecl = optionDeclaration.toString() + paramSynopsis(optionDeclaration.getParamDeclarations());
-                // TODO: add value synopsis to strDecl
                 if (strDecl.length() > max) {
                     max = strDecl.length();
                 }

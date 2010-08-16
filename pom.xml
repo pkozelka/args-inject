@@ -177,7 +177,7 @@
               <tags>
                 <tag>
                   <name>todo</name>
-                  <!-- todo tag for all places -->
+                  <!-- a = for all places -->
                   <placement>a</placement>
                   <head>To do:</head>
                 </tag>

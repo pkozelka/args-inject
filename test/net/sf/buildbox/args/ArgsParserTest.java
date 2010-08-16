@@ -4,22 +4,56 @@ import java.text.ParseException;
 import java.util.concurrent.Callable;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ArgsParserTest {
     @Test
     public void testMultiFiles() throws Exception {
         // START SNIPPET: example1
-        final AnnottationAwareSetup setup = new AnnottationAwareSetup("myapp");
-        setup.setDefaultSubCommand(DemoFileLister.class);
-        final Callable<Integer> cmd = BasicArgsParser.parse(setup,
-                "-D", "a", "b",
+        final int exitCode = DemoFileLister.run("-D", "a", "b",
                 "false", "17", "/tmp", "/var", "/root",
                 "-C=true",
                 "--property", "xxx", "yyy");
-        System.out.println("--- execute ---");
-        cmd.call();
         // END SNIPPET: example1
+        Assert.assertEquals(0, exitCode);
+    }
+
+    @Test
+    public void testSampleOptionShort() throws Exception {
+        final StringBuilder stdout = new StringBuilder();
+        final StringBuilder stderr = new StringBuilder();
+        final int exitCode = ArgsTestUtils.trapStandardOutputs(stdout, stderr, new Callable<Integer>() {
+            public Integer call() throws Exception {
+                return SampleOptionPrinter.run(
+                        "-si", "42",
+                        "-sb", "false",
+                        "-ss", "Hello");
+            }
+        });
+        System.out.println(stdout);
+        System.err.println(stderr);
+        Assert.assertEquals(0, exitCode);
+        Assert.assertEquals("42:false:Hello", stdout.toString());
+    }
+
+    @Ignore("TODO - attached options not yet working")
+    @Test
+    public void testSampleOptionSyntaxMix() throws Exception {
+        final StringBuilder stdout = new StringBuilder();
+        final StringBuilder stderr = new StringBuilder();
+        final int exitCode = ArgsTestUtils.trapStandardOutputs(stdout, stderr, new Callable<Integer>() {
+            public Integer call() throws Exception {
+                return SampleOptionPrinter.run(
+                        "-si42",
+                        "--sample-boolean=false",
+                        "-sample-string", "Hello");
+            }
+        });
+        System.out.println(stdout);
+        System.err.println(stderr);
+        Assert.assertEquals(0, exitCode);
+        Assert.assertEquals("42:false:Hello", stdout.toString());
     }
 
     @Test

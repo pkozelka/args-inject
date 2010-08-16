@@ -1,8 +1,9 @@
 package net.sf.buildbox.args.minicalc;
 
-import java.io.*;
-import java.net.URL;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Arrays;
+import net.sf.buildbox.args.ArgsTestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,8 +11,8 @@ public class MiniCalcTest {
 
     @Test
     public void testPlus() throws Exception {
-        final String stdout = minicalc("plus", "5", "10", "3", "2");
-        Assert.assertEquals("20", stdout);
+        final String stdout = minicalc("plus", "5", "10", "3", "-2");
+        Assert.assertEquals("16", stdout);
     }
 
     @Test
@@ -29,31 +30,16 @@ public class MiniCalcTest {
     @Test
     public void testHelp() throws Exception {
         String stderr = minicalcTrapStderr(0, "help");
-        filewrite("minicalc-help.txt", stderr);
+        ArgsTestUtils.filewrite("minicalc-help.txt", stderr);
 
         stderr = minicalcTrapStderr(0, "help", "log");
-        filewrite("minicalc-help-log.txt", stderr);
+        ArgsTestUtils.filewrite("minicalc-help-log.txt", stderr);
 
         stderr = minicalcTrapStderr(0, "help", "plus");
-        filewrite("minicalc-help-plus.txt", stderr);
+        ArgsTestUtils.filewrite("minicalc-help-plus.txt", stderr);
 
         stderr = minicalcTrapStderr(0, "help", "minus");
-        filewrite("minicalc-help-minus.txt", stderr);
-    }
-
-    private void filewrite(String filename, String text) throws IOException {
-        final URL url = getClass().getResource("/ref.txt");
-        Assert.assertNotNull("Failed to find resource ref.txt", url);
-        final File dir = new File(url.getPath()).getParentFile();
-        final File of = new File(dir, filename);
-        final Writer w = new FileWriter(of);
-        System.out.println("Writing to " + of);
-        try {
-            w.write(text);
-            System.out.println(text);
-        } finally {
-            w.close();
-        }
+        ArgsTestUtils.filewrite("minicalc-help-minus.txt", stderr);
     }
 
     @Test
@@ -136,7 +122,6 @@ public class MiniCalcTest {
     }
 
     private String minicalcTrapStderr(int requiredExitCode, String... args) throws Exception {
-//        ArgsUtils.debugMode = true;
         // trap stdout to a string
         System.err.println("minicalc " + Arrays.toString(args));
         final PrintStream origErr = System.err;
@@ -150,7 +135,7 @@ public class MiniCalcTest {
             System.err.println("  ==> " + result);
             return result;
         } finally {
-            System.setOut(origErr);
+            System.setErr(origErr);
         }
     }
 }

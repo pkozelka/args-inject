@@ -5,10 +5,11 @@ import java.util.Arrays;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import net.sf.buildbox.args.annotation.Option;
 import net.sf.buildbox.args.annotation.SubCommand;
 
-@SubCommand(name = "ls")
+@SubCommand(name = "ls", description = "list files (demo)")
 public class DemoFileLister implements Callable<Integer> {
     private final boolean deep;
     private final int maxCount;
@@ -58,5 +59,11 @@ public class DemoFileLister implements Callable<Integer> {
         System.out.println("properties = " + properties);
         System.out.println("timeunit = " + timeunit);
         return 0;
+    }
+
+    static int run(String... args) throws Exception {
+        final AnnottationAwareSetup setup = new AnnottationAwareSetup("DemoFileLister");
+        setup.setDefaultSubCommand(DemoFileLister.class);
+        return BasicArgsParser.process(setup, args);
     }
 }

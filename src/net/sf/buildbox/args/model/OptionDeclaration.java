@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @todo get shortName and longName without leading dashes
+ * Represents option declaration.
  */
 public final class OptionDeclaration {
     private final String shortName;

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.regex.Pattern;
 import net.sf.buildbox.args.api.ArgsSetup;
 import net.sf.buildbox.args.model.CommandlineDeclaration;
 import net.sf.buildbox.args.model.OptionDeclaration;
@@ -16,10 +17,6 @@ import net.sf.buildbox.args.model.SubCommandDeclaration;
  * Supports one subcommand on the commandline.
  * The order of global options, subcommand options, subcommand itself and its parameters does not matter - all can be mixed.
  * Values of options must however directly follow the option name.
- *
- * @todo embedded docs support
- * @todo print synopsis support
- * @todo print full help support
  */
 public class BasicArgsParser {
     private final ArgsSetup declarationSetup;
@@ -75,8 +72,13 @@ public class BasicArgsParser {
             } else if (arg.startsWith("-")) {
                 optionDecl = declaration.lookupShortOption(argName);
                 if (optionDecl == null) {
-                    //TODO: if digits (with dot) follow, pass it as a value
-                    throw new ParseException("invalid option: " + arg, 0);
+                    final Pattern NUMBER_CHARS = Pattern.compile("-\\d+(\\.\\d+)?");
+                    if (!NUMBER_CHARS.matcher(argName).matches()) {
+                        throw new ParseException("invalid option: " + arg, 0);
+                    }
+                    // if digits (with dot) follow, pass it as a value => this enables support for negative subcommand param values
+                    cmdParams.add(arg);
+                    continue;
                 }
             } else {
                 cmdParams.add(arg);
