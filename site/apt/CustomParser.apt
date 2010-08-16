@@ -5,5 +5,25 @@
 
 Writing a custom parser
 
-//TODO
+ Parser is the part that combines actual arguments list (<<<String args[]>>> from <<<static main>>> method) with existing
+ declaration (as produced by a {{{./CustomAnalyzer.html}analyzer}}).
+
+ The class <<<BasicArgsParser>>> implements the approach that produces exactly one <<<Callable>>> object.  
+
+* When to do it
+
+   There is rarely a good reason. Here are some tips:
+
+   * when you need to generate multiple <<<Callable>>> objects
+
+   * when you need to place further restrictions on commandline structure, than <<<BasicArgsParser>>> does
+
+* Responsibilities
+
+   The only resposibility is to
+
+   * translate args to callable instance
+
+   It is recommended to implement static method <<<process>>> with the same semantics as in <<<BasicArgsParser>>>, to keep the usability easy.
+
 

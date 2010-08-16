@@ -5,8 +5,16 @@
 
 Internal design of <<args-inject>>
 
+   [[1]] {{{./CustomAnalyzer.html}Analyzer}} creates the <declaration> model
+
+   [[2]] {{{./CustomParser.html}Parser}} matches actual arguments against declaration and prepares <callable> object
+
+   [[3]] Client calls the <callable> to execute the desired functionality
+
+   [[4]] Client evaluates any exceptions and exit code and passes it up
+
  Following picture shows components participating in commandline parsing:
 
 [ArgsInjectProcessing.png] Commandline processing using args-inject
 
-   Note that XmlSetup is not yet implemented. It's present here just to visualize the idea of alternative declaration source.
+   <Note: XmlSetup is not yet implemented. It's present here just to visualize the idea of {{{./CustomAnalyzer.html}alternative declaration source}}.>

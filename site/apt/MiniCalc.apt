@@ -20,6 +20,10 @@ MiniCalc
 
    * working with floating-point values
 
+ Files:
+
+%{toc|fromDepth=2}
+
 * MiniCalc.java
 
 %{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}

@@ -9,9 +9,11 @@ Declaring variable list of parameters
 
  This is typical for file operations - zipping, copying, moving or doing whatever else with multiple files is quite common task.
 
+ However, it can be used for any other supported type, not just files.
+
  To declare it with <<<AnnottationAwareSetup>>>, you just equip your command class with a constructor using varargs in the latest parameter.
 
- An example is in {{{./MiniCalc.html}MiniCalc}} - see its subcommand <<<plus>>>.
+ An example is in {{{./MiniCalc.html}MiniCalc}} - see its subcommand {{{./MiniCalc.html#Plus.java}plus}}.
 
 
 Multiple varargs

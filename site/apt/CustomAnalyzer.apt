@@ -9,10 +9,19 @@ Writing a custom analyzer
 
    The class AnnottationAwareSetup implements analyzer which uses Java Reflections with some annottations to construct that model.
 
-   Alternative implementations can provide creating the declaration model from different input information, or using more elegant approach.
 
    The support for custom analyzers may be subject to changes, because there is currently no existing alternative - therefore future can
    show some weaknesses of current code.
+
+* When to do it
+
+   Alternative implementations can be useful when you need to 
+
+   * create the declaration model from different input source (XML, DB, ...)
+
+   * define more elegant approach to declaration style
+
+   * reuse existing declaration information in other form
 
 * Responsibilities
 
