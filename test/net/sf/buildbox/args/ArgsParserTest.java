@@ -26,9 +26,9 @@ public class ArgsParserTest {
         final int exitCode = ArgsTestUtils.trapStandardOutputs(stdout, stderr, new Callable<Integer>() {
             public Integer call() throws Exception {
                 return SampleOptionPrinter.run(
-                        "-si", "42",
-                        "-sb", "false",
-                        "-ss", "Hello");
+                        "-i", "42",
+                        "-b", "false",
+                        "-s", "Hello");
             }
         });
         System.out.println(stdout);
@@ -37,7 +37,7 @@ public class ArgsParserTest {
         Assert.assertEquals("42:false:Hello", stdout.toString());
     }
 
-    @Ignore("TODO - attached options not yet working")
+//    @Ignore("TODO - attached options feature is not yet working")
     @Test
     public void testSampleOptionSyntaxMix() throws Exception {
         final StringBuilder stdout = new StringBuilder();
@@ -45,9 +45,9 @@ public class ArgsParserTest {
         final int exitCode = ArgsTestUtils.trapStandardOutputs(stdout, stderr, new Callable<Integer>() {
             public Integer call() throws Exception {
                 return SampleOptionPrinter.run(
-                        "-si42",
+                        "-i42",
                         "--sample-boolean=false",
-                        "-sample-string", "Hello");
+                        "--sample-string", "Hello");
             }
         });
         System.out.println(stdout);

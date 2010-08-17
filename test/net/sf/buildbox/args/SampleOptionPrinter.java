@@ -9,17 +9,17 @@ public class SampleOptionPrinter implements Callable<Integer> {
     private boolean sampleBoolean;
     private String sampleString;
 
-    @Option(longName = "--sample-int", shortName = "-si", description = "sample integer option")
+    @Option(longName = "--sample-int", shortName = "-i", description = "sample integer option")
     public void setSampleInt(int sampleInt) {
         this.sampleInt = sampleInt;
     }
 
-    @Option(longName = "--sample-boolean", shortName = "-sb", description = "sample boolean option")
+    @Option(longName = "--sample-boolean", shortName = "-b", description = "sample boolean option")
     public void setSampleBoolean(boolean sampleBoolean) {
         this.sampleBoolean = sampleBoolean;
     }
 
-    @Option(longName = "--sample-string", shortName = "-ss", description = "sample string option")
+    @Option(longName = "--sample-string", shortName = "-s", description = "sample string option")
     public void setSampleString(String sampleString) {
         this.sampleString = sampleString;
     }
