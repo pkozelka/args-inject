@@ -7,6 +7,22 @@
   </dependency>
   <!-- END SNIPPET: dependency -->
 
+  <!-- START SNIPPET: alpha-repo -->
+  <repositories>
+    <repository>
+      <id>bbx-alpha</id>
+      <name>Buildbox repository for ALPHA releases (developer preview)</name>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <url>http://buildbox.sf.net/maven2-alpha</url>
+    </repository>
+  </repositories>
+  <!-- END SNIPPET: alpha-repo -->
+
   <!-- START SNIPPET: ant-maven-dependency -->
   <project name="my-project"
       xmlns="antlib:org.apache.tools.ant"

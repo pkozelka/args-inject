@@ -39,8 +39,6 @@ Parameters and types
 
    This makes, for instance, all enumerations to be usable out of the box.
 
-  TODO: add sample
-
 ** public constructor with single argument of type String
 
    Define constructor which
@@ -50,8 +48,6 @@ Parameters and types
    * takes exactly one argument, which is of type String
 
    This makes some existing value types usable - for instance, BigDecimal etc.
-
-  TODO: add sample
 
 * Lists
 
@@ -78,3 +74,11 @@ Parameters and types
   Have a look at {{{./MyPathTool.html}MyPathTool sample}} to see it in action.
 
   Note that the above applies to any component type.
+
+* Symbolic names
+
+  When help prints parameter synopsis, it uses simple heuristic to derive a sensible name placeholder from the value type.
+
+  For instance, type <<<java.io.File>>> is printed as <<<file>>>, <<<int>>> is printed as <<<int>>> etc.
+
+  In most cases, it will be somewhat helpful to specify the <<<@Param("myname")>>> annottation to explicitly specify something more valid in the specific context.   

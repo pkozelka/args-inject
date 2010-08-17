@@ -19,8 +19,6 @@ Args-inject step-by-step tutorial
 
    * Create Application class
 
-   * Write JUnit test
-
    * Creating wrapper shell script
 
 ** Adding args-inject to dependencies
@@ -30,6 +28,12 @@ Args-inject step-by-step tutorial
    If you use Maven2, you have a project with a <<<pom.xml>>> so you will need to add something like this <(with the released version that you selected, of course)>:
 
 %{code-snippet|id=dependency|brush=xml|file=site/snip.xml}
+
+   Following fragment adds the buildbox repository containing the release if you do not use a centralized artifact repository software <(like {{{http://nexus.sonatype.com}Sonatype Nexus}} for instance)>:
+
+%{code-snippet|id=alpha-repo|brush=xml|file=site/snip.xml}
+
+   With Nexus or other repository software, you will probably prefer to use above information <(id, url)> for adding a new repository proxy to a public repository group.
 
 *** Ant project
 
@@ -105,9 +109,9 @@ Args-inject step-by-step tutorial
 
    Rules
 
-
    * implement both <<<main>>> and <<<run>>> as shown in <<MiniCalc sample>>
-   TODO
+
+   * your application should always return with 0 on success and with 1 on failure; this is conveniently handled by method <<<BasicArgsParser.process>>>
 
    []
 
@@ -121,18 +125,15 @@ Args-inject step-by-step tutorial
 
 %{code-snippet|id=sample-main|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}
 
-
-** Writing JUnit tests
-
-   Rules
-
-   TODO
-
 ** Creating wrapper shell script
 
    Rules
 
-   * use the name you specified in <<<main()>>> as base
+   * use the name you specified in <<<main()>>> as the base name; that is, <<<something.bat>>> or <<<something.cmd>>> on Windows, and just <<<something>>> on Linux
+
+   * be sure to pass exitcode from JVM also out from the script; putting <<<java>>> as the latest command usually does the job
+
+   * remember to pass script arguments to your main class - on Windows, use "<<<%*>>>", on Linux, use "<<<$*>>>". 
 
    []
 
@@ -140,51 +141,20 @@ Args-inject step-by-step tutorial
 
    * remember to include all runtime dependencies in the resulting classpath
 
-   TODO
+   * keep the shell script as brief as possible; long scripts are difficult to translate under certain platforms, especially Windows
+
+   * on Linux, if your last command of the script is <<<java>>> <(recommended!)>, then it is good to call it with exec to reuse script's process for JVM:
+   
+     <<<exec java -classpath $CP net.sf.buildbox.args.minicalc.MiniCalc $*>>>
+
 
 * Finetuning
 
-   * TODO: using default command
+   * using default command - see {{{./Subcommands.html}Subcommands}}
+
+   * specifying symbolic names to improve help outputs - see {{{./Params.html}Params}}
+
+   * working with arrays  - see {{{./Options.html}Options}}
 
    * TODO: using help as the default
-
-   * TODO: specifying symbolic names to improve help outputs
-
-   * TODO: working with arrays
-
-* OLD CONTENT - WILL BE DISSOLVED:
-
-** @Option
-
- <TODO>
-
-*** Option syntax styles
-
-   * flag
-
-   * property
-
-   * assignment
-
-   * presence
-
-   * plus/minus/none
-
- <TODO>
-
-** @Param
-
- <TODO>
-
-*** Type conversions
-
-   * file
-
-   * time
-
-   * numbers
-
-   * lists
-
- <TODO>
 

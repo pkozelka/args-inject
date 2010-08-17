@@ -39,7 +39,7 @@
       <item name="Introduction" href="index.html"/>
       <item name="Features" href="Features.html"/>
       <item name="Comparison" href="Comparison.html"/>
-      <item name="Tutorial" href="Usage.html"/>
+      <item name="Tutorial" href="Tutorial.html"/>
     </menu>
     <menu name="Samples">
       <item name="MiniCalc" href="MiniCalc.html"/>

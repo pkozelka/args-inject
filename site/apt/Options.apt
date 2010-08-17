@@ -21,7 +21,7 @@ Commandline Options
 
 ** Simple (1 value)
 
- TODO: some more notes
+   The most typical way of using options.
 
    Sample:
 
@@ -33,7 +33,7 @@ Commandline Options
 
 ** Property assignment (2 values)
 
- TODO: some more notes
+   Often used to specify properties.
 
    Sample:
 

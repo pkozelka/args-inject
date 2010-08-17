@@ -2,4 +2,4 @@
 D=$PWD
 CP=$D/target/classes:$D/target/test-classes
 CP=$CP:$HOME/.m2/repository/net/sourceforge/xmlfacade/xmlfacade/1.0.0/xmlfacade-1.0.0.jar
-exec java -classpath $CP $ARGS_JVM_OPTS -Dargs.debug=true net.sf.buildbox.args.minicalc.MiniCalc $*
+exec java -classpath $CP $ARGS_JVM_OPTS net.sf.buildbox.args.minicalc.MiniCalc $*
