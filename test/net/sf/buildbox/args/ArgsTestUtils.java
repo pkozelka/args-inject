@@ -23,21 +23,28 @@ public class ArgsTestUtils {
 
     public static int trapStandardOutputs(StringBuilder stdout, StringBuilder stderr, Callable<Integer> callable) throws Exception {
         final PrintStream origOut = System.out;
-        final ByteArrayOutputStream outBaos = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outBaos));
         final PrintStream origErr = System.err;
+        final ByteArrayOutputStream outBaos = new ByteArrayOutputStream();
         final ByteArrayOutputStream errBaos = new ByteArrayOutputStream();
-        System.setErr(new PrintStream(errBaos));
+        if (stdout != null) {
+            System.setOut(new PrintStream(outBaos));
+        }
+        if (stderr != null) {
+            System.setErr(new PrintStream(errBaos));
+        }
         try {
-            final int exitCode = callable.call();
-            outBaos.flush();
-            stdout.append(outBaos.toString().trim());
-            errBaos.flush();
-            stderr.append(errBaos.toString().trim());
-            return exitCode;
+            return callable.call();
         } finally {
-            System.setOut(origOut);
-            System.setErr(origErr);
+            if (stdout != null) {
+                outBaos.flush();
+                stdout.append(outBaos.toString().trim());
+                System.setOut(origOut);
+            }
+            if (stderr != null) {
+                errBaos.flush();
+                stderr.append(errBaos.toString().trim());
+                System.setErr(origErr);
+            }
         }
     }
 
