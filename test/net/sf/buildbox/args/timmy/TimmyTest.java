@@ -3,6 +3,7 @@ package net.sf.buildbox.args.timmy;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import net.sf.buildbox.args.ArgsTestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,7 +23,9 @@ public class TimmyTest {
 
     @Test
     public void testHelp() throws Exception {
+        System.setProperty("args.xml", ArgsTestUtils.getTestClassesDir() + "/timmy.xml");
         final int exitCode = Timmy.run("help");
+        System.getProperties().remove("args.xml");
         Assert.assertEquals(0, exitCode);
     }
 

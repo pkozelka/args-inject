@@ -1,43 +1,37 @@
 package net.sf.buildbox.args;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.List;
 import javax.xml.namespace.QName;
-import net.sf.buildbox.args.annotation.SubCommand;
-import net.sf.buildbox.args.api.MetaCommand;
 import net.sf.buildbox.args.model.CommandlineDeclaration;
 import net.sf.buildbox.args.model.OptionDeclaration;
 import net.sf.buildbox.args.model.ParamDeclaration;
 import net.sf.buildbox.args.model.SubCommandDeclaration;
+import net.sourceforge.xmlfacade.XmlException;
 import net.sourceforge.xmlfacade.XmlFacade;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-@SubCommand(name = "help-xml")
-public class DefaultHelpXmlCommand implements MetaCommand {
-    private CommandlineDeclaration declaration = null;
-    private static final String NS = "http://buildbox.sf.net/args/help.xml";
+public class XmlModelSerializer {
+    public static final String NS = "http://buildbox.sf.net/args-inject";
 
-    public void setDeclaration(CommandlineDeclaration declaration) {
-        this.declaration = declaration;
-    }
-
-    public Integer call() throws Exception {
-        final Document doc = createDomDescriptor(declaration);
-        XmlFacade.saveXml(doc, System.out);
-        return 0;
-    }
-
-    private static Document createDomDescriptor(CommandlineDeclaration declaration) {
+    /**
+     * Creates XML DOM Document containing complete commandline structure declaration
+     *
+     * @param declaration -
+     * @return dom document
+     */
+    public static Document createDomDescriptor(CommandlineDeclaration declaration) {
         final Document doc = XmlFacade.createDocument();
         final Element root = XmlFacade.createElement(doc, new QName(NS, "commandline"));
         root.setAttribute("program", declaration.getProgramName());
         doc.appendChild(root);
         if (declaration.getDefaultSubCommand() != null) {
-            showCommand(root, declaration.getDefaultSubCommand(), true);
+            createCommandElement(root, declaration.getDefaultSubCommand(), true);
         }
         for (SubCommandDeclaration decl : declaration.getCommandDeclarations()) {
-            showCommand(root, decl, false);
+            createCommandElement(root, decl, false);
         }
         // all option declarations
         for (OptionDeclaration decl : declaration.getOptionDeclarations()) {
@@ -45,7 +39,7 @@ public class DefaultHelpXmlCommand implements MetaCommand {
             final Element opt = XmlFacade.createElement(doc, new QName(NS, "option"));
             root.appendChild(opt);
             opt.setAttribute("id", method.getDeclaringClass().getName() + ":" + method.getName());
-            showDescription(opt, decl.getDescription());
+            createDescriptionElement(opt, decl.getDescription());
             final String longName = decl.getLongName();
             final String shortName = decl.getShortName();
             if (longName != null) {
@@ -57,12 +51,12 @@ public class DefaultHelpXmlCommand implements MetaCommand {
             if (decl.isGlobal()) {
                 opt.setAttribute("global", "true");
             }
-            showParams(opt, decl.getParamDeclarations());
+            createParamElements(opt, decl.getParamDeclarations());
         }
         return doc;
     }
 
-    private static void showCommand(Element parent, SubCommandDeclaration decl, boolean isDefault) {
+    static void createCommandElement(Element parent, SubCommandDeclaration decl, boolean isDefault) {
         final Document doc = parent.getOwnerDocument();
         final Element cmd = XmlFacade.createElement(doc, new QName(NS, "command"));
         parent.appendChild(cmd);
@@ -71,14 +65,14 @@ public class DefaultHelpXmlCommand implements MetaCommand {
         if (isDefault) {
             cmd.setAttribute("default", "true");
         }
-        showDescription(cmd, decl.getDescription());
+        createDescriptionElement(cmd, decl.getDescription());
         // aliases
         for (String alias : decl.getAlternateNames()) {
             final Element aliasElem = XmlFacade.createElement(doc, new QName(NS, "alias"));
             cmd.appendChild(aliasElem);
             aliasElem.setAttribute("name", alias);
         }
-        showParams(cmd, decl.getParamDeclarations());
+        createParamElements(cmd, decl.getParamDeclarations());
 
         // valid options
         for (OptionDeclaration optionDeclaration : decl.getOptionDeclarations()) {
@@ -89,14 +83,14 @@ public class DefaultHelpXmlCommand implements MetaCommand {
         }
     }
 
-    private static void showDescription(Element parent, String description) {
+    static void createDescriptionElement(Element parent, String description) {
         if (description != null) {
             final Document doc = parent.getOwnerDocument();
             parent.appendChild(XmlFacade.createElement(doc, new QName(NS, "description"), doc.createTextNode(description)));
         }
     }
 
-    private static void showParams(Element parent, List<ParamDeclaration> params) {
+    static void createParamElements(Element parent, List<ParamDeclaration> params) {
         final Document doc = parent.getOwnerDocument();
         // params
         for (ParamDeclaration paramDecl : params) {
@@ -114,6 +108,21 @@ public class DefaultHelpXmlCommand implements MetaCommand {
             } else if (listSep != null) {
                 param.setAttribute("list-separator", listSep);
             }
+        }
+    }
+
+    /**
+     * If property args.xml is set, its value is used as the name of output file which receives xml representation of the model.
+     *
+     * @param declaration the declaration to print
+     * @throws XmlException -
+     */
+    public static void checkArgsXml(CommandlineDeclaration declaration) throws XmlException {
+        final String xmlFileName = System.getProperty("args.xml");
+        if (xmlFileName != null) {
+            final Document doc = createDomDescriptor(declaration);
+            final File file = new File(xmlFileName);
+            XmlFacade.saveXml(doc, file);
         }
     }
 }

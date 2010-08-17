@@ -7,9 +7,7 @@ import org.junit.Assert;
 
 public class ArgsTestUtils {
     public static void filewrite(String filename, String text) throws IOException {
-        final URL url = ArgsTestUtils.class.getResource("/ref.txt");
-        Assert.assertNotNull("Failed to find resource ref.txt", url);
-        final File dir = new File(url.getPath()).getParentFile();
+        final File dir = getTestClassesDir();
         final File of = new File(dir, filename);
         final Writer w = new FileWriter(of);
         System.out.println("Writing to " + of);
@@ -19,6 +17,12 @@ public class ArgsTestUtils {
         } finally {
             w.close();
         }
+    }
+
+    public static File getTestClassesDir() {
+        final URL url = ArgsTestUtils.class.getResource("/ref.txt");
+        Assert.assertNotNull("Failed to find resource ref.txt", url);
+        return new File(url.getPath()).getParentFile();
     }
 
     public static int trapStandardOutputs(StringBuilder stdout, StringBuilder stderr, Callable<Integer> callable) throws Exception {

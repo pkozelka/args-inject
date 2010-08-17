@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.Arrays;
+import net.sf.buildbox.args.ArgsTestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,13 +34,15 @@ public class MyPathToolTest {
         final File a2 = new File("/a/2").getAbsoluteFile();
         final File a3 = new File("/a/3").getAbsoluteFile();
         final String S = File.pathSeparator;
-        final String stdout = mpt(a1+S+a2+S+a1+S+a3, "--keep-missing-paths", "true");
-        Assert.assertEquals(a1+S+a2+S+a3, stdout);
+        final String stdout = mpt(a1 + S + a2 + S + a1 + S + a3, "--keep-missing-paths", "true");
+        Assert.assertEquals(a1 + S + a2 + S + a3, stdout);
     }
 
     @Test
     public void testHelp() throws Exception {
+        System.setProperty("args.xml", ArgsTestUtils.getTestClassesDir() + "/mpt.xml");
         final int exitCode = MyPathTool.run("help");
+        System.getProperties().remove("args.xml");
         Assert.assertEquals(0, exitCode);
     }
 

@@ -155,6 +155,7 @@ public class BasicArgsParser {
      */
     public static int process(ArgsSetup setup, String... args) throws Exception {
         try {
+            XmlModelSerializer.checkArgsXml(setup.getDeclaration());
             final int exitCode = new BasicArgsParser(setup).parse(args).call();
             ArgsUtils.debug("exitCode = %d", exitCode);
             return exitCode;
@@ -172,4 +173,5 @@ public class BasicArgsParser {
             return 1;
         }
     }
+
 }

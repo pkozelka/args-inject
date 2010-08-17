@@ -1,0 +1,32 @@
+ ------
+ Features
+ ------
+ Petr Kozelka
+
+args-inject features
+
+   The most important features include:
+
+   * simple annottation-based declaration
+
+   * straightforward mapping to Java
+
+   * support for subcommands
+
+   * support of most syntax styles
+
+   * prefabricated default help command, ready for use
+
+   * xml output for further integration <(use JVM option <<<-Dargs.xml=filename.xml>>>)>
+
+   * flexible data model and processing model
+
+* Future enhancements and ideas
+
+   * parser implementation supporting multiple commands on one commandline
+
+   * spring integration <(ArgsSetup instantiated as a bean)>
+
+   * bash-completion generator (based on XML output)
+
+   * syntax diagram generator

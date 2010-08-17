@@ -37,7 +37,7 @@ public class ArgsParserTest {
         Assert.assertEquals("42:false:Hello", stdout.toString());
     }
 
-//    @Ignore("TODO - attached options feature is not yet working")
+    @Ignore("TODO - attached options feature is not yet working")
     @Test
     public void testSampleOptionSyntaxMix() throws Exception {
         final StringBuilder stdout = new StringBuilder();

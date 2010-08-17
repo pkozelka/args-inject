@@ -37,9 +37,9 @@
 
     <menu name="args-inject">
       <item name="Introduction" href="index.html"/>
-      <item name="Features" href="MainFeatures.html"/>
+      <item name="Features" href="Features.html"/>
       <item name="Comparison" href="Comparison.html"/>
-      <!--<item name="Road Map" href="roadmap.html"/>-->
+      <item name="Tutorial" href="Usage.html"/>
     </menu>
     <menu name="Samples">
       <item name="MiniCalc" href="MiniCalc.html"/>
@@ -47,7 +47,6 @@
       <item name="Timmy" href="Timmy.html"/>
     </menu>
     <menu name="Use it">
-      <item name="Tutorial" href="Usage.html"/>
       <item name="CLI types" href="CliTypes.html"/>
       <item name="Varargs" href="Varargs.html"/>
       <item name="Default help support" href="HelpCommand.html"/>
@@ -56,7 +55,7 @@
     <menu name="Model">
       <item name="Subcommands" href="Subcommands.html"/>
       <item name="Options" href="Options.html"/>
-      <item name="Parameters" href="CustomTypes.html"/>
+      <item name="Params" href="Params.html"/>
     </menu>
     <menu name="Hack it">
       <item name="Design" href="Design.html"/>

@@ -29,7 +29,9 @@ public class MiniCalcTest {
 
     @Test
     public void testHelp() throws Exception {
+        System.setProperty("args.xml", ArgsTestUtils.getTestClassesDir() + "/minicalc.xml");
         String stderr = minicalcTrapStderr(0, "help");
+        System.getProperties().remove("args.xml");
         ArgsTestUtils.filewrite("minicalc-help.txt", stderr);
 
         stderr = minicalcTrapStderr(0, "help", "log");

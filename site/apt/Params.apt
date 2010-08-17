@@ -5,7 +5,7 @@
 
 Parameters and types
 
-   Parameters are used at two places: as {{{./Subcommands.html}subcommand}} values and as {{{./Options.html}option}} values.
+   Parameters are used at two places: as <{{{./Subcommands.html}subcommand}}> values and as <{{{./Options.html}option}}> values.
 
 * Standard value types
 
