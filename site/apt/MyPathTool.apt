@@ -6,9 +6,9 @@
 
 MyPathTool Sample (mpt)
 
- Implements a commandline application doing some useful stuff with path lists.
+   Implements a commandline application doing some useful stuff with path lists.
 
- Demonstrates:
+   Demonstrates:
 
    * application without subcommands (all functionality implemented by one, unnamed, subcommand)
 

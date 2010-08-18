@@ -3,9 +3,11 @@
  ------
  Petr Kozelka
 
+%{toc|fromDepth=2}
+
 Args-inject step-by-step tutorial
 
-%{toc|fromDepth=2}
+   This tutorial assumes you will read also some other pages on the site, and concentrates on stating rules and recommendations in each step.
 
 * Creating a simple commandline application
 
@@ -31,7 +33,7 @@ Args-inject step-by-step tutorial
 
    Following fragment adds the buildbox repository containing the release if you do not use a centralized artifact repository software <(like {{{http://nexus.sonatype.com}Sonatype Nexus}} for instance)>:
 
-%{code-snippet|id=alpha-repo|brush=xml|file=site/snip.xml}
+%{code-snippet|id=alpha-repo|brush=xml|file=site/snip.xml|sh-params=highlight:[3,4]}
 
    With Nexus or other repository software, you will probably prefer to use above information <(id, url)> for adding a new repository proxy to a public repository group.
 

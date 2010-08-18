@@ -3,7 +3,7 @@
   <dependency>
     <groupId>net.sf.buildbox</groupId>
     <artifactId>args-inject</artifactId>
-    <version>1.0.0-alpha-1</version>
+    <version>1.0.0-alpha</version>
   </dependency>
   <!-- END SNIPPET: dependency -->
 
@@ -11,6 +11,7 @@
   <repositories>
     <repository>
       <id>bbx-alpha</id>
+      <url>http://buildbox.sf.net/maven2-alpha</url>
       <name>Buildbox repository for ALPHA releases (developer preview)</name>
       <releases>
         <enabled>true</enabled>
@@ -18,7 +19,6 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-      <url>http://buildbox.sf.net/maven2-alpha</url>
     </repository>
   </repositories>
   <!-- END SNIPPET: alpha-repo -->
@@ -33,7 +33,7 @@
         uri="urn:maven-artifact-ant"/>
     <!-- resolve the dependency -->
     <artifact:dependencies>
-      <artifact:dependency groupId="net.sf.buildbox" artifactId="args-inject" version="1.0.0-alpha-1"/>
+      <artifact:dependency groupId="net.sf.buildbox" artifactId="args-inject" version="1.0.0-alpha"/>
     </artifact:dependencies>
     <!-- use the dependency as a file -->
     <echo>add this path to javac classpath: ${net.sf.buildbox:args-inject:jar}</echo>

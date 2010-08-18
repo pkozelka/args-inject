@@ -6,19 +6,17 @@
 
 Timmy Sample
 
- Implements a  commandline application working with date/time arguments.
+   Implements a commandline application working with date/time arguments.
 
- Please keep in mind that working with dates/times is still very immature.
+   Please keep in mind that support for date/time stuff is still quite immature.
 
- Demonstrates:
+   Demonstrates:
 
    * using default command (<<<timeconvert>>>)
 
    * using variable parameter list (<<<timeconvert>>>)
 
    * "custom" type with String constructor - <<<SimpleDateFormat>>>
-
-   * working with datetimes
 
 * Timmy.java
 

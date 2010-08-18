@@ -7,7 +7,7 @@ args-inject: How it differs from other known libraries
 
 * Commandline-handling libraries
 
-   At the time of writing, following are known to me:
+   At the time of writing, following "competitors" are known to me:
 
    * {{{http://commons.apache.org/cli/}commons-cli}} by Apache Commons Project
 
@@ -17,25 +17,13 @@ args-inject: How it differs from other known libraries
 
    Plus, some inspiration comes from cvs, svn, svnkit, spring and other projects.
 
-* Important differences
-
-   * unmarshalling, i.e. translating the value to the target type <<<(note: args4j has unmarshalling)>>>
-
-   * support for declarative setup <<<(note: args4j has declarative setup)>>>
-
-   * injection to client (subcommand) object
-
-   * explicit, straightforward support for subcommands
-
-   * exception handling
-
 * Comparison table
 
-      Following comparison in french was used as the base for this table:
-      {{{http://hikage.developpez.com/java/articles/api/cli-vs-args4j/?page=page_4#LIV}}}
+   When creating this comparison table, I used {{{http://hikage.developpez.com/java/articles/api/cli-vs-args4j/?page=page_4#LIV}this <(in french)>}}
+   as the base.
 
 *-------------------------+------------------+------------------+--------------+
- <criteria>               | <<commons-cli>>  | <<args4j>>       |  <<args-inject>> 
+                          | <<commons-cli>>  | <<args4j>>       |  <<args-inject>> 
 *-------------------------+------------------+------------------+--------------+
  license                  | MIT              | Apache           | Apache
 *-------------------------+------------------+------------------+--------------+
@@ -45,7 +33,7 @@ args-inject: How it differs from other known libraries
 *-------------------------+------------------+------------------+--------------+
  multi-value support      | yes              | yes              | yes
 *-------------------------+------------------+------------------+--------------+
- embedded help            | yes              | yes              | yes
+ embedded help            | yes              | yes              | {{{./HelpCommand.html}yes}}
 *-------------------------+------------------+------------------+--------------+
  custom value types       | no               | yes              | yes
 *-------------------------+------------------+------------------+--------------+
@@ -53,3 +41,13 @@ args-inject: How it differs from other known libraries
 *-------------------------+------------------+------------------+--------------+
  subcommands              | no               | no               | yes
 *-------------------------+------------------+------------------+--------------+
+ POSIX like options       | yes              | no               | no
+*-------------------------+------------------+------------------+--------------+
+ GNU like long options    | yes              | yes              | yes
+*-------------------------+------------------+------------------+--------------+
+ Java like properties     | yes              | yes              | yes
+*-------------------------+------------------+------------------+--------------+
+ automatic unmarshalling  | no               | yes              | yes
+*-------------------------+------------------+------------------+--------------+
+
+ <Note: should you find any mistakes here, {{{./issue-tracking.html}please let me know}} >

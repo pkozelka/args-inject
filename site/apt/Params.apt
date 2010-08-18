@@ -21,7 +21,7 @@ Parameters and types
 
 * Custom value types
 
- By default, number of common types is converted from commandline String values. User can also define its own types to be convertible.
+ By default, number of common types is converted from commandline String values. Custom types can be enhanced to be automatically translated.
 
  Following sections describe how it can be done.
 
@@ -51,11 +51,11 @@ Parameters and types
 
 * Lists
 
-  For working with lists, <<args-inject>> supports two approaches:
+  Working with lists in <<args-inject>> is supported two ways:
 
   * {{{./Varargs.html}varargs}} in command parameter list - click the link to read more
 
-  * string-separated lists <(discussed here)>
+  * lists separated by specified char <(discussed here)>
 
   []
 
@@ -63,7 +63,7 @@ Parameters and types
 
   Lists are supported on parameters defined as <<java array>>.
 
-  You can use the <<<@Param.listSeparator>>> to explicitly set separator on given parameter; however there is very nice algorithm to compute default if you don't:
+  You can use the <<<@Param.listSeparator>>> to explicitly set separator on given parameter; however, there is very nice algorithm to compute the default if you don't:
 
   * for parameters with component type <<<java.io.File>>>, the default equals to platform-dependent property <<<path.separator>>> - which is colon on Linux and semicolon on Windows
 

@@ -5,13 +5,13 @@
 
 Writing a custom analyzer
 
-   Custom analyzer is the part that takes "something" and translated it into declaration objects (see package <<<net.sf.buildbox.args.model>>>)
+   Declaration analyzer is the part that takes "something" and translates it into declaration objects (see package <<<net.sf.buildbox.args.model>>>)
 
    The class AnnottationAwareSetup implements analyzer which uses Java Reflections with some annottations to construct that model.
 
 
-   The support for custom analyzers may be subject to changes, because there is currently no existing alternative - therefore future can
-   show some weaknesses of current code.
+   The support for custom analyzers may be subject to changes, because there is currently no existing alternative - so, future can
+   show some weak points in the current design.
 
 * When to do it
 

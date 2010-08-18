@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<changes xmlns="http://buildbox.sf.net/changes/2.0">
+  <unreleased groupId="net.sf.buildbox" artifactId="args-inject" version="1-SNAPSHOT">
+    <item>initial release</item>
+  </unreleased>
+</changes>

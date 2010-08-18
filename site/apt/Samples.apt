@@ -1,0 +1,60 @@
+ ------
+ Samples
+ ------
+ Petr Kozelka
+
+Code samples
+
+   For faster bootstrap, I wrote a few samples demonstrating most key features of the library.
+
+   Curious developer is also encouraged to study the {{{./xref-test/index.html}unit test code}}, and eventually also {{{./xref/index.html}source code}}.
+
+   All these samples are implemented within unit test area, and are therefore heavily used for unit testing.
+
+* MiniCalc
+
+   Small commandline application with two subcommands.
+
+   Details {{{./MiniCalc.html}here}}, code {{{./xref-test/net/sf/buildbox/args/minicalc/package-summary.html}here}}.
+
+   Demonstrates:
+
+   * using variable parameter list (<<<plus>>>)
+
+   * working with floating-point values
+
+   * implementing <<<main()>>> method
+
+* MyPathTool
+
+   Commandline application doing some useful stuff with path lists.
+
+   Details {{{./MyPathTool.html}here}}, code {{{./xref-test/net/sf/buildbox/args/mypathtool/package-summary.html}here}}.
+
+   Demonstrates:
+
+   * application without subcommands (all functionality implemented by one, unnamed, subcommand)
+
+   * mapping pathlist to <<<File[]>>> array - separated by colon or semicolon depending on operating system
+
+   * mapping comma separated exclussion list to <<<String[]>>> array
+
+   * using paramless option method
+
+   * using option method with boolean value
+
+
+* Timmy
+
+   Commandline application working with date/time arguments
+
+   Details {{{./Timmy.html}here}}, code {{{./xref-test/net/sf/buildbox/args/timmy/package-summary.html}here}}.
+
+   Demonstrates:
+
+   * using default command (<<<timeconvert>>>)
+
+   * using variable parameter list (<<<timeconvert>>>)
+
+   * "custom" type with String constructor - <<<SimpleDateFormat>>>
+

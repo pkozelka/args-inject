@@ -25,6 +25,8 @@
       <groupId>net.sourceforge.xmlfacade</groupId>
       <artifactId>xmlfacade</artifactId>
       <version>1.0.0</version>
+      <!-- TODO: remove optional when xmlfacade appears in central repository -->
+      <optional>true</optional>
     </dependency>
   </dependencies>
   <build>
@@ -137,6 +139,9 @@
   <profiles>
     <profile>
       <id>all-reports</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <reporting>
         <plugins>
           <plugin>

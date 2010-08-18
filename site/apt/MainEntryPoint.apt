@@ -3,27 +3,36 @@
  ------
  Petr Kozelka
 
-Defining program entry point (main)
+Writing main() method
 
-* Sample main method
+   <<args-inject>> is designed to process a commandline, therefore it logically has direct impact on <<<public static main()>>> method serving as the Java's entry point to the application.
+
+   While developer is given complete freedom on how to implement it, there is rarely a reason for any creativity. See below which implementation prototypes are recommended.
+
+* Straightforward approach
+
+   This code does <exactly> the needed minimum to have a functional <<<main>>> - imagine your set of commands and other settings there:
 
 %{code-snippet|id=sample-main|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}
 
-* Supporting testability of the application
+* Unit testing aware approach
 
-   The above main method is simple enough, but it still makes sense to split it into two parts if you wish to use utilize most of production code in your unit tests.
+   The above main method is simple enough, but it still makes sense to split it into two parts if you wish to use utilize
+   most of production code in your unit tests.
 
    Look how it is done in the {{{./MiniCalc.html}MiniCalc}} sample:
 
    * the part that constructs java mapping (setup)
 
+   []
+
 %{code-snippet|id=run|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}
 
    * the part that can call <<<System.exit()>>> which is illegal in JUnit
 
-%{code-snippet|id=main|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}
-
    []
+
+%{code-snippet|id=main|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}
 
    Then your junit test can use it like this:
 
