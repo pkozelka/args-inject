@@ -41,7 +41,7 @@ Args-inject step-by-step tutorial
 
 %{code-snippet|id=ant-maven-dependency|brush=xml|file=site/snip.xml}
 
-   Note that this uses the ant library {{{http://maven.apache.org/ant-tasks/}maven-ant-tasks}} which is an excellent way of reusing Maven artifacts in Ant code; I highly recommend it to your attention.
+   Note that this uses the ant library {{{http://maven.apache.org/ant-tasks/}maven-ant-tasks}} which is an excellent library for reusing Maven artifacts in Ant code; I highly recommend it to your attention.
 
 *** Any other build system
 
@@ -57,7 +57,7 @@ Args-inject step-by-step tutorial
 
    * create constructor with taking mandatory parameters of the command
 
-   * to allow unlimited number of params, your last constructor's parameter can be Java varargs array <(using notation <<<SomeType... myarray>>> )>
+   * to allow unlimited number of params, your last constructor's parameter can be Java varargs array <(using notation "SomeType... myarray" )>
 
    * the functionality must be implemented within the <<<Integer call()>>> method; usually you will want to return 0 from it
 
@@ -147,6 +147,16 @@ Args-inject step-by-step tutorial
    
      <<<exec java -classpath $CP net.sf.buildbox.args.minicalc.MiniCalc $*>>>
 
+   * there are several tools to ensure that your output jar does not require any external libraries, which makes the launcher a bit simpler. Have a look at:
+
+      * {{{http://code.google.com/p/onejar-maven-plugin}onejar-maven-plugin}} using {{{http://one-jar.sourceforge.net}one-jar library}} - packages dependencies into your jar; your code is then executed via a proxy main class and its custom classloader
+
+      * {{{http://maven.apache.org/plugins/maven-shade-plugin}maven-shade-plugin}} - see {{{http://maven.apache.org/plugins/maven-shade-plugin/examples/executable-jar.html}Executable JAR}} - dependency classes are extracted and mixed into your jar
+
+         * {{{http://maven.apache.org/plugins/maven-dependency-plugin/unpack-dependencies-mojo.html}unpack-dependencies mojo of maven-dependency-plugin}}
+            can produce similar effect but without {{{http://maven.apache.org/plugins/maven-shade-plugin/examples/resource-transformers.html}resource transformation}}
+
+      * {{{http://maven.apache.org/plugins/maven-assembly-plugin}maven-assembly-plugin}}
 
 * Finetuning
 
@@ -157,4 +167,3 @@ Args-inject step-by-step tutorial
    * working with arrays  - see {{{./Options.html}Options}}
 
    * TODO: using help as the default
-

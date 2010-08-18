@@ -5,17 +5,17 @@
 
 args-inject: How it differs from other known libraries
 
-* Known commandline-handling libraries
+* Commandline-handling libraries
 
-   * commons-cli by Apache Commons: http://commons.apache.org/cli/
+   At the time of writing, following are known to me:
 
-   * args4j by Kohsuke Kawaguchi: https://args4j.dev.java.net/
+   * {{{http://commons.apache.org/cli/}commons-cli}} by Apache Commons Project
 
-      * Comparison in french: http://hikage.developpez.com/java/articles/api/cli-vs-args4j/?page=page_4#LIV
+   * {{{https://args4j.dev.java.net}args4j}} by Kohsuke Kawaguchi
 
    []
 
-   Plus, some inspiration comes from svn, svnkit and spring projects.
+   Plus, some inspiration comes from cvs, svn, svnkit, spring and other projects.
 
 * Important differences
 
@@ -29,4 +29,27 @@ args-inject: How it differs from other known libraries
 
    * exception handling
 
+* Comparison table
 
+      Following comparison in french was used as the base for this table:
+      {{{http://hikage.developpez.com/java/articles/api/cli-vs-args4j/?page=page_4#LIV}}}
+
+*-------------------------+------------------+------------------+--------------+
+ <criteria>               | <<commons-cli>>  | <<args4j>>       |  <<args-inject>> 
+*-------------------------+------------------+------------------+--------------+
+ license                  | MIT              | Apache           | Apache
+*-------------------------+------------------+------------------+--------------+
+ java version             | 1.5              | 1.4              | 1.5
+*-------------------------+------------------+------------------+--------------+
+ declaration of options   | runtime          | annottations     | both runtime and annottations
+*-------------------------+------------------+------------------+--------------+
+ multi-value support      | yes              | yes              | yes
+*-------------------------+------------------+------------------+--------------+
+ embedded help            | yes              | yes              | yes
+*-------------------------+------------------+------------------+--------------+
+ custom value types       | no               | yes              | yes
+*-------------------------+------------------+------------------+--------------+
+ internationalization     | yes              | no               | no
+*-------------------------+------------------+------------------+--------------+
+ subcommands              | no               | no               | yes
+*-------------------------+------------------+------------------+--------------+

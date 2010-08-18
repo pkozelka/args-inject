@@ -16,7 +16,9 @@ Types of commandline structure
 
    * some options
 
-   * examples: wget, cat, head, ... simply most Unix text utilities
+   * examples: {{{http://linux.die.net/man/1/wget}wget}},
+   {{{http://linux.die.net/man/1/cat}cat}}, {{{http://linux.die.net/man/1/head}head}},
+   ... simply most Unix utilities
 
    * sample code: {{{./MyPathTool.html}MyPathTool}}
 

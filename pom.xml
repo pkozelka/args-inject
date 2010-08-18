@@ -88,6 +88,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
+        <version>2.1.1</version>
         <configuration>
           <siteDirectory>site</siteDirectory>
         </configuration>
@@ -119,8 +120,20 @@
   </mailingLists>
   <issueManagement>
     <system>sourceforge</system>
-    <url>https://sourceforge.net/tracker/?func=browse&amp;group_id=198902&amp;atid=1281115</url>
+    <url>https://sourceforge.net/tracker/?func=browse&amp;group_id=198902&amp;atid=1439976</url>
   </issueManagement>
+  <repositories>
+    <repository>
+      <id>xmlfacade</id>
+      <url>http://xmlfacade.sourceforge.net/releases</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
   <profiles>
     <profile>
       <id>all-reports</id>
@@ -172,7 +185,7 @@
             <artifactId>maven-pmd-plugin</artifactId>
             <version>2.5</version>
             <configuration>
-              <!--<linkXref>true</linkXref>-->
+              <linkXRef>true</linkXRef>
               <sourceEncoding>UTF-8</sourceEncoding>
               <minimumTokens>30</minimumTokens>
               <targetJdk>1.5</targetJdk>
@@ -201,13 +214,6 @@
               <links>
                 <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
                 <link>http://xmlfacade.sourceforge.net/site/apidocs</link>
-                <!--
-                            <link>http://hc.apache.org/httpcomponents-client/httpclient/apidocs/</link>
-                            <link>http://hc.apache.org/httpcomponents-core/httpcore/apidocs/</link>
-                            <link>http://groovy.codehaus.org/api/</link>
-                            <link>http://json-lib.sourceforge.net/apidocs/jdk15</link>
-                            <link>http://xml.apache.org/commons/components/apidocs/resolver</link>
-                -->
               </links>
             </configuration>
             <reportSets>

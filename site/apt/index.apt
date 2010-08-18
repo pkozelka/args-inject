@@ -10,10 +10,6 @@ args-inject: Commandline Injection Library
  Time to time, almost every programmer needs to write a simple utility which has only a trivial commandline interface.
  As with anything else, it often happens that the simple utility grows to a complex full-featured application - but still enjoying commandline parametrization.
 
- Besides that, many applications never saw the bright of life even if they would be quite simple - just because they still need a
- lot of parameters <(let's omit that for some of them, it is perhaps better that they do not exist)>
-
-
 * How does <<args-inject>> work ?
 
 [ArgsInjectProcessingSimple.png] Simplified picture of commandline processing with args-inject
