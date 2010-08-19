@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <changes xsi:schemaLocation="http://buildbox.sf.net/changes/2.0 http://buildbox.sf.net/changes/2.0/changes.xsd" xmlns="http://buildbox.sf.net/changes/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <unreleased groupId="net.sf.buildbox" artifactId="args-inject" version="1-SNAPSHOT">
+    <!--delete this wrapping comment and write your change items here - at least one is required for release.
+    <item action="fix/add/improve" issue="XX-1234" component="WhateverComponent">some meaningful description</item>
+    ::-->
+  </unreleased>
   <release groupId="net.sf.buildbox" artifactId="args-inject" version="1.0.0-alpha" timestamp="2010-08-19T00:11:51.270Z" author="pkozelka@gmail.com">
     <item>initial release</item>
     <buildtool role="compiler" groupId="com.sun.jdk" artifactId="java" version="1.5.0_11-b03"/>
