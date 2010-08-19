@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.sf.buildbox</groupId>
   <artifactId>args-inject</artifactId>
-  <version>1.0.0-alpha</version>
+  <version>1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <parent>
     <groupId>net.sf.buildbox.maven</groupId>
@@ -233,8 +233,8 @@
     </profile>
   </profiles>
   <scm>
-    <connection>scm:svn:https://buildbox.svn.sourceforge.net/svnroot/buildbox/tags/net.sf.buildbox-args-inject-1.0.0-alpha</connection>
-    <developerConnection>scm:svn:https://buildbox.svn.sourceforge.net/svnroot/buildbox/tags/net.sf.buildbox-args-inject-1.0.0-alpha</developerConnection>
-    <url>https://buildbox.svn.sourceforge.net/svnroot/buildbox/tags/net.sf.buildbox-args-inject-1.0.0-alpha</url>
+    <connection>scm:svn:https://buildbox.svn.sourceforge.net/svnroot/buildbox/trunk/base/args-inject</connection>
+    <developerConnection>scm:svn:https://buildbox.svn.sourceforge.net/svnroot/buildbox/trunk/base/args-inject</developerConnection>
+    <url>https://buildbox.svn.sourceforge.net/svnroot/buildbox/trunk/base/args-inject</url>
   </scm>
 </project>
