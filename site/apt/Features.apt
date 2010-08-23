@@ -17,7 +17,7 @@ args-inject features
 
    * prefabricated default help command, ready for use
 
-   * xml output for further integration <(use JVM option <<<-Dargs.xml=filename.xml>>>)>
+   * xml output for further integration <(use JVM option -Dargs.xml=filename.xml )>
 
    * flexible data model and processing model
 
