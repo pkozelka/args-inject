@@ -45,9 +45,21 @@ Args-inject step-by-step tutorial
 
    Note that this uses the ant library {{{http://maven.apache.org/ant-tasks/}maven-ant-tasks}} which is an excellent library for reusing Maven artifacts in Ant code; I highly recommend it to your attention.
 
-*** Any other build system
+*** Direct download link
 
-   Well, reading the above sections, you get the idea - use your skills to setup your system so that it compiles against args-inject, among other external libraries.
+   In some cases, it might still be useful to have direct download links. Here they are:
+
+*---+---*---*---+
+ <<Artifact>> | <<MD5>> | <<SHA1>> | <<Description>>
+*---+---*---*---+
+ {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha.jar}args-inject-1.0.0-alpha.jar}} | {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha.jar.md5}MD5}} | {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha.jar.sha1}SHA1}} | library JAR
+*---+---*---*---+
+ {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha-sources.jar}args-inject-1.0.0-alpha-sources.jar}} | {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha-sources.jar.md5}MD5}} | {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha-sources.jar.sha1}SHA1}} | library sources
+*---+---*---*---+
+
+*** Any other build system or IDE
+
+   Well, reading the above sections, you get the idea - use your skills to setup your buildsystem so that it compiles against <<<args-inject>>>, among other external libraries.
 
 ** Creating SubCommand class
 
