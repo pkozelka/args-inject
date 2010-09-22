@@ -1,10 +1,10 @@
 package net.sf.buildbox.args;
 
-import java.util.concurrent.Callable;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import net.sf.buildbox.args.annotation.Option;
+import net.sf.buildbox.args.api.ArgsCommand;
 
-public class SampleOptionPrinter implements Callable<Integer> {
+public class SampleOptionPrinter implements ArgsCommand {
     private int sampleInt;
     private boolean sampleBoolean;
     private String sampleString;

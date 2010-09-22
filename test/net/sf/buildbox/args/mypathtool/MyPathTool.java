@@ -3,18 +3,18 @@ package net.sf.buildbox.args.mypathtool;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.Callable;
 import net.sf.buildbox.args.BasicArgsParser;
 import net.sf.buildbox.args.DefaultHelpCommand;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import net.sf.buildbox.args.annotation.Option;
 import net.sf.buildbox.args.annotation.Param;
+import net.sf.buildbox.args.api.ArgsCommand;
 
 /**
  * Commandline archetype: no subcommands, just single param and some options
  * This sample code demonstrates working with array input arguments.
  */
-public class MyPathTool implements Callable<Integer> {
+public class MyPathTool implements ArgsCommand {
     private final File[] pathList;
     private boolean dirPerLine;
     private boolean keepDuplicatePaths;

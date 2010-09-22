@@ -8,9 +8,10 @@ import java.util.concurrent.TimeUnit;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import net.sf.buildbox.args.annotation.Option;
 import net.sf.buildbox.args.annotation.SubCommand;
+import net.sf.buildbox.args.api.ArgsCommand;
 
 @SubCommand(name = "ls", description = "list files (demo)")
-public class DemoFileLister implements Callable<Integer> {
+public class DemoFileLister implements ArgsCommand {
     private final boolean deep;
     private final int maxCount;
     final File[] files;

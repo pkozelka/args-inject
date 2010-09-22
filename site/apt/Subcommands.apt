@@ -19,7 +19,7 @@ Subcommands
 
 
 
-   <<Subcommand>> is represented with a java object implementing interface <<<Callable\<Integer\>>>>. This object is
+   <<Subcommand>> is represented with a java object implementing interface <<<ArgsCommand>>>. This object is
 
    * instantiated using public constructor, with parameters filled from commandline params
 

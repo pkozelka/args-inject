@@ -65,7 +65,7 @@ Args-inject step-by-step tutorial
 
    Rules
 
-   * the class must implement <<<Callable\<Integer\>>>>
+   * the class must implement <<<ArgsCommand>>>
 
    * class should be annottated with <<<@SubCommand>>> with a little description
 

@@ -2,13 +2,13 @@ package net.sf.buildbox.args.timmy;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.Callable;
 import net.sf.buildbox.args.BasicArgsParser;
 import net.sf.buildbox.args.DefaultHelpCommand;
 import net.sf.buildbox.args.annotation.AnnottationAwareSetup;
 import net.sf.buildbox.args.annotation.Option;
 import net.sf.buildbox.args.annotation.Param;
 import net.sf.buildbox.args.annotation.SubCommand;
+import net.sf.buildbox.args.api.ArgsCommand;
 
 /**
  * This sample code demonstrates working with input arguments of {@link Date} type.
@@ -18,7 +18,7 @@ import net.sf.buildbox.args.annotation.SubCommand;
 public class Timmy {
 
     @SubCommand(name = "shift", description = "shifts time by given milliseconds")
-    public static class TimeShiftCommand implements Callable<Integer> {
+    public static class TimeShiftCommand implements ArgsCommand {
         //TODO: option "unit" for offset
         private final Date basetime;
         private final long offset;
@@ -42,7 +42,7 @@ public class Timmy {
     }
 
     @SubCommand(name = "delta", description = "computes difference in millis between two given times")
-    public static class TimeDeltaCommand implements Callable<Integer> {
+    public static class TimeDeltaCommand implements ArgsCommand {
         //TODO: option "unit" for output (output as decimal)
         private final Date basetime;
         private final Date otherTime;
@@ -60,7 +60,7 @@ public class Timmy {
     }
 
     @SubCommand(name = "timeconvert", description = "converts given times to millis since epoch; uses current time if none specified")
-    public static class TimeConvertCommand implements Callable<Integer> {
+    public static class TimeConvertCommand implements ArgsCommand {
         private final Date[] times;
 
         public TimeConvertCommand(@Param("times") Date... times) {

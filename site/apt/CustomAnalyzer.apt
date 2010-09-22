@@ -29,7 +29,7 @@ Writing a custom analyzer
 
    * creating the declaration model
 
-   * creating instance of command class - <<<Callable\<Integer\>>>>
+   * creating instance of command class - <<<ArgsCommand>>>
 
    * calling neccessary option methods on that instance
 

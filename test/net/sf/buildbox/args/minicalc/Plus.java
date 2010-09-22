@@ -1,10 +1,10 @@
 package net.sf.buildbox.args.minicalc;
 
 import net.sf.buildbox.args.annotation.SubCommand;
-import java.util.concurrent.Callable;
+import net.sf.buildbox.args.api.ArgsCommand;
 
 @SubCommand(name = "plus", description = "computes sum of all given numbers")
-public class Plus implements Callable<Integer> {
+public class Plus implements ArgsCommand {
     private final int[] numbers;
 
     public Plus(int... numbers) {

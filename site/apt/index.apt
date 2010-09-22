@@ -42,7 +42,7 @@ args-inject: Commandline Injection Library
 
    Following mapping is implemented by <<<AnnottationAwareSetup>>> class:
 
-   * <<subcommand>> maps to a java <<class>> implementing interface Callable\<Integer\>
+   * <<subcommand>> maps to a java <<class>> implementing interface ArgsCommand
 
       * annottation <<<@SubCommand>>> can optionally define more properties of the command
 

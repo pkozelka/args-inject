@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.regex.Pattern;
 import net.sf.buildbox.args.api.ArgsSetup;
+import net.sf.buildbox.args.api.ArgsCommand;
 import net.sf.buildbox.args.model.CommandlineDeclaration;
 import net.sf.buildbox.args.model.OptionDeclaration;
 import net.sf.buildbox.args.model.ParsedOption;
@@ -114,7 +115,7 @@ public class BasicArgsParser {
                 cmdName = cmdname(cmdDecl);
             }
         }
-        final Callable<Integer> commandInstance = declarationSetup.createSubCommand(cmdName, cmdDecl, cmdParams);
+        final ArgsCommand commandInstance = declarationSetup.createSubCommand(cmdName, cmdDecl, cmdParams);
         // fail if any token remains
         if (!cmdParams.isEmpty()) {
             throw new ParseException("unparsed tokens: " + cmdParams, 0);

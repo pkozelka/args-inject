@@ -1,6 +1,5 @@
 package net.sf.buildbox.args.model;
 
-import java.io.File;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;

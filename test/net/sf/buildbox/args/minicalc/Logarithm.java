@@ -1,12 +1,12 @@
 package net.sf.buildbox.args.minicalc;
 
-import net.sf.buildbox.args.annotation.SubCommand;
-import net.sf.buildbox.args.annotation.Param;
 import net.sf.buildbox.args.annotation.Option;
-import java.util.concurrent.Callable;
+import net.sf.buildbox.args.annotation.Param;
+import net.sf.buildbox.args.annotation.SubCommand;
+import net.sf.buildbox.args.api.ArgsCommand;
 
 @SubCommand(name = "log", description = "computes logarithm of given argument")
-public class Logarithm implements Callable<Integer> {
+public class Logarithm implements ArgsCommand {
     private final double x;
     private double base = 0;
 
