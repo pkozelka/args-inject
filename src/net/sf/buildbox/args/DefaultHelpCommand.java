@@ -17,7 +17,8 @@ import net.sf.buildbox.args.model.SubCommandDeclaration;
  * javaapp BADCMD
  * detailed help - synopsis of one command
  * javaapp help SOMECMD
- * javaapp SOMECMD --help
+ * javaapp --help SOMECMD
+ * @todo support also: javaapp SOMECMD --help
  */
 @SubCommand(name = "help", aliases = {"--help", "?", "h"}, description = "shows help for the whole app. or for specified command")
 public class DefaultHelpCommand implements MetaCommand {
@@ -51,6 +52,7 @@ public class DefaultHelpCommand implements MetaCommand {
         final String programName = declaration.getProgramName();
         final String shortDesc = cmdDecl.getDescription();
         out.println("Subcommand '" + cmdDecl + "': " + shortDesc);
+        out.println();
         out.println("Usage:");
         final StringBuilder usage = new StringBuilder("   ");
         usage.append(programName);
@@ -65,6 +67,7 @@ public class DefaultHelpCommand implements MetaCommand {
     }
 
     private void showValidOptions(Collection<OptionDeclaration> options, boolean global) {
+        out.println();
         final List<OptionDeclaration> sortedOptions = new ArrayList<OptionDeclaration>(options);
         if (!sortedOptions.isEmpty()) {
             Collections.sort(sortedOptions, new Comparator<OptionDeclaration>() {
@@ -93,7 +96,6 @@ public class DefaultHelpCommand implements MetaCommand {
             }
         }
 
-        out.println();
         //todo: add verbose description - from .txt resource located next to .class
     }
 
@@ -106,7 +108,6 @@ public class DefaultHelpCommand implements MetaCommand {
             }
             out.println();
         }
-        out.println();
     }
 
     private static String paramSynopsis(List<ParamDeclaration> paramDeclarations) {
