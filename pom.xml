@@ -10,7 +10,7 @@
     <artifactId>buildbox-pom</artifactId>
     <version>1.0.2-1</version>
   </parent>
-  <name>args-inject:1.0.0-rc-1</name>
+  <name>${project.artifactId}:${project.version}</name>
   <description>Commandline Arguments Injection</description>
   <url>http://buildbox.sf.net/args-inject</url>
   <dependencies>
@@ -235,9 +235,4 @@
       </reporting>
     </profile>
   </profiles>
-  <scm>
-    <connection>scm:svn:https://buildbox.svn.sourceforge.net/svnroot/buildbox/trunk/base/args-inject</connection>
-    <developerConnection>scm:svn:https://buildbox.svn.sourceforge.net/svnroot/buildbox/trunk/base/args-inject</developerConnection>
-    <url>https://buildbox.svn.sourceforge.net/svnroot/buildbox/trunk/base/args-inject</url>
-  </scm>
 </project>
