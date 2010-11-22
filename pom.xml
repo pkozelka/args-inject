@@ -106,6 +106,7 @@
   </distributionManagement>
   <developers>
     <developer>
+      <id>pkozelka</id>
       <name>Petr Kozelka</name>
       <email>pkozelka@gmail.com</email>
       <url>http://kozelka.net</url>
