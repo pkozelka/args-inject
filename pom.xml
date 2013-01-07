@@ -9,6 +9,7 @@
     <groupId>net.sf.buildbox.maven</groupId>
     <artifactId>buildbox-pom</artifactId>
     <version>1.0.4</version>
+    <relativePath/>
   </parent>
   <name>${project.artifactId}:${project.version}</name>
   <description>Commandline Arguments Injection</description>
@@ -19,13 +20,6 @@
       <artifactId>junit</artifactId>
       <version>4.10</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.xmlfacade</groupId>
-      <artifactId>xmlfacade</artifactId>
-      <version>1.0.0</version>
-      <!-- TODO: remove optional when xmlfacade appears in central repository -->
-      <optional>true</optional>
     </dependency>
   </dependencies>
   <build>
@@ -124,18 +118,6 @@
     <system>sourceforge</system>
     <url>https://sourceforge.net/tracker/?func=browse&amp;group_id=198902&amp;atid=1439976</url>
   </issueManagement>
-  <repositories>
-    <repository>
-      <id>xmlfacade</id>
-      <url>http://xmlfacade.sourceforge.net/releases</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
   <profiles>
     <profile>
       <id>all-reports</id>
@@ -219,7 +201,6 @@
               <linksource>true</linksource>
               <links>
                 <link>http://java.sun.com/j2se/1.5.0/docs/api/</link>
-                <link>http://xmlfacade.sourceforge.net/site/apidocs</link>
               </links>
             </configuration>
             <reportSets>
