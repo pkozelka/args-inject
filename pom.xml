@@ -48,8 +48,17 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
-        <version>2.1.1</version>
-        <dependencies>
+        <version>3.3</version>
+               <configuration>
+                    <attach>false</attach>
+                    <detail>true</detail>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.doxia</groupId>
+                        <artifactId>doxia-module-markdown</artifactId>
+                        <version>1.5</version>
+                    </dependency>
           <dependency>
             <groupId>org.apache.maven.doxia</groupId>
             <artifactId>doxia-module-twiki</artifactId>
@@ -62,6 +71,7 @@
           </dependency>
         </dependencies>
       </plugin>
+<!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -76,6 +86,7 @@
           </execution>
         </executions>
       </plugin>
+-->
     </plugins>
   </build>
   <reporting>
@@ -113,6 +124,7 @@
   </issueManagement>
   <profiles>
     <profile>
+      <!-- todo get rid of the need for this profile -->
       <id>all-reports</id>
       <!--
             <activation>
@@ -124,7 +136,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-project-info-reports-plugin</artifactId>
-            <version>2.1.2</version>
+            <version>2.7</version>
             <reportSets>
               <reportSet>
                 <reports>
@@ -160,12 +172,12 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>findbugs-maven-plugin</artifactId>
-            <version>1.2</version>
+            <version>2.5.4</version>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
-            <version>2.5</version>
+            <version>3.1</version>
             <configuration>
               <linkXRef>true</linkXRef>
               <sourceEncoding>UTF-8</sourceEncoding>
@@ -176,7 +188,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jxr-plugin</artifactId>
-            <version>2.2</version>
+            <version>2.3</version>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>

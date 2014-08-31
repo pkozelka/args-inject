@@ -2,8 +2,8 @@
 install:
 	mvn clean install
 
-site:
-	mvn clean install site
+sitex:
+	mvn clean install site -Pall-reports
 
 	# fix refs to JXR line numbers
 	find target/site -name '*.html' -print0 | xargs -0 sed -i 's:\(\.html#\)L\([[:digit:]]\):\1\2:g'
