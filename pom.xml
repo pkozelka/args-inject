@@ -13,7 +13,7 @@
   </parent>
   <name>${project.artifactId}:${project.version}</name>
   <description>Commandline Arguments Injection</description>
-  <url>http://buildbox.sf.net/args-inject</url>
+  <url>http://code.kozelka.net/args-inject</url>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -90,6 +90,7 @@
       </plugin>
     </plugins>
   </reporting>
+<!--
   <distributionManagement>
     <downloadUrl>http://buildbox.sf.net/${project.artifactId}</downloadUrl>
     <site>
@@ -97,6 +98,7 @@
       <url>sftp://web.sf.net/home/groups/b/bu/buildbox/htdocs/${project.artifactId}</url>
     </site>
   </distributionManagement>
+-->
   <developers>
     <developer>
       <id>pkozelka</id>
@@ -105,18 +107,9 @@
       <url>http://kozelka.net</url>
     </developer>
   </developers>
-  <mailingLists>
-    <mailingList>
-      <archive>http://groups.google.com/group/buildbox</archive>
-      <name>buildbox</name>
-      <post>buildbox@googlegroups.com</post>
-      <subscribe>http://groups.google.com/group/buildbox</subscribe>
-      <unsubscribe>buildbox+unsubscribe@googlegroups.com</unsubscribe>
-    </mailingList>
-  </mailingLists>
   <issueManagement>
-    <system>sourceforge</system>
-    <url>https://sourceforge.net/tracker/?func=browse&amp;group_id=198902&amp;atid=1439976</url>
+    <system>github</system>
+    <url>https://github.com/pkozelka/args-inject/issues</url>
   </issueManagement>
   <profiles>
     <profile>
