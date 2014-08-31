@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <changes xsi:schemaLocation="http://buildbox.sf.net/changes/2.0 http://buildbox.sourceforge.net/releasator/changes.xsd" xmlns="http://buildbox.sf.net/changes/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <unreleased groupId="net.sf.buildbox" artifactId="args-inject" version="1-SNAPSHOT">
+  <unreleased groupId="net.kozelka.args" artifactId="args-inject" version="1-SNAPSHOT">
     <item action="add" >embedded part of the XmlFacade project (by Vojta Habarta) to avoid build setup complications</item>
   </unreleased>
   <release groupId="net.sf.buildbox" artifactId="args-inject" version="1.0.0-rc-1" timestamp="2010-11-22T21:52:49.178Z" author="pkozelka@gmail.com">
