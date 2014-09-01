@@ -52,6 +52,7 @@
                <configuration>
                     <attach>false</attach>
                     <detail>true</detail>
+                    <siteDirectory>site</siteDirectory>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -89,18 +90,6 @@
 -->
     </plugins>
   </build>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>2.1.1</version>
-        <configuration>
-          <siteDirectory>site</siteDirectory>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
 <!--
   <distributionManagement>
     <downloadUrl>http://buildbox.sf.net/${project.artifactId}</downloadUrl>
@@ -167,7 +156,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>cobertura-maven-plugin</artifactId>
-            <version>2.4</version>
+            <version>2.6</version>
           </plugin>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>

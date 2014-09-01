@@ -28,7 +28,7 @@
             <bodyColumnClass>span9</bodyColumnClass>
             <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
             <googlePlusOne/>
-            <breadcrumbDivider><C2><BB></breadcrumbDivider>
+            <breadcrumbDivider>»</breadcrumbDivider>
             <skipGenerationDate>true</skipGenerationDate>
             <!--
             <twitter>
