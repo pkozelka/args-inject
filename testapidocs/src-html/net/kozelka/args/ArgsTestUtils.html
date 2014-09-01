@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package net.kozelka.args;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>import java.io.*;<a name="line.3"></a>
+<span class="sourceLineNo">004</span>import java.net.URL;<a name="line.4"></a>
+<span class="sourceLineNo">005</span>import java.util.concurrent.Callable;<a name="line.5"></a>
+<span class="sourceLineNo">006</span>import org.junit.Assert;<a name="line.6"></a>
+<span class="sourceLineNo">007</span><a name="line.7"></a>
+<span class="sourceLineNo">008</span>public class ArgsTestUtils {<a name="line.8"></a>
+<span class="sourceLineNo">009</span>    public static void filewrite(String filename, String text) throws IOException {<a name="line.9"></a>
+<span class="sourceLineNo">010</span>        final File dir = getTestClassesDir();<a name="line.10"></a>
+<span class="sourceLineNo">011</span>        final File of = new File(dir, filename);<a name="line.11"></a>
+<span class="sourceLineNo">012</span>        final Writer w = new FileWriter(of);<a name="line.12"></a>
+<span class="sourceLineNo">013</span>        System.out.println("Writing to " + of);<a name="line.13"></a>
+<span class="sourceLineNo">014</span>        try {<a name="line.14"></a>
+<span class="sourceLineNo">015</span>            w.write(text);<a name="line.15"></a>
+<span class="sourceLineNo">016</span>            System.out.println(text);<a name="line.16"></a>
+<span class="sourceLineNo">017</span>        } finally {<a name="line.17"></a>
+<span class="sourceLineNo">018</span>            w.close();<a name="line.18"></a>
+<span class="sourceLineNo">019</span>        }<a name="line.19"></a>
+<span class="sourceLineNo">020</span>    }<a name="line.20"></a>
+<span class="sourceLineNo">021</span><a name="line.21"></a>
+<span class="sourceLineNo">022</span>    public static File getTestClassesDir() {<a name="line.22"></a>
+<span class="sourceLineNo">023</span>        final URL url = ArgsTestUtils.class.getResource("/ref.txt");<a name="line.23"></a>
+<span class="sourceLineNo">024</span>        Assert.assertNotNull("Failed to find resource ref.txt", url);<a name="line.24"></a>
+<span class="sourceLineNo">025</span>        return new File(url.getPath()).getParentFile();<a name="line.25"></a>
+<span class="sourceLineNo">026</span>    }<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>    public static int trapStandardOutputs(StringBuilder stdout, StringBuilder stderr, Callable&lt;Integer&gt; callable) throws Exception {<a name="line.28"></a>
+<span class="sourceLineNo">029</span>        final PrintStream origOut = System.out;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>        final PrintStream origErr = System.err;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>        final ByteArrayOutputStream outBaos = new ByteArrayOutputStream();<a name="line.31"></a>
+<span class="sourceLineNo">032</span>        final ByteArrayOutputStream errBaos = new ByteArrayOutputStream();<a name="line.32"></a>
+<span class="sourceLineNo">033</span>        if (stdout != null) {<a name="line.33"></a>
+<span class="sourceLineNo">034</span>            System.setOut(new PrintStream(outBaos));<a name="line.34"></a>
+<span class="sourceLineNo">035</span>        }<a name="line.35"></a>
+<span class="sourceLineNo">036</span>        if (stderr != null) {<a name="line.36"></a>
+<span class="sourceLineNo">037</span>            System.setErr(new PrintStream(errBaos));<a name="line.37"></a>
+<span class="sourceLineNo">038</span>        }<a name="line.38"></a>
+<span class="sourceLineNo">039</span>        try {<a name="line.39"></a>
+<span class="sourceLineNo">040</span>            return callable.call();<a name="line.40"></a>
+<span class="sourceLineNo">041</span>        } finally {<a name="line.41"></a>
+<span class="sourceLineNo">042</span>            if (stdout != null) {<a name="line.42"></a>
+<span class="sourceLineNo">043</span>                outBaos.flush();<a name="line.43"></a>
+<span class="sourceLineNo">044</span>                stdout.append(outBaos.toString().trim());<a name="line.44"></a>
+<span class="sourceLineNo">045</span>                System.setOut(origOut);<a name="line.45"></a>
+<span class="sourceLineNo">046</span>            }<a name="line.46"></a>
+<span class="sourceLineNo">047</span>            if (stderr != null) {<a name="line.47"></a>
+<span class="sourceLineNo">048</span>                errBaos.flush();<a name="line.48"></a>
+<span class="sourceLineNo">049</span>                stderr.append(errBaos.toString().trim());<a name="line.49"></a>
+<span class="sourceLineNo">050</span>                System.setErr(origErr);<a name="line.50"></a>
+<span class="sourceLineNo">051</span>            }<a name="line.51"></a>
+<span class="sourceLineNo">052</span>        }<a name="line.52"></a>
+<span class="sourceLineNo">053</span>    }<a name="line.53"></a>
+<span class="sourceLineNo">054</span><a name="line.54"></a>
+<span class="sourceLineNo">055</span>}<a name="line.55"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

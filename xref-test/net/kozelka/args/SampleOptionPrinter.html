@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>SampleOptionPrinter xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../testapidocs/net/kozelka/args/SampleOptionPrinter.html">View Javadoc</a></div><pre>
+
+<a class="jxr_linenumber" name="1" href="#1">1</a>   <strong class="jxr_keyword">package</strong> net.kozelka.args;
+<a class="jxr_linenumber" name="2" href="#2">2</a>   
+<a class="jxr_linenumber" name="3" href="#3">3</a>   <strong class="jxr_keyword">import</strong> net.kozelka.args.annotation.AnnottationAwareSetup;
+<a class="jxr_linenumber" name="4" href="#4">4</a>   <strong class="jxr_keyword">import</strong> net.kozelka.args.annotation.Option;
+<a class="jxr_linenumber" name="5" href="#5">5</a>   <strong class="jxr_keyword">import</strong> net.kozelka.args.api.ArgsCommand;
+<a class="jxr_linenumber" name="6" href="#6">6</a>   
+<a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../net/kozelka/args/SampleOptionPrinter.html">SampleOptionPrinter</a> <strong class="jxr_keyword">implements</strong> ArgsCommand {
+<a class="jxr_linenumber" name="8" href="#8">8</a>       <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> sampleInt;
+<a class="jxr_linenumber" name="9" href="#9">9</a>       <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> sampleBoolean;
+<a class="jxr_linenumber" name="10" href="#10">10</a>      <strong class="jxr_keyword">private</strong> String sampleString;
+<a class="jxr_linenumber" name="11" href="#11">11</a>  
+<a class="jxr_linenumber" name="12" href="#12">12</a>      @Option(longName = <span class="jxr_string">"--sample-int"</span>, shortName = <span class="jxr_string">"-i"</span>, description = <span class="jxr_string">"sample integer option"</span>)
+<a class="jxr_linenumber" name="13" href="#13">13</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setSampleInt(<strong class="jxr_keyword">int</strong> sampleInt) {
+<a class="jxr_linenumber" name="14" href="#14">14</a>          <strong class="jxr_keyword">this</strong>.sampleInt = sampleInt;
+<a class="jxr_linenumber" name="15" href="#15">15</a>      }
+<a class="jxr_linenumber" name="16" href="#16">16</a>  
+<a class="jxr_linenumber" name="17" href="#17">17</a>      @Option(longName = <span class="jxr_string">"--sample-boolean"</span>, shortName = <span class="jxr_string">"-b"</span>, description = <span class="jxr_string">"sample boolean option"</span>)
+<a class="jxr_linenumber" name="18" href="#18">18</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setSampleBoolean(<strong class="jxr_keyword">boolean</strong> sampleBoolean) {
+<a class="jxr_linenumber" name="19" href="#19">19</a>          <strong class="jxr_keyword">this</strong>.sampleBoolean = sampleBoolean;
+<a class="jxr_linenumber" name="20" href="#20">20</a>      }
+<a class="jxr_linenumber" name="21" href="#21">21</a>  
+<a class="jxr_linenumber" name="22" href="#22">22</a>      @Option(longName = <span class="jxr_string">"--sample-string"</span>, shortName = <span class="jxr_string">"-s"</span>, description = <span class="jxr_string">"sample string option"</span>)
+<a class="jxr_linenumber" name="23" href="#23">23</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setSampleString(String sampleString) {
+<a class="jxr_linenumber" name="24" href="#24">24</a>          <strong class="jxr_keyword">this</strong>.sampleString = sampleString;
+<a class="jxr_linenumber" name="25" href="#25">25</a>      }
+<a class="jxr_linenumber" name="26" href="#26">26</a>  
+<a class="jxr_linenumber" name="27" href="#27">27</a>      <strong class="jxr_keyword">public</strong> Integer call() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="28" href="#28">28</a>          System.out.println(String.format(<span class="jxr_string">"%d:%s:%s"</span>, sampleInt, sampleBoolean, sampleString));
+<a class="jxr_linenumber" name="29" href="#29">29</a>          <strong class="jxr_keyword">return</strong> 0;
+<a class="jxr_linenumber" name="30" href="#30">30</a>      }
+<a class="jxr_linenumber" name="31" href="#31">31</a>  
+<a class="jxr_linenumber" name="32" href="#32">32</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> run(String... args) <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="33" href="#33">33</a>          <strong class="jxr_keyword">final</strong> AnnottationAwareSetup setup = <strong class="jxr_keyword">new</strong> AnnottationAwareSetup(<span class="jxr_string">"DemoFileLister"</span>);
+<a class="jxr_linenumber" name="34" href="#34">34</a>          setup.setDefaultSubCommand(SampleOptionPrinter.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="35" href="#35">35</a>          <strong class="jxr_keyword">return</strong> BasicArgsParser.process(setup, args);
+<a class="jxr_linenumber" name="36" href="#36">36</a>      }
+<a class="jxr_linenumber" name="37" href="#37">37</a>  }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+

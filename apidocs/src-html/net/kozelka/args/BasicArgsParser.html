@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>package net.kozelka.args;<a name="line.1"></a>
+<span class="sourceLineNo">002</span><a name="line.2"></a>
+<span class="sourceLineNo">003</span>import java.text.ParseException;<a name="line.3"></a>
+<span class="sourceLineNo">004</span>import java.util.ArrayList;<a name="line.4"></a>
+<span class="sourceLineNo">005</span>import java.util.Arrays;<a name="line.5"></a>
+<span class="sourceLineNo">006</span>import java.util.LinkedList;<a name="line.6"></a>
+<span class="sourceLineNo">007</span>import java.util.List;<a name="line.7"></a>
+<span class="sourceLineNo">008</span>import java.util.concurrent.Callable;<a name="line.8"></a>
+<span class="sourceLineNo">009</span>import java.util.regex.Pattern;<a name="line.9"></a>
+<span class="sourceLineNo">010</span>import net.kozelka.args.api.ArgsSetup;<a name="line.10"></a>
+<span class="sourceLineNo">011</span>import net.kozelka.args.api.ArgsCommand;<a name="line.11"></a>
+<span class="sourceLineNo">012</span>import net.kozelka.args.model.CommandlineDeclaration;<a name="line.12"></a>
+<span class="sourceLineNo">013</span>import net.kozelka.args.model.OptionDeclaration;<a name="line.13"></a>
+<span class="sourceLineNo">014</span>import net.kozelka.args.model.ParsedOption;<a name="line.14"></a>
+<span class="sourceLineNo">015</span>import net.kozelka.args.model.SubCommandDeclaration;<a name="line.15"></a>
+<span class="sourceLineNo">016</span><a name="line.16"></a>
+<span class="sourceLineNo">017</span>/**<a name="line.17"></a>
+<span class="sourceLineNo">018</span> * Supports one subcommand on the commandline.<a name="line.18"></a>
+<span class="sourceLineNo">019</span> * The order of global options, subcommand options, subcommand itself and its parameters does not matter - all can be mixed.<a name="line.19"></a>
+<span class="sourceLineNo">020</span> * Values of options must however directly follow the option name.<a name="line.20"></a>
+<span class="sourceLineNo">021</span> */<a name="line.21"></a>
+<span class="sourceLineNo">022</span>public class BasicArgsParser {<a name="line.22"></a>
+<span class="sourceLineNo">023</span>    private final ArgsSetup declarationSetup;<a name="line.23"></a>
+<span class="sourceLineNo">024</span><a name="line.24"></a>
+<span class="sourceLineNo">025</span>    public BasicArgsParser(ArgsSetup declarationSetup) {<a name="line.25"></a>
+<span class="sourceLineNo">026</span>        this.declarationSetup = declarationSetup;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>    }<a name="line.27"></a>
+<span class="sourceLineNo">028</span><a name="line.28"></a>
+<span class="sourceLineNo">029</span>    /**<a name="line.29"></a>
+<span class="sourceLineNo">030</span>     * Parses the commandline args.<a name="line.30"></a>
+<span class="sourceLineNo">031</span>     *<a name="line.31"></a>
+<span class="sourceLineNo">032</span>     * @param args the args array to parse<a name="line.32"></a>
+<span class="sourceLineNo">033</span>     * @return initialized command instance<a name="line.33"></a>
+<span class="sourceLineNo">034</span>     * @throws ParseException -<a name="line.34"></a>
+<span class="sourceLineNo">035</span>     */<a name="line.35"></a>
+<span class="sourceLineNo">036</span>    public Callable&lt;Integer&gt; parse(String... args) throws ParseException {<a name="line.36"></a>
+<span class="sourceLineNo">037</span>        final CommandlineDeclaration declaration = declarationSetup.getDeclaration();<a name="line.37"></a>
+<span class="sourceLineNo">038</span>        final LinkedList&lt;String&gt; argsList = new LinkedList&lt;String&gt;(Arrays.asList(args));<a name="line.38"></a>
+<span class="sourceLineNo">039</span>        ArgsUtils.debug("Parsing commandline args: %s", argsList);<a name="line.39"></a>
+<span class="sourceLineNo">040</span>        final List&lt;ParsedOption&gt; parsedOptions = new ArrayList&lt;ParsedOption&gt;();<a name="line.40"></a>
+<span class="sourceLineNo">041</span>        final LinkedList&lt;String&gt; cmdParams = new LinkedList&lt;String&gt;();<a name="line.41"></a>
+<span class="sourceLineNo">042</span>        while (!argsList.isEmpty()) {<a name="line.42"></a>
+<span class="sourceLineNo">043</span>            final String arg = argsList.removeFirst();<a name="line.43"></a>
+<span class="sourceLineNo">044</span>//            System.out.println("arg = " + arg);<a name="line.44"></a>
+<span class="sourceLineNo">045</span>            final int n = arg.indexOf('=');<a name="line.45"></a>
+<span class="sourceLineNo">046</span>            final String argName;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>            if (n &gt;= 0) {<a name="line.47"></a>
+<span class="sourceLineNo">048</span>                argName = arg.substring(0, n);<a name="line.48"></a>
+<span class="sourceLineNo">049</span>                //TODO: also prepend name as separate option argument<a name="line.49"></a>
+<span class="sourceLineNo">050</span>                // TODO: somehow, support property options like -Dkey=value<a name="line.50"></a>
+<span class="sourceLineNo">051</span>                final String argValue = arg.substring(n + 1);<a name="line.51"></a>
+<span class="sourceLineNo">052</span>                argsList.addFirst(argValue);<a name="line.52"></a>
+<span class="sourceLineNo">053</span>            } else {<a name="line.53"></a>
+<span class="sourceLineNo">054</span>                //TODO: support -x- meaning boolean option with value of false <a name="line.54"></a>
+<span class="sourceLineNo">055</span>                argName = arg;<a name="line.55"></a>
+<span class="sourceLineNo">056</span>            }<a name="line.56"></a>
+<span class="sourceLineNo">057</span>            final OptionDeclaration optionDecl;<a name="line.57"></a>
+<span class="sourceLineNo">058</span>            if (arg.equals("-") || arg.equals("--")) {<a name="line.58"></a>
+<span class="sourceLineNo">059</span>                // allow stdfile value (-) and multi-varargs separator (--)<a name="line.59"></a>
+<span class="sourceLineNo">060</span>                cmdParams.add(arg);<a name="line.60"></a>
+<span class="sourceLineNo">061</span>                continue;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>            } else if (arg.startsWith("--")) {<a name="line.62"></a>
+<span class="sourceLineNo">063</span>                optionDecl = declaration.lookupLongOption(argName);<a name="line.63"></a>
+<span class="sourceLineNo">064</span>                if (optionDecl == null) {<a name="line.64"></a>
+<span class="sourceLineNo">065</span>                    // little trick to allow stuff like --help or --version behave as command:<a name="line.65"></a>
+<span class="sourceLineNo">066</span>                    final SubCommandDeclaration cmdDecl = declaration.lookupCommand(arg, false);<a name="line.66"></a>
+<span class="sourceLineNo">067</span>                    if (cmdDecl == null) {<a name="line.67"></a>
+<span class="sourceLineNo">068</span>                        throw new ParseException("invalid option: " + arg, 0);<a name="line.68"></a>
+<span class="sourceLineNo">069</span>                    }<a name="line.69"></a>
+<span class="sourceLineNo">070</span>                    cmdParams.add(arg);<a name="line.70"></a>
+<span class="sourceLineNo">071</span>                    continue;<a name="line.71"></a>
+<span class="sourceLineNo">072</span>                }<a name="line.72"></a>
+<span class="sourceLineNo">073</span>            } else if (arg.startsWith("-")) {<a name="line.73"></a>
+<span class="sourceLineNo">074</span>                optionDecl = declaration.lookupShortOption(argName);<a name="line.74"></a>
+<span class="sourceLineNo">075</span>                if (optionDecl == null) {<a name="line.75"></a>
+<span class="sourceLineNo">076</span>                    final Pattern NUMBER_CHARS = Pattern.compile("-\\d+(\\.\\d+)?");<a name="line.76"></a>
+<span class="sourceLineNo">077</span>                    if (!NUMBER_CHARS.matcher(argName).matches()) {<a name="line.77"></a>
+<span class="sourceLineNo">078</span>                        throw new ParseException("invalid option: " + arg, 0);<a name="line.78"></a>
+<span class="sourceLineNo">079</span>                    }<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                    // if digits (with dot) follow, pass it as a value =&gt; this enables support for negative subcommand param values<a name="line.80"></a>
+<span class="sourceLineNo">081</span>                    cmdParams.add(arg);<a name="line.81"></a>
+<span class="sourceLineNo">082</span>                    continue;<a name="line.82"></a>
+<span class="sourceLineNo">083</span>                }<a name="line.83"></a>
+<span class="sourceLineNo">084</span>            } else {<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                cmdParams.add(arg);<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                continue;<a name="line.86"></a>
+<span class="sourceLineNo">087</span>            }<a name="line.87"></a>
+<span class="sourceLineNo">088</span>//            System.out.println("optionMethod = " + optionMethod);<a name="line.88"></a>
+<span class="sourceLineNo">089</span>            // pre-parse option - command may be still unknown<a name="line.89"></a>
+<span class="sourceLineNo">090</span>            final ParsedOption option = new ParsedOption(argName, optionDecl);<a name="line.90"></a>
+<span class="sourceLineNo">091</span>            option.parse(argsList);<a name="line.91"></a>
+<span class="sourceLineNo">092</span>            parsedOptions.add(option);<a name="line.92"></a>
+<span class="sourceLineNo">093</span>        }<a name="line.93"></a>
+<span class="sourceLineNo">094</span>        ArgsUtils.debug("  cmdParams:     %s", cmdParams);<a name="line.94"></a>
+<span class="sourceLineNo">095</span>        ArgsUtils.debug("  parsedOptions: %s", parsedOptions);<a name="line.95"></a>
+<span class="sourceLineNo">096</span>        // parse command<a name="line.96"></a>
+<span class="sourceLineNo">097</span>        final SubCommandDeclaration defaultSubCommand = declaration.getDefaultSubCommand();<a name="line.97"></a>
+<span class="sourceLineNo">098</span>        SubCommandDeclaration cmdDecl;<a name="line.98"></a>
+<span class="sourceLineNo">099</span>        String cmdName;<a name="line.99"></a>
+<span class="sourceLineNo">100</span>        if (cmdParams.isEmpty()) {<a name="line.100"></a>
+<span class="sourceLineNo">101</span>            if (defaultSubCommand == null) {<a name="line.101"></a>
+<span class="sourceLineNo">102</span>                throw new ParseException("no subcommand specified", 0);<a name="line.102"></a>
+<span class="sourceLineNo">103</span>            }<a name="line.103"></a>
+<span class="sourceLineNo">104</span>            cmdDecl = defaultSubCommand;<a name="line.104"></a>
+<span class="sourceLineNo">105</span>            cmdName = cmdname(cmdDecl);<a name="line.105"></a>
+<span class="sourceLineNo">106</span>        } else {<a name="line.106"></a>
+<span class="sourceLineNo">107</span>            cmdName = cmdParams.removeFirst();<a name="line.107"></a>
+<span class="sourceLineNo">108</span>            cmdDecl = declaration.lookupCommand(cmdName, false);<a name="line.108"></a>
+<span class="sourceLineNo">109</span>            if (cmdDecl == null) {<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                if (defaultSubCommand == null) {<a name="line.110"></a>
+<span class="sourceLineNo">111</span>                    throw new ParseException("unknown subcommand: " + cmdName, 0);<a name="line.111"></a>
+<span class="sourceLineNo">112</span>                }<a name="line.112"></a>
+<span class="sourceLineNo">113</span>                cmdParams.addFirst(cmdName); // return it back, it's value<a name="line.113"></a>
+<span class="sourceLineNo">114</span>                cmdDecl = defaultSubCommand;<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                cmdName = cmdname(cmdDecl);<a name="line.115"></a>
+<span class="sourceLineNo">116</span>            }<a name="line.116"></a>
+<span class="sourceLineNo">117</span>        }<a name="line.117"></a>
+<span class="sourceLineNo">118</span>        final ArgsCommand commandInstance = declarationSetup.createSubCommand(cmdName, cmdDecl, cmdParams);<a name="line.118"></a>
+<span class="sourceLineNo">119</span>        // fail if any token remains<a name="line.119"></a>
+<span class="sourceLineNo">120</span>        if (!cmdParams.isEmpty()) {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>            throw new ParseException("unparsed tokens: " + cmdParams, 0);<a name="line.121"></a>
+<span class="sourceLineNo">122</span>        }<a name="line.122"></a>
+<span class="sourceLineNo">123</span>        declarationSetup.injectOptions(commandInstance, parsedOptions, cmdName);<a name="line.123"></a>
+<span class="sourceLineNo">124</span>        return commandInstance;<a name="line.124"></a>
+<span class="sourceLineNo">125</span>    }<a name="line.125"></a>
+<span class="sourceLineNo">126</span><a name="line.126"></a>
+<span class="sourceLineNo">127</span>    private static String cmdname(SubCommandDeclaration cmdDecl) {<a name="line.127"></a>
+<span class="sourceLineNo">128</span>        String name = cmdDecl.getName();<a name="line.128"></a>
+<span class="sourceLineNo">129</span>        return name == null ? "&lt;UNNAMED&gt;" : name;<a name="line.129"></a>
+<span class="sourceLineNo">130</span>    }<a name="line.130"></a>
+<span class="sourceLineNo">131</span><a name="line.131"></a>
+<span class="sourceLineNo">132</span>    public static Callable&lt;Integer&gt; parse(ArgsSetup declarationSetup, String... args) throws ParseException {<a name="line.132"></a>
+<span class="sourceLineNo">133</span>        return new BasicArgsParser(declarationSetup).parse(args);<a name="line.133"></a>
+<span class="sourceLineNo">134</span>    }<a name="line.134"></a>
+<span class="sourceLineNo">135</span><a name="line.135"></a>
+<span class="sourceLineNo">136</span>    /**<a name="line.136"></a>
+<span class="sourceLineNo">137</span>     * &lt;p&gt;High-level entry point for commandline processing. Builds command according to setup and args, calls it,<a name="line.137"></a>
+<span class="sourceLineNo">138</span>     * and handles any exceptions in a way expectable from commandline application.&lt;/p&gt;<a name="line.138"></a>
+<span class="sourceLineNo">139</span>     * &lt;p&gt;Expected usage:&lt;/p&gt;<a name="line.139"></a>
+<span class="sourceLineNo">140</span>     * &lt;pre&gt;<a name="line.140"></a>
+<span class="sourceLineNo">141</span>     * ...<a name="line.141"></a>
+<span class="sourceLineNo">142</span>     * public static void main(String[] args) {<a name="line.142"></a>
+<span class="sourceLineNo">143</span>     *   // ... create your commandline setup here ...<a name="line.143"></a>
+<span class="sourceLineNo">144</span>     *   if (!&lt;b&gt; SingleCommandBuilder.main&lt;/b&gt;(setup, args)) {<a name="line.144"></a>
+<span class="sourceLineNo">145</span>     *     {@link System#exit(int) System.exit(1)}; // indicate failure to shell<a name="line.145"></a>
+<span class="sourceLineNo">146</span>     *   }<a name="line.146"></a>
+<span class="sourceLineNo">147</span>     * }<a name="line.147"></a>
+<span class="sourceLineNo">148</span>     * ...<a name="line.148"></a>
+<span class="sourceLineNo">149</span>     * &lt;/pre&gt;<a name="line.149"></a>
+<span class="sourceLineNo">150</span>     * &lt;p&gt;Note that this way, the dirty job of calling {@link System#exit(int)} is intentionally left up to the caller.&lt;/p&gt;<a name="line.150"></a>
+<span class="sourceLineNo">151</span>     *<a name="line.151"></a>
+<span class="sourceLineNo">152</span>     * @param setup commandline declaration<a name="line.152"></a>
+<span class="sourceLineNo">153</span>     * @param args  actual arguments to be processed<a name="line.153"></a>
+<span class="sourceLineNo">154</span>     * @return exit code. It is a good idea to indicate failure to shell by terminating with {@link System#exit(int) System.exit(1)}<a name="line.154"></a>
+<span class="sourceLineNo">155</span>     * @throws Exception used only if {@link net.kozelka.args.ArgsUtils#debugMode}==true<a name="line.155"></a>
+<span class="sourceLineNo">156</span>     */<a name="line.156"></a>
+<span class="sourceLineNo">157</span>    public static int process(ArgsSetup setup, String... args) throws Exception {<a name="line.157"></a>
+<span class="sourceLineNo">158</span>        try {<a name="line.158"></a>
+<span class="sourceLineNo">159</span>            XmlModelSerializer.checkArgsXml(setup.getDeclaration());<a name="line.159"></a>
+<span class="sourceLineNo">160</span>            final int exitCode = new BasicArgsParser(setup).parse(args).call();<a name="line.160"></a>
+<span class="sourceLineNo">161</span>            ArgsUtils.debug("exitCode = %d", exitCode);<a name="line.161"></a>
+<span class="sourceLineNo">162</span>            return exitCode;<a name="line.162"></a>
+<span class="sourceLineNo">163</span>        } catch (ParseException e) {<a name="line.163"></a>
+<span class="sourceLineNo">164</span>            System.err.println("ERROR: " + e.getMessage());<a name="line.164"></a>
+<span class="sourceLineNo">165</span>            if (ArgsUtils.debugMode) {<a name="line.165"></a>
+<span class="sourceLineNo">166</span>                e.printStackTrace();<a name="line.166"></a>
+<span class="sourceLineNo">167</span>            }<a name="line.167"></a>
+<span class="sourceLineNo">168</span>            return 1;<a name="line.168"></a>
+<span class="sourceLineNo">169</span>        } catch (IllegalArgumentException e) {<a name="line.169"></a>
+<span class="sourceLineNo">170</span>            System.err.println("ERROR: " + e.getClass().getSimpleName() + " - " + e.getMessage());<a name="line.170"></a>
+<span class="sourceLineNo">171</span>            if (ArgsUtils.debugMode) {<a name="line.171"></a>
+<span class="sourceLineNo">172</span>                e.printStackTrace();<a name="line.172"></a>
+<span class="sourceLineNo">173</span>            }<a name="line.173"></a>
+<span class="sourceLineNo">174</span>            return 1;<a name="line.174"></a>
+<span class="sourceLineNo">175</span>        }<a name="line.175"></a>
+<span class="sourceLineNo">176</span>    }<a name="line.176"></a>
+<span class="sourceLineNo">177</span><a name="line.177"></a>
+<span class="sourceLineNo">178</span>}<a name="line.178"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
