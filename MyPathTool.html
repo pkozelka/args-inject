@@ -8,7 +8,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Petr Kozelka" />
-    <meta name="Date-Revision-yyyymmdd" content="20140901" />
+    <meta name="Date-Revision-yyyymmdd" content="20140902" />
     <meta http-equiv="Content-Language" content="en" />
     <title>args-inject - MyPathTool Sample</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.1.min.css" />
@@ -242,22 +242,20 @@
         <ul class="breadcrumb">
                 
                     
-                  <li id="publishDate">Last Published: 2014-09-01
-                      <span class="divider">|</span>
-                   </li>
-                  <li id="projectVersion">Version: 1-SNAPSHOT
-                          <span class="divider">|</span>
-                      </li>
-                                      <li class="">
+                              <li class="">
                     <a href="index.html" title="args-inject">
         args-inject</a>
                     <span class="divider">»</span>
       </li>
         <li class="active ">MyPathTool Sample</li>
-                
+        
                 
                     
-      
+                  <li id="publishDate" class="pull-right"><span class="divider">|</span> Last Published: 2014-09-02</li>
+              <li id="projectVersion" class="pull-right">
+                    Version: 1-SNAPSHOT
+        </li>
+            
                             </ul>
       </div>
 
@@ -276,9 +274,126 @@
 <li>using paramless option method</li>
 <li>using option method with boolean value</li></ul>
 <div class="section">
-<h3>MyPathTool.java<a name="MyPathTool.java"></a></h3></div></div>
-<div class="section">
-<h2>.MACRO.<a name="code-snippetbrushjavafiletestnetsfbuildboxargsmypathtoolMyPathTool.java">code-snippet|brush=java|file=test/net/sf/buildbox/args/mypathtool/MyPathTool.java</a><a name="a.MACRO.code-snippetbrushjavafiletestnetsfbuildboxargsmypathtoolMyPathTool.java"></a></h2></div>
+<h3>MyPathTool.java<a name="MyPathTool.java"></a></h3><pre class="brush: java">package net.kozelka.args.mypathtool;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import net.kozelka.args.BasicArgsParser;
+import net.kozelka.args.DefaultHelpCommand;
+import net.kozelka.args.annotation.AnnottationAwareSetup;
+import net.kozelka.args.annotation.Option;
+import net.kozelka.args.annotation.Param;
+import net.kozelka.args.api.ArgsCommand;
+
+/**
+ * Commandline archetype: no subcommands, just single param and some options
+ * This sample code demonstrates working with array input arguments.
+ */
+public class MyPathTool implements ArgsCommand {
+    private final File[] pathList;
+    private boolean dirPerLine;
+    private boolean keepDuplicatePaths;
+    private boolean keepMissingPaths;
+    private Set&lt;String&gt; exclude = Collections.emptySet();
+
+    public MyPathTool(@Param(&quot;path&quot;) File[] pathList) {
+        this.pathList = pathList;
+    }
+
+    @Option(shortName = &quot;-l&quot;, longName = &quot;--multi-line-output&quot;, description = &quot;list paths one per line&quot;)
+    public void dirPerLine() {
+        dirPerLine = true;
+    }
+
+    @Option(shortName = &quot;-kd&quot;, longName = &quot;--keep-duplicate-paths&quot;, description = &quot;do not remove duplicates&quot;)
+    public void setKeepDuplicatePaths(boolean keepDuplicatePaths) {
+        this.keepDuplicatePaths = keepDuplicatePaths;
+    }
+
+    @Option(shortName = &quot;-km&quot;, longName = &quot;--keep-missing-paths&quot;, description = &quot;do not remove missing paths&quot;)
+    public void setKeepMissingPaths(boolean keepMissingPaths) {
+        this.keepMissingPaths = keepMissingPaths;
+    }
+
+    @Option(longName = &quot;--exclude&quot;, description=&quot;excludes directories containing given subpaths (comma separated)&quot;)
+    public void setExclude(String... exclude) {
+        this.exclude = new HashSet&lt;String&gt;(Arrays.asList(exclude));
+    }
+
+    public Integer call() throws Exception {
+        final Collection&lt;File&gt; result = keepDuplicatePaths ? new ArrayList&lt;File&gt;() :  new LinkedHashSet&lt;File&gt;();
+        for (File path : pathList) {
+            try {
+                if (! keepMissingPaths) {
+                    if (!path.exists()) {
+                        System.err.println(&quot;missing path: &quot; + path);
+                        continue;
+                    }
+                }
+                if (containsExcludedSubpath(path)) {
+                    System.err.println(&quot;excluding: &quot; + path);
+                    continue;
+                }
+                final File d = path.getCanonicalFile();
+                if (!result.add(d)) {
+                    System.err.println(&quot;duplicate path: &quot; + d);
+                }
+            } catch (IOException e) {
+                System.err.println(&quot;invalid path: &quot; + path);
+            }
+        }
+        printPathList(result);
+        return 0;
+    }
+
+    private boolean containsExcludedSubpath(File path) {
+        for (String ex : exclude) {
+            final File p = new File(path, ex);
+            if (p.exists()) return true;
+        }
+        return false;
+    }
+
+    private void printPathList(Collection&lt;File&gt; paths) {
+        if (dirPerLine) {
+            for (File path : paths) {
+                System.out.println(path);
+            }
+        } else {
+            final StringBuilder sb = new StringBuilder();
+            for (File path : paths) {
+                if (sb.length() != 0) {
+                    sb.append(File.pathSeparatorChar);
+                }
+                sb.append(path);
+            }
+            System.out.println(sb);
+        }
+    }
+
+    /**
+     * Highest-possible level of invocation usable both from {@link #main} and from unit tests.
+     *
+     * @param args commandline arguments
+     * @return true if successful
+     * @throws Exception -
+     */
+    static int run(String... args) throws Exception {
+        final AnnottationAwareSetup setup = new AnnottationAwareSetup(&quot;mpt&quot;);
+        setup.setDefaultSubCommand(MyPathTool.class);
+        setup.addSubCommand(DefaultHelpCommand.class);
+        return BasicArgsParser.process(setup, args);
+    }
+
+    public static void main(String[] args) throws Exception {
+        final int exitCode = run(args);
+        if (exitCode != 0) {
+            System.exit(exitCode);
+        }
+    }
+}
+</pre></div></div>
                   </div>
           </div>
 

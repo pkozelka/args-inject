@@ -8,7 +8,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Petr Kozelka" />
-    <meta name="Date-Revision-yyyymmdd" content="20140901" />
+    <meta name="Date-Revision-yyyymmdd" content="20140902" />
     <meta http-equiv="Content-Language" content="en" />
     <title>args-inject - main(String[] args)</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.1.min.css" />
@@ -242,22 +242,20 @@
         <ul class="breadcrumb">
                 
                     
-                  <li id="publishDate">Last Published: 2014-09-01
-                      <span class="divider">|</span>
-                   </li>
-                  <li id="projectVersion">Version: 1-SNAPSHOT
-                          <span class="divider">|</span>
-                      </li>
-                                      <li class="">
+                              <li class="">
                     <a href="index.html" title="args-inject">
         args-inject</a>
                     <span class="divider">»</span>
       </li>
         <li class="active ">main(String[] args)</li>
-                
+        
                 
                     
-      
+                  <li id="publishDate" class="pull-right"><span class="divider">|</span> Last Published: 2014-09-02</li>
+              <li id="projectVersion" class="pull-right">
+                    Version: 1-SNAPSHOT
+        </li>
+            
                             </ul>
       </div>
 
@@ -271,25 +269,47 @@
 <p>While developer is given complete freedom on how to implement it, there is rarely a reason for any creativity. See below which implementation prototypes are recommended.</p>
 <div class="section">
 <h3>Straightforward approach<a name="Straightforward_approach"></a></h3>
-<p>This code does <i>exactly</i> the needed minimum to have a functional <tt>main</tt> - imagine your set of commands and other settings there:</p></div></div>
-<div class="section">
-<h2>.MACRO.<a name="code-snippetidsample-mainbrushjavafiletestnetsfbuildboxargsArgsParserTest.java">code-snippet|id=sample-main|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java</a><a name="a.MACRO.code-snippetidsample-mainbrushjavafiletestnetsfbuildboxargsArgsParserTest.java"></a></h2>
+<p>This code does <i>exactly</i> the needed minimum to have a functional <tt>main</tt> - imagine your set of commands and other settings there:</p><pre class="brush: java">    public static void main(String[] args) throws Exception {
+        final AnnottationAwareSetup setup = new AnnottationAwareSetup(&quot;myapp&quot;);
+        setup.setDefaultSubCommand(DemoFileLister.class);
+        final int exitCode = BasicArgsParser.process(setup, args);
+        if (exitCode != 0) {
+            System.exit(exitCode); // indicate failure to shell
+        }
+    }
+</pre></div>
 <div class="section">
 <h3>Unit testing aware approach<a name="Unit_testing_aware_approach"></a></h3>
 <p>The above main method is simple enough, but it still makes sense to split it into two parts if you wish to use utilize most of production code in your unit tests.</p>
 <p>Look how it is done in the <a href="./MiniCalc.html">MiniCalc</a> sample:</p>
 <ul>
-<li>the part that constructs java mapping (setup)</li></ul></div></div>
-<div class="section">
-<h2>.MACRO.<a name="code-snippetidrunbrushjavafiletestnetsfbuildboxargsminicalcMiniCalc.java">code-snippet|id=run|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java</a><a name="a.MACRO.code-snippetidrunbrushjavafiletestnetsfbuildboxargsminicalcMiniCalc.java"></a></h2>
+<li>the part that constructs java mapping (setup)</li></ul><pre class="brush: java">    /**
+     * Highest-possible level of invocation usable both from {@link #main} and from unit tests.
+     *
+     * @param args commandline arguments
+     * @return true if successful
+     * @throws Exception -
+     */
+    static int run(String... args) throws Exception {
+        final AnnottationAwareSetup setup = new AnnottationAwareSetup(&quot;minicalc&quot;);
+        setup.addSubCommand(DefaultHelpCommand.class);
+        setup.addSubCommand(Plus.class);
+        setup.addSubCommand(Minus.class);
+        setup.addSubCommand(Logarithm.class);
+        return BasicArgsParser.process(setup, args);
+    }
+</pre>
 <ul>
-<li>the part that can call <tt>System.exit()</tt> which is illegal in JUnit</li></ul></div>
-<div class="section">
-<h2>.MACRO.<a name="code-snippetidmainbrushjavafiletestnetsfbuildboxargsminicalcMiniCalc.java">code-snippet|id=main|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java</a><a name="a.MACRO.code-snippetidmainbrushjavafiletestnetsfbuildboxargsminicalcMiniCalc.java"></a></h2>
-<p>Then your junit test can use it like this:</p></div>
-<div class="section">
-<h2>.MACRO.<a name="code-snippetiduse-in-junitbrushjavafiletestnetsfbuildboxargsminicalcMiniCalcTest.java">code-snippet|id=use-in-junit|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalcTest.java</a><a name="a.MACRO.code-snippetiduse-in-junitbrushjavafiletestnetsfbuildboxargsminicalcMiniCalcTest.java"></a></h2>
-<p>You can also be interrested in trapping stdout/stderr for testing; it's fairly simple; for inspiration, look into <tt>MiniCalcTest.java</tt> how it can be accomplished.</p></div>
+<li>the part that can call <tt>System.exit()</tt> which is illegal in JUnit</li></ul><pre class="brush: java">    public static void main(String[] args) throws Exception {
+        final int exitCode = run(args);
+        if (exitCode != 0) {
+            System.exit(exitCode);
+        }
+    }
+</pre>
+<p>Then your junit test can use it like this:</p><pre class="brush: java">            Assert.assertEquals(0, MiniCalc.run(args));
+</pre>
+<p>You can also be interrested in trapping stdout/stderr for testing; it's fairly simple; for inspiration, look into <tt>MiniCalcTest.java</tt> how it can be accomplished.</p></div></div>
                   </div>
           </div>
 
