@@ -52,10 +52,6 @@ public final class ParamDeclaration {
         }
     }
 
-    static enum MyEnum {
-        A,B,C
-    }
-
     public Class<?> getType() {
         return type;
     }
