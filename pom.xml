@@ -78,18 +78,22 @@
     </site>
   </distributionManagement>
 -->
-  <developers>
-    <developer>
-      <id>pkozelka</id>
-      <name>Petr Kozelka</name>
-      <email>pkozelka@gmail.com</email>
-      <url>http://kozelka.net</url>
-    </developer>
-  </developers>
-  <issueManagement>
-    <system>github</system>
-    <url>https://github.com/pkozelka/args-inject/issues</url>
-  </issueManagement>
+    <developers>
+        <developer>
+            <id>pkozelka</id>
+            <name>Petr Kozelka</name>
+            <email>pkozelka@gmail.com</email>
+            <url>http://kozelka.net</url>
+        </developer>
+    </developers>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/pkozelka/args-inject/issues</url>
+    </issueManagement>
+    <organization>
+        <name>Petr Kozelka</name>
+        <url>http://kozelka.net</url>
+    </organization>
   <profiles>
     <profile>
       <!-- todo get rid of the need for this profile -->
