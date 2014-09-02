@@ -5,7 +5,7 @@
 
 Writing a custom analyzer
 
-   Declaration analyzer is the part that takes "something" and translates it into declaration objects (see package <<<net.sf.buildbox.args.model>>>)
+   Declaration analyzer is the part that takes "something" and translates it into declaration objects (see package <<<net.kozelka.args.model>>>)
 
    The class AnnottationAwareSetup implements analyzer which uses Java Reflections with some annottations to construct that model.
 

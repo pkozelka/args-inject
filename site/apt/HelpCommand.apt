@@ -9,7 +9,7 @@ Using default help command
 
  To add support for default "help" command, using declared documentation, add <<<DefaultHelpCommand.class>>> command class:
 
-%{code-snippet|id=default-help|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}
+%{code-snippet|id=default-help|brush=java|file=test/net/kozelka/args/ArgsParserTest.java}
 
  Note that help command works just like any other command.
 

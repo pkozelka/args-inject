@@ -1,27 +1,11 @@
 <snippets>
   <!-- START SNIPPET: dependency -->
   <dependency>
-    <groupId>net.sf.buildbox</groupId>
+    <groupId>net.kozelka</groupId>
     <artifactId>args-inject</artifactId>
-    <version>1.0.0-alpha</version>
+    <version>0.1-SNAPSHOT</version>
   </dependency>
   <!-- END SNIPPET: dependency -->
-
-  <!-- START SNIPPET: alpha-repo -->
-  <repositories>
-    <repository>
-      <id>bbx-alpha</id>
-      <url>http://buildbox.sf.net/maven2-alpha</url>
-      <name>Buildbox repository for ALPHA releases (developer preview)</name>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-  <!-- END SNIPPET: alpha-repo -->
 
   <!-- START SNIPPET: ant-maven-dependency -->
   <project name="my-project"
@@ -33,10 +17,10 @@
         uri="urn:maven-artifact-ant"/>
     <!-- resolve the dependency -->
     <artifact:dependencies>
-      <artifact:dependency groupId="net.sf.buildbox" artifactId="args-inject" version="1.0.0-alpha"/>
+      <artifact:dependency groupId="net.kozelka" artifactId="args-inject" version="0.1-SNAPSHOT"/>
     </artifact:dependencies>
     <!-- use the dependency as a file -->
-    <echo>add this path to javac classpath: ${net.sf.buildbox:args-inject:jar}</echo>
+    <echo>add this path to javac classpath: ${net.kozelka:args-inject:jar}</echo>
     <!-- ... -->
     <!-- END SNIPPET: ant-maven-dependency -->
   </project>

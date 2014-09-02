@@ -26,7 +26,7 @@ MiniCalc Sample
 
 * MiniCalc.java
 
-%{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/MiniCalc.java}
+%{code-snippet|brush=java|file=test/net/kozelka/args/minicalc/MiniCalc.java}
 
 ** minicalc help
 
@@ -34,7 +34,7 @@ MiniCalc Sample
 
 * Plus.java
 
-%{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/Plus.java}
+%{code-snippet|brush=java|file=test/net/kozelka/args/minicalc/Plus.java}
 
 ** minicalc help plus
 
@@ -42,7 +42,7 @@ MiniCalc Sample
 
 * Minus.java
 
-%{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/Minus.java}
+%{code-snippet|brush=java|file=test/net/kozelka/args/minicalc/Minus.java}
 
 ** minicalc help minus
 
@@ -50,7 +50,7 @@ MiniCalc Sample
 
 * Logarithm.java
 
-%{code-snippet|brush=java|file=test/net/sf/buildbox/args/minicalc/Logarithm.java}
+%{code-snippet|brush=java|file=test/net/kozelka/args/minicalc/Logarithm.java}
 
 ** minicalc help log
 

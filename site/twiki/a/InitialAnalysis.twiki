@@ -49,7 +49,7 @@ Options can occur anywhere before/after the command and any argument without hav
 Options having values must have these values next to it, in order of their definition.
 
 ---++++ Example
-%snippet{id=example1|file=test/net/sf/buildbox/args/ArgsParserTest.java}%
+%snippet{id=example1|file=test/net/kozelka/args/ArgsParserTest.java}%
 
 ---+++ TODO: StrictArgs Parser (CVS-like)
 

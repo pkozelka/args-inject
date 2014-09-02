@@ -31,12 +31,6 @@ Args-inject step-by-step tutorial
 
 %{code-snippet|id=dependency|brush=xml|file=site/snip.xml}
 
-   Following fragment adds the buildbox repository containing the release if you do not use a centralized artifact repository software <(like {{{http://nexus.sonatype.com}Sonatype Nexus}} for instance)>:
-
-%{code-snippet|id=alpha-repo|brush=xml|file=site/snip.xml|sh-params=highlight:[3,4]}
-
-   With Nexus or other repository software, you will probably prefer to use above information <(id, url)> for adding a new repository proxy to a public repository group.
-
 *** Ant project
 
    If you compile your code with Ant, then fragments of following code might be useful to you:
@@ -52,9 +46,9 @@ Args-inject step-by-step tutorial
 *---+---*---*---+
  <<Artifact>> | <<MD5>> | <<SHA1>> | <<Description>>
 *---+---*---*---+
- {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha.jar}args-inject-1.0.0-alpha.jar}} | {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha.jar.md5}MD5}} | {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha.jar.sha1}SHA1}} | library JAR
+ {{{http://repo1.maven.org/maven2/net/kozelka/args-inject/0.1-SNAPSHOT/0.1-SNAPSHOT.jar}args-inject-0.1-SNAPSHOT.jar}} | {{{jar.md5}MD5}} | {{{http://jar.sha1}SHA1}} | library JAR
 *---+---*---*---+
- {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha-sources.jar}args-inject-1.0.0-alpha-sources.jar}} | {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha-sources.jar.md5}MD5}} | {{{http://buildbox.sourceforge.net/maven2-alpha/net/sf/buildbox/args-inject/1.0.0-alpha/args-inject-1.0.0-alpha-sources.jar.sha1}SHA1}} | library sources
+ {{{http://sources.jar}args-inject-0.1-SNAPSHOT-sources.jar}} | {{{sources.jar.md5}MD5}} | {{{sources.jar.sha1}SHA1}} | library sources
 *---+---*---*---+
 
 *** Any other build system or IDE
@@ -91,7 +85,7 @@ Args-inject step-by-step tutorial
 
 *** Sample subcommand class
 
-%{code-snippet|brush=java|file=test/net/sf/buildbox/args/DemoFileLister.java}
+%{code-snippet|brush=java|file=test/net/kozelka/args/DemoFileLister.java}
 
 
 
@@ -137,7 +131,7 @@ Args-inject step-by-step tutorial
 
 *** Sample main method
 
-%{code-snippet|id=sample-main|brush=java|file=test/net/sf/buildbox/args/ArgsParserTest.java}
+%{code-snippet|id=sample-main|brush=java|file=test/net/kozelka/args/ArgsParserTest.java}
 
 ** Creating wrapper shell script
 
@@ -159,7 +153,7 @@ Args-inject step-by-step tutorial
 
    * on Linux, if your last command of the script is <<<java>>> <(recommended!)>, then it is good to call it with exec to reuse script's process for JVM:
    
-     <<<exec java -classpath $CP net.sf.buildbox.args.minicalc.MiniCalc $*>>>
+     <<<exec java -classpath $CP net.kozelka.args.minicalc.MiniCalc $*>>>
 
    * there are several tools to ensure that your output jar does not require any external libraries, which makes the launcher a bit simpler. Have a look at:
 

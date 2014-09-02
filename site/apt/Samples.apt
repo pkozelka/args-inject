@@ -15,7 +15,7 @@ Code samples
 
    Small commandline application with two subcommands.
 
-   Details {{{./MiniCalc.html}here}}, code {{{./xref-test/net/sf/buildbox/args/minicalc/package-summary.html}here}}.
+   Details {{{./MiniCalc.html}here}}, code {{{./xref-test/net/kozelka/args/minicalc/package-summary.html}here}}.
 
    Demonstrates:
 
@@ -29,7 +29,7 @@ Code samples
 
    Commandline application doing some useful stuff with path lists.
 
-   Details {{{./MyPathTool.html}here}}, code {{{./xref-test/net/sf/buildbox/args/mypathtool/package-summary.html}here}}.
+   Details {{{./MyPathTool.html}here}}, code {{{./xref-test/net/kozelka/args/mypathtool/package-summary.html}here}}.
 
    Demonstrates:
 
@@ -48,7 +48,7 @@ Code samples
 
    Commandline application working with date/time arguments
 
-   Details {{{./Timmy.html}here}}, code {{{./xref-test/net/sf/buildbox/args/timmy/package-summary.html}here}}.
+   Details {{{./Timmy.html}here}}, code {{{./xref-test/net/kozelka/args/timmy/package-summary.html}here}}.
 
    Demonstrates:
 
