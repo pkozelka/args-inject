@@ -29,13 +29,13 @@ Args-inject step-by-step tutorial
 
    If you use Maven2, you have a project with a <<<pom.xml>>> so you will need to add something like this <(with the released version that you selected, of course)>:
 
-%{code-snippet|id=dependency|brush=xml|file=site/snip.xml}
+%{code-snippet|id=dependency|brush=xml|file=src/site/snip.xml}
 
 *** Ant project
 
    If you compile your code with Ant, then fragments of following code might be useful to you:
 
-%{code-snippet|id=ant-maven-dependency|brush=xml|file=site/snip.xml}
+%{code-snippet|id=ant-maven-dependency|brush=xml|file=src/site/snip.xml}
 
    Note that this uses the ant library {{{http://maven.apache.org/ant-tasks/}maven-ant-tasks}} which is an excellent library for reusing Maven artifacts in Ant code; I highly recommend it to your attention.
 

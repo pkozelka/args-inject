@@ -2,7 +2,7 @@
 install:
 	mvn clean install
 
-sitex:
+site:
 	mvn clean install site -Pall-reports
 
 	# fix refs to JXR line numbers

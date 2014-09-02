@@ -42,7 +42,9 @@
             -->
         </fluidoSkin>
     </custom>
-  <body>
+    <publishDate position="right"/>
+    <version position="right"/>
+    <body>
         <breadcrumbs>
             <item name="args-inject" href="index.html"/>
         </breadcrumbs>
@@ -105,5 +107,5 @@
     </menu>
 
     <menu ref="reports"/>
-  </body>
+    </body>
 </project>
