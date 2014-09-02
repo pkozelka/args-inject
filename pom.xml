@@ -210,4 +210,9 @@
       </reporting>
     </profile>
   </profiles>
+    <scm>
+        <connection>scm:git:http://github.com/pkozelka/args-inject.git</connection>
+        <developerConnection>scm:git:git@github.com:pkozelka/args-inject.git</developerConnection>
+        <url>http://github.com/pkozelka/args-inject</url>
+    </scm>
 </project>
