@@ -22,5 +22,5 @@ MyPathTool Sample (mpt)
 
 * MyPathTool.java
 
-%{code-snippet|brush=java|file=test/net/kozelka/args/mypathtool/MyPathTool.java}
+%{code-snippet|brush=java|file=src/test/java/net/kozelka/args/mypathtool/MyPathTool.java}
 

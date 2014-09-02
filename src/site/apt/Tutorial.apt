@@ -85,7 +85,7 @@ Args-inject step-by-step tutorial
 
 *** Sample subcommand class
 
-%{code-snippet|brush=java|file=test/net/kozelka/args/DemoFileLister.java}
+%{code-snippet|brush=java|file=src/test/java/net/kozelka/args/DemoFileLister.java}
 
 
 
@@ -131,7 +131,7 @@ Args-inject step-by-step tutorial
 
 *** Sample main method
 
-%{code-snippet|id=sample-main|brush=java|file=test/net/kozelka/args/ArgsParserTest.java}
+%{code-snippet|id=sample-main|brush=java|file=src/test/java/net/kozelka/args/ArgsParserTest.java}
 
 ** Creating wrapper shell script
 

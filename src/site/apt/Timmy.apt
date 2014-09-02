@@ -20,5 +20,5 @@ Timmy Sample
 
 * Timmy.java
 
-%{code-snippet|brush=java|file=test/net/kozelka/args/timmy/Timmy.java}
+%{code-snippet|brush=java|file=src/test/java/net/kozelka/args/timmy/Timmy.java}
 

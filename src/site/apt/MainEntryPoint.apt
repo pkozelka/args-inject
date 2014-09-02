@@ -13,7 +13,7 @@ Writing main() method
 
    This code does <exactly> the needed minimum to have a functional <<<main>>> - imagine your set of commands and other settings there:
 
-%{code-snippet|id=sample-main|brush=java|file=test/net/kozelka/args/ArgsParserTest.java}
+%{code-snippet|id=sample-main|brush=java|file=src/test/java/net/kozelka/args/ArgsParserTest.java}
 
 * Unit testing aware approach
 
@@ -26,17 +26,17 @@ Writing main() method
 
    []
 
-%{code-snippet|id=run|brush=java|file=test/net/kozelka/args/minicalc/MiniCalc.java}
+%{code-snippet|id=run|brush=java|file=src/test/java/net/kozelka/args/minicalc/MiniCalc.java}
 
    * the part that can call <<<System.exit()>>> which is illegal in JUnit
 
    []
 
-%{code-snippet|id=main|brush=java|file=test/net/kozelka/args/minicalc/MiniCalc.java}
+%{code-snippet|id=main|brush=java|file=src/test/java/net/kozelka/args/minicalc/MiniCalc.java}
 
    Then your junit test can use it like this:
 
-%{code-snippet|id=use-in-junit|brush=java|file=test/net/kozelka/args/minicalc/MiniCalcTest.java}
+%{code-snippet|id=use-in-junit|brush=java|file=src/test/java/net/kozelka/args/minicalc/MiniCalcTest.java}
 
    You can also be interrested in trapping stdout/stderr for testing; it's fairly simple; for inspiration, look into <<<MiniCalcTest.java>>> how it can be accomplished.
 
