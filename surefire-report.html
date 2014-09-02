@@ -281,7 +281,7 @@
 <td>0</td>
 <td>1</td>
 <td>97.297%</td>
-<td>0.271</td></tr></table><br />
+<td>0.25</td></tr></table><br />
 <p>Note: failures are anticipated and checked for with assertions while errors are unanticipated.</p><br /></div>
 <div class="section">
 <h2>Package List<a name="Package_List"></a></h2><a name="Package_List"></a>
@@ -310,7 +310,7 @@
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.021</td></tr>
+<td>0.018</td></tr>
 <tr class="b">
 <td><a href="#net.kozelka.args">net.kozelka.args</a></td>
 <td>15</td>
@@ -318,7 +318,7 @@
 <td>0</td>
 <td>1</td>
 <td>93.333%</td>
-<td>0.065</td></tr>
+<td>0.047</td></tr>
 <tr class="a">
 <td><a href="#net.kozelka.args.timmy">net.kozelka.args.timmy</a></td>
 <td>7</td>
@@ -369,7 +369,7 @@
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.021</td></tr></table></div>
+<td>0.018</td></tr></table></div>
 <div class="section">
 <h3>net.kozelka.args<a name="net.kozelka.args"></a></h3><a name="net.kozelka.args"></a>
 <table border="0" class="table table-striped">
@@ -390,7 +390,7 @@
 <td>0</td>
 <td>0</td>
 <td>100%</td>
-<td>0.002</td></tr>
+<td>0.004</td></tr>
 <tr class="b">
 <td><a href="#net.kozelka.argsArgsParserTest"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
 <td><a href="#net.kozelka.argsArgsParserTest">ArgsParserTest</a></td>
@@ -399,7 +399,7 @@
 <td>0</td>
 <td>1</td>
 <td>85.714%</td>
-<td>0.063</td></tr></table></div>
+<td>0.043</td></tr></table></div>
 <div class="section">
 <h3>net.kozelka.args.timmy<a name="net.kozelka.args.timmy"></a></h3><a name="net.kozelka.args.timmy"></a>
 <table border="0" class="table table-striped">
@@ -429,47 +429,63 @@
 <table border="0" class="table table-striped">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testPlus</td>
-<td>0.006</td></tr>
+<td>testInvalidCommandErr</td>
+<td>0.005</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testNoSubcommandErr</td>
 <td>0.001</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testNotEnoughParamsErr</td>
+<td>testSyntaxErr</td>
 <td>0.002</td></tr>
 <tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>testNotEnoughParamsErr</td>
+<td>0.001</td></tr>
+<tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testUnparsedTokensErr</td>
-<td>0.002</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testHelp</td>
-<td>0.141</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testInvalidCommandErr</td>
-<td>0.001</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testSyntaxErr</td>
 <td>0.001</td></tr>
 <tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>testInvalidOptionErr</td>
+<td>0.001</td></tr>
+<tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testMinus</td>
 <td>0.001</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>testHelp</td>
+<td>0.143</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testLogarithm</td>
 <td>0.001</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testInvalidOptionErr</td>
+<td>testPlus</td>
 <td>0.001</td></tr></table></div>
 <div class="section">
 <h3>ArgsUtilsTest<a name="ArgsUtilsTest"></a></h3><a name="net.kozelka.argsArgsUtilsTest"></a>
 <table border="0" class="table table-striped">
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>testStringToType</td>
+<td>0.002</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>testLongStringToChar</td>
+<td>0</td></tr>
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>testEmptyStringToChar</td>
+<td>0.001</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>testNonStaticValueOf</td>
+<td>0</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testStaticBadTypeValueOf</td>
@@ -485,100 +501,84 @@
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testFailingConstructor</td>
-<td>0</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testStringToType</td>
-<td>0.002</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testLongStringToChar</td>
-<td>0</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testEmptyStringToChar</td>
-<td>0</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testNonStaticValueOf</td>
-<td>0</td></tr></table></div>
+<td>0.001</td></tr></table></div>
 <div class="section">
 <h3>MyPathToolTest<a name="MyPathToolTest"></a></h3><a name="net.kozelka.args.mypathtoolMyPathToolTest"></a>
 <table border="0" class="table table-striped">
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testEnvPath</td>
-<td>0.004</td></tr>
+<td>testHelp</td>
+<td>0.008</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testByLines</td>
+<td>testEnvPath</td>
 <td>0.004</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testExcludeJava</td>
+<td>testByLines</td>
 <td>0.003</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testDedup</td>
-<td>0.002</td></tr>
+<td>0.001</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testHelp</td>
-<td>0.008</td></tr></table></div>
+<td>testExcludeJava</td>
+<td>0.002</td></tr></table></div>
 <div class="section">
 <h3>TimmyTest<a name="TimmyTest"></a></h3><a name="net.kozelka.args.timmyTimmyTest"></a>
 <table border="0" class="table table-striped">
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testTimeOffset</td>
-<td>0.015</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testHelpShift</td>
-<td>0.001</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testDefaultCommand</td>
-<td>0.001</td></tr>
-<tr class="a">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testOptionNotAcceptedErr</td>
+<td>testInvalidOptionErr</td>
 <td>0.002</td></tr>
-<tr class="b">
-<td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testTimeDelta</td>
-<td>0.001</td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testHelp</td>
 <td>0.007</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testInvalidOptionErr</td>
+<td>testDefaultCommand</td>
+<td>0.002</td></tr>
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>testOptionNotAcceptedErr</td>
+<td>0.013</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>testTimeOffset</td>
+<td>0.002</td></tr>
+<tr class="a">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>testTimeDelta</td>
+<td>0.001</td></tr>
+<tr class="b">
+<td><img src="images/icon_success_sml.gif" alt="" /></td>
+<td>testHelpShift</td>
 <td>0.001</td></tr></table></div>
 <div class="section">
 <h3>ArgsParserTest<a name="ArgsParserTest"></a></h3><a name="net.kozelka.argsArgsParserTest"></a>
 <table border="0" class="table table-striped">
-<tr class="a">
-<td><a href="#net.kozelka.args.ArgsParserTest.testSampleOptionSyntaxMix"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
-<td><a href="#net.kozelka.args.ArgsParserTest.testSampleOptionSyntaxMix">testSampleOptionSyntaxMix</a>  <div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;testSampleOptionSyntaxMix&apos;);"><span style="display: inline;" id="testSampleOptionSyntaxMixoff">+</span><span id="testSampleOptionSyntaxMixon" style="display: none;">-</span> [ Detail ]</a></div></td>
-<td>0.025</td></tr>
-<tr class="b">
-<td></td>
-<td>skipped</td>
-<td></td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testMultiFiles</td>
 <td>0.03</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testGlobalHelp</td>
-<td>0.005</td></tr>
+<td>testSampleOptionShort</td>
+<td>0.003</td></tr>
+<tr class="a">
+<td><a href="#net.kozelka.args.ArgsParserTest.testSampleOptionSyntaxMix"><img src="images/icon_warning_sml.gif" alt="" /></a></td>
+<td><a href="#net.kozelka.args.ArgsParserTest.testSampleOptionSyntaxMix">testSampleOptionSyntaxMix</a>  <div class="detailToggle" style="display:inline"><a href="javascript:toggleDisplay(&apos;testSampleOptionSyntaxMix&apos;);"><span style="display: inline;" id="testSampleOptionSyntaxMixoff">+</span><span id="testSampleOptionSyntaxMixon" style="display: none;">-</span> [ Detail ]</a></div></td>
+<td>0.003</td></tr>
+<tr class="b">
+<td></td>
+<td>skipped</td>
+<td></td></tr>
 <tr class="a">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testCommandHelp</td>
-<td>0</td></tr>
+<td>0.002</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
 <td>testInvalidCommandHelp</td>
@@ -589,8 +589,8 @@
 <td>0</td></tr>
 <tr class="b">
 <td><img src="images/icon_success_sml.gif" alt="" /></td>
-<td>testSampleOptionShort</td>
-<td>0.002</td></tr></table></div><br /></div>
+<td>testGlobalHelp</td>
+<td>0.004</td></tr></table></div><br /></div>
 <div class="section">
 <h2>Failure Details<a name="Failure_Details"></a></h2><a name="Failure_Details"></a>
 <p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p><br />
@@ -609,8 +609,9 @@
     <footer>
             <div class="container">
                       <div class="row">
-                              <p >Copyright &copy;                   2014.
-          All rights reserved.      
+                              <p >Copyright &copy;                    2014
+                        <a href="http://kozelka.net">Petr Kozelka</a>.
+            All rights reserved.      
                     
       </p>
         </div>
