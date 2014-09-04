@@ -1,34 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<changes xsi:schemaLocation="http://buildbox.sf.net/changes/2.0 http://buildbox.sourceforge.net/releasator/changes.xsd" xmlns="http://buildbox.sf.net/changes/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <unreleased groupId="net.kozelka.args" artifactId="args-inject" version="1-SNAPSHOT">
-    <item action="add" >embedded part of the XmlFacade project (by Vojta Habarta) to avoid build setup complications</item>
-  </unreleased>
-  <release groupId="net.sf.buildbox" artifactId="args-inject" version="1.0.0-rc-1" timestamp="2010-11-22T21:52:49.178Z" author="pkozelka@gmail.com">
-    <item action="add" issue="SF-3061856" component="ArgsCommand">base interface for subcommand implementations</item>
-    <buildtool role="compiler" groupId="com.sun.jdk" artifactId="java" version="1.5.0_11-b03"/>
-    <buildtool role="build" groupId="org.apache" artifactId="maven" version="2.2.1"/>
-    <buildtool role="release" groupId="org.apache.maven.plugins" artifactId="maven-release-plugin" version="2.0-beta-9"/>
-    <buildtool role="release" groupId="net.sf.buildbox" artifactId="releasator" version="1-SNAPSHOT-2010-09-04T22:05:05.813Z"/>
-    <os arch="i386" name="Linux" version="2.6.35-23-generic"/>
-    <vcs id="sf.buildbox" location="/trunk/base/args-inject" tag="/tags/net.sf.buildbox-args-inject-1.0.0-rc-1"/>
-    <module groupId="net.sf.buildbox" artifactId="args-inject" version="1.0.0-rc-1">
-      <artifact classifier="sources" type="jar"/>
-      <artifact type="jar"/>
-      <artifact type="pom"/>
-    </module>
-  </release>
-  <release groupId="net.sf.buildbox" artifactId="args-inject" version="1.0.0-alpha" timestamp="2010-08-19T00:11:51.270Z" author="pkozelka@gmail.com">
-    <item>initial release</item>
-    <buildtool role="compiler" groupId="com.sun.jdk" artifactId="java" version="1.5.0_11-b03"/>
-    <buildtool role="build" groupId="org.apache" artifactId="maven" version="2.2.1"/>
-    <buildtool role="release" groupId="org.apache.maven.plugins" artifactId="maven-release-plugin" version="2.0-beta-9"/>
-    <buildtool role="release" groupId="net.sf.buildbox.tools" artifactId="releasator" version="1.0.0-rc"/>
-    <os arch="i386" name="Linux" version="2.6.32-24-generic"/>
-    <vcs id="sf.buildbox" location="/trunk/base/args-inject" tag="/tags/net.sf.buildbox-args-inject-1.0.0-alpha"/>
-    <module groupId="net.sf.buildbox" artifactId="args-inject" version="1.0.0-alpha">
-      <artifact classifier="sources" type="jar"/>
-      <artifact type="jar"/>
-      <artifact type="pom"/>
-    </module>
-  </release>
-</changes>
+<?xml version="1.0"?>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+    <properties>
+    </properties>
+    <body>
+        <release version="1.0-SNAPSHOT">
+            <action dev="Petr Kozelka" type="add">embedded part of the XmlFacade project (by Vojta Habarta) to avoid build setup complications</action>
+        </release>
+
+        <release version="1.0.1-rc-1" date="2010-11-22" description="net.sf.buildbox:args-inject">
+            <action dev="Petr Kozelka" type="add" issue="SF-3061856">ArgsCommand: base interface for subcommand implementations</action>
+        </release>
+
+        <release version="1.0.0-alpha" date="2010-08-19" description="net.sf.buildbox:args-inject">
+            <action dev="Petr Kozelka" type="add">Initial release</action>
+        </release>
+    </body>
+</document>
