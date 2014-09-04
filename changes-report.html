@@ -7,10 +7,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Petr Kozelka" />
     <meta name="Date-Revision-yyyymmdd" content="20140904" />
     <meta http-equiv="Content-Language" content="en" />
-    <title>args-inject - Options</title>
+    <title>args-inject - Changes Report</title>
     <link rel="stylesheet" href="./css/apache-maven-fluido-1.3.1.min.css" />
     <link rel="stylesheet" href="./css/site.css" />
     <link rel="stylesheet" href="./css/print.css" media="print" />
@@ -240,7 +239,7 @@
         args-inject</a>
                     <span class="divider">»</span>
       </li>
-        <li class="active ">Options</li>
+        <li class="active ">Changes Report</li>
         
                 
                     
@@ -257,66 +256,59 @@
         <div id="bodyColumn" >
                                   
             <div class="section">
-<h2>Commandline Options<a name="Commandline_Options"></a></h2>
-<ul>
-<li><a href="#Common_sytax_styles">Common sytax styles</a>
-<ul>
-<li><a href="#Just_present_0_values">Just present (0 values)</a></li>
-<li><a href="#Simple_1_value">Simple (1 value)</a></li>
-<li><a href="#Property_assignment_2_values">Property assignment (2 values)</a></li>
-<li><a href="#Multiple_values">Multiple values</a></li></ul></li>
-<li><a href="#Repeatability">Repeatability</a></li>
-<li><a href="#Global_vs._specific_options">Global vs. specific options</a></li>
-<li><a href="#Preventing_inconsistent_option_declarations">Preventing inconsistent option declarations</a></li></ul>
+<h2>Changes Report<a name="Changes_Report"></a></h2><a name="Changes_Report"></a>
 <div class="section">
-<h3>Common sytax styles<a name="Common_sytax_styles"></a></h3>
+<h3>Release History<a name="Release_History"></a></h3><a name="Release_History"></a>
+<table border="0" class="table table-striped">
+<tr class="a">
+<th>Version</th>
+<th>Date</th>
+<th>Description</th></tr>
+<tr class="b">
+<td><a href="#a1.0-SNAPSHOT">1.0-SNAPSHOT</a></td>
+<td>&#160;</td>
+<td>&#160;</td></tr>
+<tr class="a">
+<td><a href="#a1.0.1-rc-1">1.0.1-rc-1</a></td>
+<td>2010-11-22</td>
+<td>net.sf.buildbox:args-inject</td></tr>
+<tr class="b">
+<td><a href="#a1.0.0-alpha">1.0.0-alpha</a></td>
+<td>2010-08-19</td>
+<td>net.sf.buildbox:args-inject</td></tr></table></div>
 <div class="section">
-<h4>Just present (0 values)<a name="Just_present_0_values"></a></h4>
-<p>Used for options having no value. The typical effect of specifying the option includes <i>setting a property to true</i> or <i>incrementing a value</i></p>
-<p>Sample usage:</p>
-<ul>
-<li><tt>--xml</tt> sets an internal flag ensuring that the output is in XML format - used in SVN this way</li>
-<li><tt>-q</tt> turns the output to quiet mode (important messages only) - used in CVS this way</li></ul></div>
+<h3>Release 1.0-SNAPSHOT<a name="Release_1.0-SNAPSHOT"></a></h3><a name="a1.0-SNAPSHOT"></a>
+<table border="0" class="table table-striped">
+<tr class="a">
+<th>Type</th>
+<th>Changes</th>
+<th>By</th></tr>
+<tr class="b">
+<td><img src="images/add.gif" alt="add" title="add" /></td>
+<td>embedded part of the XmlFacade project (by Vojta Habarta) to avoid build setup complications</td>
+<td><a href="team-list.html#Petr Kozelka">Petr Kozelka</a></td></tr></table></div>
 <div class="section">
-<h4>Simple (1 value)<a name="Simple_1_value"></a></h4>
-<p>The most typical way of using options.</p>
-<p>Sample:</p>
-<ul>
-<li>value comes in next argument: <tt>-r 219</tt> or <tt>--revision 219</tt></li>
-<li>value is right after <i>shortName</i>, using it as a prefix: <tt>-r219</tt></li>
-<li>value assigment after <i>longName</i>: <tt>--revision=210</tt></li></ul></div>
+<h3>Release 1.0.1-rc-1 - 2010-11-22<a name="Release_1.0.1-rc-1_-_2010-11-22"></a></h3><a name="a1.0.1-rc-1"></a>
+<table border="0" class="table table-striped">
+<tr class="a">
+<th>Type</th>
+<th>Changes</th>
+<th>By</th></tr>
+<tr class="b">
+<td><img src="images/add.gif" alt="add" title="add" /></td>
+<td>ArgsCommand: base interface for subcommand implementations Fixes <a class="externalLink" href="https://github.com/pkozelka/args-inject/SF-3061856">SF-3061856</a>.</td>
+<td><a href="team-list.html#Petr Kozelka">Petr Kozelka</a></td></tr></table></div>
 <div class="section">
-<h4>Property assignment (2 values)<a name="Property_assignment_2_values"></a></h4>
-<p>Often used to specify properties.</p>
-<p>Sample:</p>
-<ul>
-<li><tt>-DpropertyName=propertyValue</tt> - used by java, javac, ant, maven, ...</li>
-<li><tt>--set-property propertyName propertyValue</tt></li></ul></div>
-<div class="section">
-<h4>Multiple values<a name="Multiple_values"></a></h4>
-<p>Not very frequent case, but possible - each value then comes from separate argument.</p>
-<p>Sample:</p>
-<ul>
-<li><tt>--jdbc h2 tcp://localhost/testdb sa sapassword</tt></li></ul></div></div></div>
-<div class="section">
-<h2>Related features<a name="Related_features"></a></h2>
-<div class="section">
-<h3>Repeatability<a name="Repeatability"></a></h3>
-<p>Each option can be specified multiple times, and no declaration is supported to prevent that.</p>
-<p>Implementation can use it for advancing its internal state, or detect second use and fail in that case. However, the most natural approach is that the value specified later overrides all preceding ones.</p></div>
-<div class="section">
-<h3>Global vs. specific options<a name="Global_vs._specific_options"></a></h3>
-<p>Some options can be considered more &quot;specific&quot; to command, while others are reused on so many commands that they are marked as global. This marking is solely for help/documentation purposes; it has no processing consequences.</p>
-<p>In more complex programs, there are many candidates for &quot;global&quot; options, but very few options are really really valid for ALL the present commands. On the other hand, some options are quite often reused, but the author still preffers to mark and document them as command-specific.</p>
-<p>For this reason, all options are processed equally, but some can be marked global, either explicitly or implicitly.</p>
-<p><b>Explicit</b> marking happens by using the annottation <tt>@Global</tt> or <tt>@Global(false)</tt>.</p>
-<p><b>Implicit</b> marking happens when annottation <tt>@Global</tt> is not present; in that case, option methods which are abstract, or defined on abstract class or interface, get the global flag set to true, while non-abstract option method declared on non-abstract command class sets global flag to false.</p></div>
-<div class="section">
-<h3>Preventing inconsistent option declarations<a name="Preventing_inconsistent_option_declarations"></a></h3>
-<p>To keep option definitions consistent, both syntactically and semantically, an important limitation is wired to the design and implementation:</p>
-<p><b>Each option name can be implemented only once</b></p>
-<p>meaning that the analyzer will fail if you, for example, implement option &quot;--xml&quot; on more than one classes/interfaces.</p>
-<p>This limitation should be easy to accept and is supposed to have positive impact on good option structure.</p></div></div>
+<h3>Release 1.0.0-alpha - 2010-08-19<a name="Release_1.0.0-alpha_-_2010-08-19"></a></h3><a name="a1.0.0-alpha"></a>
+<table border="0" class="table table-striped">
+<tr class="a">
+<th>Type</th>
+<th>Changes</th>
+<th>By</th></tr>
+<tr class="b">
+<td><img src="images/add.gif" alt="add" title="add" /></td>
+<td>Initial release</td>
+<td><a href="team-list.html#Petr Kozelka">Petr Kozelka</a></td></tr></table></div></div>
                   </div>
           </div>
 
