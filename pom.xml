@@ -69,15 +69,9 @@
 -->
     </plugins>
   </build>
-<!--
   <distributionManagement>
-    <downloadUrl>http://buildbox.sf.net/${project.artifactId}</downloadUrl>
-    <site>
-      <id>buildbox.sf.net</id>
-      <url>sftp://web.sf.net/home/groups/b/bu/buildbox/htdocs/${project.artifactId}</url>
-    </site>
+        <downloadUrl>http://code.kozelka.net.net/${project.artifactId}/download.html</downloadUrl>
   </distributionManagement>
--->
     <developers>
         <developer>
             <id>pkozelka</id>

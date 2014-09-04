@@ -5,7 +5,7 @@ import net.kozelka.args.DefaultHelpCommand;
 import net.kozelka.args.annotation.AnnottationAwareSetup;
 
 /**
- * Sample application for <a href="http://buildbox.sf.net/args-inject">args-inject</a>
+ * Sample application for <a href="http://code.kozelka.net/args-inject">args-inject</a>
  * @author <a href="mailto:pkozelka@gmail.com">Petr Kozelka</a>
  */
 public class MiniCalc {

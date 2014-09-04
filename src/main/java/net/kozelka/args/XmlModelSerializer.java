@@ -14,7 +14,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class XmlModelSerializer {
-    public static final String NS = "http://buildbox.sf.net/args-inject";
+    public static final String NS = "http://code.kozelka.net/args-inject";
 
     /**
      * Creates XML DOM Document containing complete commandline structure declaration
