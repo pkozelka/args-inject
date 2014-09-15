@@ -13,6 +13,9 @@ public class SampleMain {
         final NgStringOption username = new NgStringOption("--username");
         cmd.addOption(username, NgCardinality.REQUIRED);
         cliParser.addCommand(cmd);
+        final NgSubCommand action = cliParser.parse(args);
+        final int exitCode = action.execute();
+        //TODO
     }
 
     static class CliParser {
@@ -20,18 +23,22 @@ public class SampleMain {
             //
         }
 
+        public NgSubCommand parse(String ... args) {
+            return null; //TODO
+        }
     }
     public static enum NgCardinality {
         OPTIONAL,
         REQUIRED,
         MULTI
-
-
     }
 
     public static class NgSubCommand {
         public void addOption(NgStringOption rev, NgCardinality required) {
             //
+        }
+        public int execute() {
+            return 1; //TODO
         }
     }
 
